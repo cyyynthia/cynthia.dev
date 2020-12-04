@@ -25,43 +25,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@import './colors';
+import { h } from 'preact'
+import Router from 'preact-router'
 
-* { box-sizing: border-box; }
-html, body, #react-root {
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  font-family: 'Quicksand', sans-serif;
-  letter-spacing: .3;
+import Home from './Home'
+// import ProjectList from './Projects/List'
+// import Resume from './Resume'
+
+import '@styles/main.scss'
+
+function Root () {
+  return (
+    <Router>
+      <Home path='/'/>
+      {/* <ProjectList path='/projects'/> */}
+      {/* <Resume path='/resume'/> */}
+    </Router>
+  )
 }
 
-body {
-  color: #ddd;
-  background-color: var(--background-primary);
-}
-
-p {
-  margin: 0;
-
-  &:not(:last-of-type) {
-    margin-bottom: 16px;
-  }
-}
-
-a {
-  color: var(--pink);
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-code {
-  font-family: 'JetBrains Mono';
-  font-size: 13px;
-  padding: 2px 4px;
-  background-color: var(--background-secondary);
-}
+Root.displayName = 'Root'
+export default Root

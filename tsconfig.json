@@ -15,7 +15,7 @@
     "allowUnreachableCode": false,
     "allowJs": false,
 
-    "lib": [ "es2020.string", "es2020.bigint" ],
+    "lib": [ "es2020.string", "es2020.bigint", "es2019.object" ],
     "baseUrl": "src",
     "paths": {
       "@components/*": [ "components/*" ],
@@ -32,7 +32,7 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "declaration": true,
-    "outDir": "./dist"
+    "outDir": "./build"
   },
   "include": [ "src/**/*" ]
 }

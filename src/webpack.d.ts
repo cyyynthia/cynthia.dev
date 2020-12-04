@@ -25,43 +25,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@import './colors';
+declare const COMMIT_HASH: string
 
-* { box-sizing: border-box; }
-html, body, #react-root {
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  font-family: 'Quicksand', sans-serif;
-  letter-spacing: .3;
+declare module '*.scss' {
+  let classes: Readonly<Record<string, string>>
+  export default classes
 }
 
-body {
-  color: #ddd;
-  background-color: var(--background-primary);
-}
-
-p {
-  margin: 0;
-
-  &:not(:last-of-type) {
-    margin-bottom: 16px;
-  }
-}
-
-a {
-  color: var(--pink);
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-code {
-  font-family: 'JetBrains Mono';
-  font-size: 13px;
-  padding: 2px 4px;
-  background-color: var(--background-secondary);
+declare module '@assets/*' {
+  let asset: string
+  export default asset
 }

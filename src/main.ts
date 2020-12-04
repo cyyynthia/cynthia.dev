@@ -27,7 +27,9 @@
 
 import 'preact/debug'
 import { h, render } from 'preact'
-import Layout from '@components/Layout'
+import Root from '@components/Root'
 
-let app = h(Layout, null)
-render(app, document.getElementById('react-root') as HTMLElement)
+render(
+  h(Root, null),
+  document.getElementById('react-root') as HTMLElement
+)

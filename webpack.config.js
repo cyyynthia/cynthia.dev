@@ -10,7 +10,7 @@ const FriendlyErrors = require('friendly-errors-webpack-plugin')
 const { DefinePlugin, HotModuleReplacementPlugin, optimize: { LimitChunkCountPlugin } } = require('webpack')
 
 // Env vars
-const COMMIT_HASH = 'a' // require('child_process').execSync('git rev-parse HEAD').toString().trim()
+const COMMIT_HASH = require('child_process').execSync('git rev-parse HEAD').toString().trim()
 const IS_DEV = process.env.NODE_ENV === 'development'
 const SRC = join(__dirname, 'src')
 const OUT = join(__dirname, 'dist')
@@ -205,11 +205,10 @@ if (IS_DEV) {
       chunkFilename: '[name].chk.js',
       libraryTarget: 'commonjs2',
       path: join(__dirname, 'build'),
-      publicPath: '/dist/',
-      iife: false
+      publicPath: '/dist/'
     },
     plugins: [
-      ...baseConfig.plugins.slice(4), // Slice manifest, build side, sri
+      ...baseConfig.plugins.slice(3), // Slice manifest, build side, sri
       new LimitChunkCountPlugin({ maxChunks: 1 }),
       new DefinePlugin({ 'process.env.BUILD_SIDE': JSON.stringify('server') })
     ],

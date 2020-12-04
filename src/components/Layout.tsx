@@ -25,18 +25,36 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { h } from 'preact'
-import Router from 'preact-router'
+import { h, Fragment } from 'preact'
+import type { ComponentChild } from 'preact'
 
-import Home from './Home'
+import style from '@styles/layout.scss'
 
-import '@styles/main.scss'
+interface LayoutProps {
+  title: string
+  context?: string
+  breadcrumb?: [ string, string ][]
+  children: ComponentChild
+}
 
-function Layout () {
+function Layout (props: LayoutProps) {
   return (
-    <Router>
-      <Home path='/'/>
-    </Router>
+    <div className={style.container}>
+      {props.breadcrumb && (
+        <div className={style.breadcrumb}>
+          <a href='/'>cynthia.dev</a>
+          {props.breadcrumb.map(i => (
+            <Fragment>
+              {' > '}
+              <a href={i[0]}>{i[1]}</a>
+            </Fragment>
+          ))}
+        </div>
+      )}
+      {props.context && <div className={style.context}>{props.context}</div>}
+      <h1 className={style.title}>{props.title}</h1>
+      {props.children}
+    </div>
   )
 }
 

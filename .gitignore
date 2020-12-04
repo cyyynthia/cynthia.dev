@@ -2,3 +2,10 @@ build
 dist
 node_modules
 config.json
+*.nogit.*
+*.nogit/
+
+# Soon:tm:
+src/components/Resume
+src/styles/resume.scss
+/pdf.js
