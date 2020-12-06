@@ -1,3 +1,6 @@
+.vscode
+.idea
+
 build
 dist
 node_modules

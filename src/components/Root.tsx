@@ -26,17 +26,34 @@
  */
 
 import { h } from 'preact'
+import { useState } from 'preact/hooks'
+import { useMeta, useLink, useTitle } from 'hoofd/preact'
 import Router from 'preact-router'
 
 import Home from './Home'
 // import ProjectList from './Projects/List'
 // import Resume from './Resume'
 
+import avatar from '@assets/avatar.png'
 import '@styles/main.scss'
 
-function Root () {
+interface RootProps {
+  url?: string
+}
+
+function Root (props: RootProps) {
+  const [ url, setUrl ] = useState(props.url || location.pathname)
+  useTitle(url === '/' ? 'Cynthia\'s Website' : '%s • Cynthia\'s Website', url !== '/')
+
+  useMeta({ name: 'og:image', content: avatar })
+  useMeta({ name: 'og:title', content: 'Cynthia\'s Website' })
+  useMeta({ name: 'og:site_name', content: 'cynthia.dev' })
+  useMeta({ name: 'og:description', content: 'The website of a pink-haired french gal turning coffee into spaghet.' })
+  useMeta({ name: 'description', content: 'The website of a pink-haired french gal turning coffee into spaghet.' })
+  useLink({ rel: 'shortcut icon', href: avatar })
+
   return (
-    <Router>
+    <Router url={props.url} onChange={(e) => setUrl(new URL(e.url, 'https://cynthia.dev').pathname)}>
       <Home path='/'/>
       {/* <ProjectList path='/projects'/> */}
       {/* <Resume path='/resume'/> */}

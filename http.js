@@ -25,4 +25,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-console.log('yess');
+const http = require('http')
+const render = require('preact-render-to-string')
+const { h } = require('preact')
+
+const manifest = require('./build/manifest.webpack.json')
+const integrity = require('./build/integrity.webpack.json')
+const Html = require('./build/html').default
+
+function handler (req, res) {
+  res.setHeader('content-type', 'text/html')
+  res.setHeader('x-powered-by', 'potatoes')
+  res.setHeader('x-frame-options', 'DENY')
+  res.setHeader('x-xss-protection', '1; mode=block')
+  res.setHeader('content-security-policy', "default-src 'self'; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;")
+
+  const html = render(h(Html, { manifest, integrity, url: req.url }))
+  res.end(html)
+}
+
+const server = http.createServer(handler)
+server.listen(42069)

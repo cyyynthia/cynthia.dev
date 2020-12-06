@@ -198,10 +198,10 @@ if (IS_DEV) {
 
   const nodeCfg = {
     ...baseConfig,
-    entry: './server.ts',
+    entry: './components/Html.tsx',
     target: 'node',
     output: {
-      filename: 'react.js',
+      filename: 'html.js',
       chunkFilename: '[name].chk.js',
       libraryTarget: 'commonjs2',
       path: join(__dirname, 'build'),
