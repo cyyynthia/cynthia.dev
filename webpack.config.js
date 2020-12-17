@@ -4,9 +4,9 @@ const { createHash } = require('crypto')
 
 const PreactRefresh = require('@prefresh/webpack')
 const MiniCSS = require('mini-css-extract-plugin')
-const Manifest = require('webpack-manifest-plugin')
 const CssMinimizer = require('css-minimizer-webpack-plugin')
 const FriendlyErrors = require('friendly-errors-webpack-plugin')
+const { WebpackManifestPlugin: Manifest } = require('webpack-manifest-plugin')
 const { DefinePlugin, HotModuleReplacementPlugin, optimize: { LimitChunkCountPlugin } } = require('webpack')
 
 // Env vars
