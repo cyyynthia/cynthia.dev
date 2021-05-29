@@ -62,7 +62,7 @@ function Home (_: RoutableProps) {
       <div className={style.content}>
         <Section title='About me'>
           <p>
-            Born and raised in Toulouse, France, I'm an 18 years old enthusiast spending her free time writing pieces
+            Born and raised in Toulouse, France, I'm a 19 years old enthusiast spending her free time writing pieces
             of software, always with a cup of coffee and my cookies nearby. {/* You can give a look to the projects I'm
             working on <a href='/projects'>here</a>. */}
           </p>
@@ -103,5 +103,6 @@ function Home (_: RoutableProps) {
   )
 }
 
+Section.displayName = 'Section'
 Home.displayName = 'Home'
 export default Home
