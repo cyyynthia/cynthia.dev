@@ -1,0 +1,75 @@
+.paws {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.paws::before, .paws::after {
+  position: absolute;
+  z-index: -1;
+
+  width: 72px;
+  height: 200%;
+
+  background-image: url('../assets/paw-steps.svg');
+  background-size: 100% auto;
+  background-repeat: repeat;
+}
+
+.paws::before {
+  top: -110%;
+  left: 0;
+
+  transform: translate3d(100px, 100px, 0) rotate(45deg);
+  animation: paw-steps-slide-top 10s linear infinite;
+}
+
+.paws::after {
+  content: '';
+  bottom: -110%;
+  right: 0;
+
+  transform: translate3d(-100px, -100px, 0) rotate(45deg);
+  animation: paw-steps-slide-bottom 10s linear infinite;
+}
+
+
+@media (min-width: 970px) {
+  .paws::before {
+    content: '';
+  }
+}
+
+@media (min-width: 1180px) {
+  .paws::before {
+    top: -100%;
+  }
+
+  .paws::after {
+    bottom: -100%;
+  }
+}
+
+@keyframes paw-steps-slide-top {
+  from {
+    transform: translate3d(100px, 100px, 0) rotate(45deg);
+  }
+
+  to {
+    transform: translate3d(202px, -2px, 0) rotate(45deg);
+  }
+}
+
+@keyframes paw-steps-slide-bottom {
+  from {
+    transform: translate3d(-100px, -100px, 0) rotate(45deg);
+  }
+
+  to {
+    transform: translate3d(2px, -202px, 0) rotate(45deg);
+  }
+}
