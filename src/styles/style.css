@@ -49,3 +49,12 @@
   font-size: 0.8em;
   text-align: center;
 }
+
+/* Ukraine specific styles */
+.header .underlined {
+  border-image: linear-gradient(90deg, #0057b7, #0057b7 50%,#ffd700 50%,#ffd700) 1;
+}
+
+.header::before {
+  background-image: url('../assets/paw-ua.svg');
+}
