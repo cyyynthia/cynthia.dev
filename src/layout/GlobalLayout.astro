@@ -1,0 +1,40 @@
+---
+import '../styles/global.css'
+import '../styles/paws.css'
+
+import Navbar from '../components/Navbar.astro'
+import Footer from '../components/Footer.astro'
+import Activity from '../components/Activity.astro'
+
+interface Props {
+  title: string
+  description?: string
+}
+
+const { title, description } = Astro.props
+---
+<html lang='en'>
+  <head>
+    <meta charset='utf8'/>
+    <meta name='theme-color' content='#f49898'/>
+    <meta name='viewport' content='width=device-width, initial-scale=1'/>
+    <link rel='shortcut icon' href='/favicon.ico'/>
+
+    <title>{title}</title>
+    <meta name='og:site_name' content='cynthia.dev'/>
+    <meta name='og:title' content={title}/>
+    <!-- todo: og:image -->
+    <meta name='description' content={description || 'meow meow meow meow meow meow'}/>
+    <meta name='og:description' content={description || 'meow meow meow meow meow meow'}/>
+  </head>
+  <body>
+    <div class='paws'/>
+    <div class='main-container' id='page-contents'>
+      <Navbar/>
+      <slot/>
+    </div>
+    <Footer/>
+    <Activity/>
+    <script src='../assets/spa.js'></script>
+  </body>
+</html>

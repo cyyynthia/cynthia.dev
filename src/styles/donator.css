@@ -1,0 +1,41 @@
+.donators {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.donator {
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  gap: 24px;
+  height: 72px;
+  background-color: #eee;
+  padding: 8px 16px;
+}
+
+.donator-pic {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+
+.donator-pic-default {
+  width: 40px;
+  height: 40px;
+}
+
+.donator-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.donator-name {
+  margin-bottom: 4px;
+}
+
+.donator-date {
+  opacity: 0.8;
+  font-size: 0.8em;
+}

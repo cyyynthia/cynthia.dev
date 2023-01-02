@@ -26,49 +26,42 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-.paws {
+.activity-widget {
   display: none;
   position: fixed;
+  bottom: 16px;
+  right: 16px;
+  text-align: right;
+  opacity: 1;
+  width: 230px;
+  transition: opacity .3s, right .3s;
+  user-select: none;
+}
+
+.activity-widget div {
+  white-space: nowrap;
+  text-overflow: ellipsis;
   overflow: hidden;
-  top: -115%;
-  left: 0;
-  z-index: 0;
-
-  width: 72px;
-  height: 200%;
-
-  background-image: url('../assets/paw-steps.svg');
-  background-size: 100% auto;
-  background-repeat: repeat;
-
-  transform: translate3d(100px, 100px, 0) rotate(45deg);
-  animation: paw-steps-slide 10s linear infinite;
+  line-height: 1.25em;
 }
 
-@media (min-width: 970px) {
-  .paws {
+.activity-widget h3 {
+  margin: 0;
+  font-weight: 400;
+  font-size: 0.85rem;
+}
+
+.activity-widget b {
+  font-weight: 400;
+}
+
+.activity-widget.hidden {
+  right: -16px;
+  opacity: 0;
+}
+
+@media (min-width: 1160px) {
+  .activity-widget {
     display: block;
-  }
-}
-
-@media (min-width: 1060px) {
-  .paws {
-    top: -110%;
-  }
-}
-
-@media (min-width: 1180px) {
-  .paws {
-    top: -100%;
-  }
-}
-
-@keyframes paw-steps-slide {
-  from {
-    transform: translate3d(100px, 100px, 0) rotate(45deg);
-  }
-
-  to {
-    transform: translate3d(202px, -2px, 0) rotate(45deg);
   }
 }

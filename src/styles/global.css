@@ -1,0 +1,158 @@
+@font-face {
+  font-family: 'Lexend';
+  font-style: normal;
+  font-display: swap;
+  src: url(../assets/fonts/lexend-regular.woff2) format('truetype');
+}
+
+@font-face {
+  font-family: 'Lexend';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(../assets/fonts/lexend-medium.woff2) format('truetype');
+}
+
+@font-face {
+  font-family: 'Lexend';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(../assets/fonts/lexend-bold.woff2) format('truetype');
+}
+
+:root {
+  --background-color: #fff;
+  --text-color: #000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #101010;
+    --text-color: #ddd;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+
+  font-family: 'Lexend', sans-serif;
+  text-rendering: optimizeLegibility;
+  text-transform: lowercase;
+
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+body.loading::before {
+  content: '';
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 24px;
+  height: 24px;
+  border: 3px solid #f49898;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+}
+
+a::before, a::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 1px;
+}
+
+a::before {
+  width: 100%;
+  background-color: currentColor;
+}
+
+a::after {
+  width: 0;
+  transition: width .3s;
+  background-color: #f49898;
+}
+
+a:hover::after {
+  width: 100%;
+}
+
+code {
+  font-size: 0.825rem;
+  font-family: monospace;
+  font-weight: 500;
+}
+
+ol, ul {
+  margin: 1em 0 0;
+}
+
+li:not(:last-child) {
+  margin-bottom: 0.25rem;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem 2rem;
+  margin: 0 auto;
+
+  position: relative;
+  z-index: 1;
+}
+
+.section {
+  margin-bottom: 2rem;
+}
+
+.section h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.underlined {
+  padding-bottom: .05em;
+  margin-bottom: .05em;
+  border-bottom: .10em solid #f49898;
+  width: fit-content;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+@media (min-width: 720px) {
+  .main-container {
+    width: 45%;
+    min-width: 720px;
+  }
+}

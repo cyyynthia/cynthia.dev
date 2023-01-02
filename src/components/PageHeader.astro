@@ -1,0 +1,10 @@
+---
+import '../styles/pageHeader.css'
+
+const now = new Date()
+const france = now.getDate() === 14 && now.getMonth() === 6
+---
+<header class:list={[ 'page-header', { france } ]}>
+  <h1 class='underlined'><slot/></h1>
+  {Astro.slots.has('subtitle') && <h2><slot name='subtitle'/></h2>}
+</header>

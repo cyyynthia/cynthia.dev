@@ -1,0 +1,44 @@
+.page-header {
+  margin-bottom: 2.5rem;
+  padding-left: 92px;
+  position: relative;
+  display: flex;
+  height: 5.5em;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.page-header .underlined {
+  border-color: #f49898;
+  border-width: 5px;
+}
+
+.page-header.france .underlined {
+  border-image: linear-gradient(90deg,#000091,#000091 33%,#ededed 33%,#ededed 67%,#e1000f 67%,#e1000f) 1 1;
+}
+
+.page-header::before {
+  content: '';
+  position: absolute;
+  width: 72px;
+  height: 100%;
+  top: 4px;
+  left: 4px;
+  transform: rotate(15deg);
+  background-image: url('../assets/paw.svg');
+  background-size: 72px 72px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-weight: 500;
+  font-size: 2.4rem;
+}
+
+.page-header h2 {
+  margin: 0;
+  font-weight: 400;
+  font-size: 1.6rem;
+}

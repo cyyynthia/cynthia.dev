@@ -1,0 +1,23 @@
+---
+import '../styles/footer.css'
+import quotes from './quotes.json'
+
+const date = new Date().toISOString().slice(5, 10)
+const quote = date in quotes.special
+  ? quotes.special[date as keyof typeof quotes.special]
+  : quotes.classic[Math.random() * quotes.classic.length | 0]
+---
+<footer class='footer'>
+  <div class='footer-links'>
+    <span>meow</span>
+    <div class='separator'/>
+    <span><a href='https://github.com/cyyynthia/cynthia.dev' target='_blank' rel='noreferrer'>sauce code</a></span>
+    <div class='separator'/>
+    <span><a href='https://ko-fi.com/cyyynthia' target='_blank' rel='noreferrer'>feed me</a></span>
+    <div class='separator'/>
+    <span>meow</span>
+  </div>
+  <div class='footer-comment'>
+    {quote}
+  </div>
+</footer>

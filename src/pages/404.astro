@@ -1,0 +1,15 @@
+---
+import GlobalLayout from '../layout/GlobalLayout.astro'
+import PageHeader from '../components/PageHeader.astro'
+---
+<GlobalLayout title="404 not found - cynthia's website">
+  <PageHeader>
+    Where are you?
+    <h2 slot='subtitle'>404 Not Found</h2>
+  </PageHeader>
+  <main>
+    <section class='section'>
+      There's nothing here. Not even a good 404 page. <a href='/'>Go back home</a>
+    </section>
+  </main>
+</GlobalLayout>

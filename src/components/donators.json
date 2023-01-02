@@ -1,0 +1,32 @@
+{
+  "//": [
+    "This is manual for now, yeah. I plan to automate it along with making a Discord bot manage roles for me in my server too",
+    "ORDER MATTERS! The more you give the more you're in front. Then, oldest-to-newest. Same for 'others'"
+  ],
+  "diamond": [],
+  "emerald": [],
+  "gold": [],
+  "silver": [],
+  "bronze": [
+    { "name": "fabbe50", "pic": "fabbe50", "date": "2022-10-04" }
+  ],
+  "others": [
+    { "name": "Mari", "pic": "mari", "date": "2021-12-24" },
+    { "name": "Anonymous #2", "pic": null, "date": "2021-05-27" },
+    { "name": "LeaPhant 🌈", "pic": "leaphant", "date": "2021-06-08" },
+    { "name": "Alex", "pic": null, "date": "2022-10-30" },
+    { "name": "Jan Cizmar", "pic": null, "date": "2022-03-12" },
+    { "name": "DeJay", "pic": null, "date": "2021-10-22" },
+    { "name": "Dracc#2017", "pic": null, "date": "2021-02-26" },
+    { "name": "Anonymous #1", "pic": null, "date": "2021-03-15" },
+    { "name": "Piotr Placzek", "pic": "piotr_placzek", "date": "2021-04-06" },
+    { "name": "dnglchlk#9343", "pic": null, "date": "2021-05-02" },
+    { "name": "dzshn", "pic": null, "date": "2021-07-13" },
+    { "name": "Tails", "pic": null, "date": "2021-07-20" },
+    { "name": "amanda", "pic": null, "date": "2021-07-31" },
+    { "name": "cpq", "pic": null, "date": "2021-09-23" },
+    { "name": "nopbreak", "pic": null, "date": "2022-02-02" },
+    { "name": "Aspect", "pic": null, "date": "2022-02-21" },
+    { "name": "intergrav", "pic": "intergrav", "date": "2022-12-05" }
+  ]
+}

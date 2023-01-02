@@ -1,0 +1,29 @@
+---
+import '../styles/donator.css'
+import bird from '../assets/bird.svg'
+
+interface Props {
+  name: string
+  pic: string | null
+  date: string
+}
+
+function formatDate (str: string) {
+  const date = new Date(str)
+  const d = date.getDate().toString().padStart(2, '0')
+  const m = (date.getMonth() + 1).toString().padStart(2, '0')
+  const y = date.getFullYear()
+  return `${d}/${m}/${y}`
+}
+
+const { name, pic, date } = Astro.props
+---
+<div class='donator'>
+  {pic
+    ? <img class='donator-pic' src={pic} alt={`${name}'s profile picture'`}/>
+    : <img class='donator-pic-default' src={bird} alt={`${name}'s profile picture'`}/>}
+  <div class='donator-info'>
+    <span class='donator-name'>{name}</span>
+    <span class='donator-date'>{formatDate(date)}</span>
+  </div>
+</div>

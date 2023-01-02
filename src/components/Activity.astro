@@ -1,0 +1,37 @@
+---
+import '../styles/activity.css'
+---
+<div id='activity' class='activity-widget hidden'>
+  <h3 id='activity-title'>I'm currently listening to</h3>
+  <div id='activity-name'></div>
+  <div id='activity-detail'></div>
+</div>
+
+<script>
+  type Activity = { playing: boolean, name: string, artist: string }
+
+  const widget = document.getElementById('activity')!
+  // const title = document.getElementById('activity-title')!
+  const name = document.getElementById('activity-name')!
+  const detail = document.getElementById('activity-detail')!
+
+  function onMessage (activity: Activity) {
+    if ('type' in activity) return // upcoming (breaking) changes to the api
+    if (!activity.playing) {
+      widget.classList.add('hidden')
+      return
+    }
+
+    widget.classList.remove('hidden')
+    name.innerText = name.title = activity.name
+    detail.innerText = detail.title = 'by ' + activity.artist
+  }
+
+  function connect () {
+    const ws = new WebSocket('wss://cynthia.rest/activity')
+    ws.addEventListener('message', (e) => onMessage(JSON.parse(e.data)))
+    ws.addEventListener('close', () => setTimeout(connect, 250))
+  }
+
+  connect()
+</script>

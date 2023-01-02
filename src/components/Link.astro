@@ -1,0 +1,18 @@
+---
+import { AstroBuiltinAttributes } from 'astro';
+
+interface Props {
+  href: string
+  class?: AstroBuiltinAttributes['class:list']
+  activeClass?: AstroBuiltinAttributes['class:list']
+  exact?: boolean
+}
+
+const { href, class: cls, activeClass, exact } = Astro.props
+const matches = exact
+  ? Astro.url.pathname === href
+  : Astro.url.pathname.startsWith(href)
+---
+<a href={href} class:list={[ cls, matches && activeClass ]}>
+  <slot/>
+</a>

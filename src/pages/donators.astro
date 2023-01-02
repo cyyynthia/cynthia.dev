@@ -1,0 +1,51 @@
+---
+import GlobalLayout from '../layout/GlobalLayout.astro'
+import PageHeader from '../components/PageHeader.astro'
+import Donator from '../components/Donator.astro'
+
+import donatorsList from '../components/donators.json'
+
+type Donator = typeof donatorsList['others'][number]
+
+async function processDonators (donator: Donator): Promise<Donator> {
+  return {
+    name: donator.name,
+    pic: donator.pic && await import(`../assets/donators/${donator.pic}.png`).then((m) => m.default),
+    date: donator.date,
+  }
+}
+
+const subscribers = await Promise.all(
+  [
+    ...donatorsList.diamond,
+    ...donatorsList.emerald,
+    ...donatorsList.gold,
+    ...donatorsList.silver,
+    ...donatorsList.bronze,
+  ].map(processDonators)
+)
+
+const donators = await Promise.all(donatorsList.others.map(processDonators))
+---
+<GlobalLayout title="donators - cynthia's website">
+  <PageHeader>
+    Donators hall of fame
+  </PageHeader>
+  <main>
+    <section class='section'>
+      Massive thanks to everyone who donated to me. It means a lot, no matter the amount!
+    </section>
+    <section class='section'>
+      <h3 class='underlined'>subscribers</h3>
+      <div class='donators'>
+        {subscribers.map(({ name, pic, date }) => <Donator name={name} pic={pic} date={date}/>)}
+      </div>
+    </section>
+    <section class='section'>
+      <h3 class='underlined'>one-time & past subscribers</h3>
+      <div class='donators'>
+        {donators.map(({ name, pic, date }) => <Donator name={name} pic={pic} date={date}/>)}
+      </div>
+    </section>
+  </main>
+</GlobalLayout>
