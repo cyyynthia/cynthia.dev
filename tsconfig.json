@@ -21,11 +21,7 @@
     "lib": [ "esnext", "dom" ],
     "target": "esnext",
     "module": "esnext",
-    "moduleResolution": "node",
-
-    "jsx": "preserve",
-    "jsxFactory": "h",
-    "jsxFragmentFactory": "Fragment"
+    "moduleResolution": "node"
   },
   "include": [ "./src/**/*", "astro.config.ts" ]
 }

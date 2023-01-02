@@ -35,25 +35,14 @@ import donatorsList from '../components/donators.json'
 
 type Donator = typeof donatorsList['others'][number]
 
-async function processDonators (donator: Donator): Promise<Donator> {
-  return {
-    name: donator.name,
-    pic: donator.pic && await import(`../assets/donators/${donator.pic}.png`).then((m) => m.default),
-    date: donator.date,
-  }
-}
-
-const subscribers = await Promise.all(
-  [
-    ...donatorsList.diamond,
-    ...donatorsList.emerald,
-    ...donatorsList.gold,
-    ...donatorsList.silver,
-    ...donatorsList.bronze,
-  ].map(processDonators)
-)
-
-const donators = await Promise.all(donatorsList.others.map(processDonators))
+const donators = donatorsList.others
+const subscribers = [
+  ...donatorsList.diamond,
+  ...donatorsList.emerald,
+  ...donatorsList.gold,
+  ...donatorsList.silver,
+  ...donatorsList.bronze,
+]
 ---
 <GlobalLayout title="donators - cynthia's website">
   <PageHeader>

@@ -33,7 +33,7 @@ type Page = {
   contents: HTMLElement
 }
 
-let cache = new Map<string, Page>()
+let cache: Record<string, Page> = {}
 
 let loadPage = (url: string): Promise<Page> => {
   return fetch(url)
@@ -62,12 +62,12 @@ let clickHandler = async (e: MouseEvent) => {
 
   e.preventDefault()
   history.pushState(null, document.title, e.target.href)
-  let page = cache.get(e.target.href)
+  let page = cache[e.target.href]
   if (!page) {
     document.body.classList.add('loading')
     let timeout = setTimeout(() => location.reload(), 10e3)
     page = await loadPage(e.target.href)
-    cache.set(e.target.href, page)
+    cache[e.target.href] = page
     clearTimeout(timeout)
     document.body.classList.remove('loading')
   }
@@ -82,5 +82,12 @@ let clickHandler = async (e: MouseEvent) => {
 }
 
 document.addEventListener('click', clickHandler)
+document.addEventListener('DOMContentLoaded', () => {
+  cache[location.href] = {
+    title: document.title,
+    meta: Array.from(document.querySelectorAll('meta')),
+    contents: document.getElementById('page-contents')!.cloneNode(true) as HTMLElement,
+  }
+})
 
 export {}
