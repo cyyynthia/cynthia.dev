@@ -27,11 +27,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import GlobalLayout from '../layout/GlobalLayout.astro'
+import GlobalLayout from '../layouts/GlobalLayout.astro'
 import PageHeader from '../components/PageHeader.astro'
 import Donator from '../components/Donator.astro'
 
-import donatorsList from '../components/donators.json'
+import donatorsList from '../data/donators.json'
 
 type Donator = typeof donatorsList['others'][number]
 
@@ -53,13 +53,13 @@ const subscribers = [
       Massive thanks to everyone who donated to me. It means a lot, no matter the amount!
     </section>
     <section class='section'>
-      <h3 class='underlined'>subscribers</h3>
+      <h2 class='underlined'>Subscribers</h2>
       <div class='donators'>
         {subscribers.map(({ name, pic, date }) => <Donator name={name} pic={pic} date={date}/>)}
       </div>
     </section>
     <section class='section'>
-      <h3 class='underlined'>one-time & past subscribers</h3>
+      <h2 class='underlined'>One-time & past subscribers</h2>
       <div class='donators'>
         {donators.map(({ name, pic, date }) => <Donator name={name} pic={pic} date={date}/>)}
       </div>

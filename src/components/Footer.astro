@@ -27,8 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import '../styles/footer.css'
-import quotes from './quotes.json'
+import quotes from '../data/quotes.json'
 
 const date = new Date().toISOString().slice(5, 10)
 const quote = date in quotes.special
@@ -49,3 +48,35 @@ const quote = date in quotes.special
     {quote}
   </div>
 </footer>
+
+<style>
+  .footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: auto;
+    padding: 32px 16px 16px;
+  }
+
+  .footer-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.9em;
+  }
+
+  .footer-comment {
+    font-size: 0.75em;
+  }
+
+  .footer .separator {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background-color: var(--text-color);
+    margin-top: 2px;
+  }
+</style>

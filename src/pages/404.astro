@@ -27,13 +27,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import GlobalLayout from '../layout/GlobalLayout.astro'
+import GlobalLayout from '../layouts/GlobalLayout.astro'
 import PageHeader from '../components/PageHeader.astro'
 ---
 <GlobalLayout title="404 not found - cynthia's website">
   <PageHeader>
     Where are you?
-    <h2 slot='subtitle'>404 Not Found</h2>
+    <Fragment slot='subtitle'>404 Not Found</Fragment>
   </PageHeader>
   <main>
     <section class='section'>

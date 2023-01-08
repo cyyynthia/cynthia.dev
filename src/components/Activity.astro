@@ -26,14 +26,54 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
-import '../styles/activity.css'
 ---
 <div id='activity' class='activity-widget hidden'>
   <h3 id='activity-title'>I'm currently listening to</h3>
   <div id='activity-name'></div>
   <div id='activity-detail'></div>
 </div>
+
+<style>
+  .activity-widget {
+    display: none;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    text-align: right;
+    opacity: 1;
+    width: 230px;
+    transition: opacity .3s, right .3s;
+    user-select: none;
+  }
+
+  .activity-widget div {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    line-height: 1.25em;
+  }
+
+  .activity-widget h3 {
+    margin: 0;
+    font-weight: 400;
+    font-size: 0.85rem;
+  }
+
+  .activity-widget b {
+    font-weight: 400;
+  }
+
+  .activity-widget.hidden {
+    right: -16px;
+    opacity: 0;
+  }
+
+  @media (min-width: 1160px) {
+    .activity-widget {
+      display: block;
+    }
+  }
+</style>
 
 <script>
   type Activity = { playing: boolean, name: string, artist: string }
@@ -44,7 +84,6 @@ import '../styles/activity.css'
   const detail = document.getElementById('activity-detail')!
 
   function onMessage (activity: Activity) {
-    if ('type' in activity) return // upcoming (breaking) changes to the api
     if (!activity.playing) {
       widget.classList.add('hidden')
       return

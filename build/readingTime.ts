@@ -1,4 +1,3 @@
----
 /*
  * Copyright (c) 2021-2023 Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
@@ -27,17 +26,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import GlobalLayout from '../../layout/GlobalLayout.astro'
-import PageHeader from '../../components/PageHeader.astro'
----
-<GlobalLayout title="cynthia's blog">
-  <PageHeader>
-    Cynthia's blog
-  </PageHeader>
-  <main>
-    <section class='section'>
-      I haven't got around writing posts yet. I'm not a big writer, and still unsure if I want to commit to writing
-      some (un)interesting blog posts here... Maybe!
-    </section>
-  </main>
-</GlobalLayout>
+import getReadingTime from 'reading-time'
+import { toString } from 'mdast-util-to-string'
+
+export default function () {
+  return (tree: any, { data }: any) => {
+    const text = toString(tree)
+    data.astro.frontmatter.readingTime = getReadingTime(text).text
+  }
+}

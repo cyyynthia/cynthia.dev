@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import GlobalLayout from '../layout/GlobalLayout.astro'
+import GlobalLayout from '../layouts/GlobalLayout.astro'
 import PageHeader from '../components/PageHeader.astro'
 
 const birthDate = new Date('2002-05-30')
@@ -64,7 +64,7 @@ const description = descriptions[Math.random() * descriptions.length | 0]
       Einstein's theory of relativity, and starting an infinite amount of side projects.
     </section>
     <section class='section'>
-      <h3 class='underlined'>My projects</h3>
+      <h2 class='underlined'>My projects</h2>
       <ul>
         <li>
           <a href='https://pronoundb.org' target='_blank' rel='noreferrer'>pronoundb.org</a>, a browser extension to
@@ -80,9 +80,9 @@ const description = descriptions[Math.random() * descriptions.length | 0]
       </ul>
     </section>
     <section class='section'>
-      <h3 class='underlined'>My work</h3>
+      <h2 class='underlined'>My work</h2>
       <p>
-        I'm currently a software engineer at <a href='https://tolgee.io' target='_blank' rel='noreferrer'>tolgee.io</a>,
+        I'm currently wrangling software at <a href='https://tolgee.io' target='_blank' rel='noreferrer'>tolgee.io</a>,
         an open-core localization platform you can selfhost if you're not into SaaS. I highly recommend checking it out
         if you're looking for an alternative to proprietary crowdin or bloated weblate. 🙌
       </p>

@@ -1,3 +1,4 @@
+---
 /*
  * Copyright (c) 2021-2023 Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
@@ -26,47 +27,42 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-.page-header {
-  margin-bottom: 2.5rem;
-  padding-left: 92px;
-  position: relative;
-  display: flex;
-  height: 5.5em;
-  flex-direction: column;
-  justify-content: center;
-}
+import GlobalLayout from '../layouts/GlobalLayout.astro'
+import PageHeader from '../components/PageHeader.astro'
+import BlogPost from '../components/BlogPost.astro'
 
-.page-header .underlined {
-  border-color: #f49898;
-  border-width: 5px;
-}
+const posts = await Astro.glob('./blog/*.mdx')
+  .then((posts) => posts.filter((p) => !p.frontmatter.draft))
+---
+<GlobalLayout title="cynthia's blog">
+  <PageHeader>
+    Cynthia's blog
+  </PageHeader>
+  <main>
+    <section class='section'>
+      {posts.length
+        ? <Fragment>I write stuff that may be midly interesting.</Fragment>
+        : <Fragment>I may eventually write stuff that may be midly interesting. For now, I hope you're hungry... for nothing! >:)</Fragment>}
+    </section>
+    <section class='blog-posts'>
+      {posts.map((post) => (
+        <BlogPost
+          url={post.url}
+          title={post.frontmatter.title}
+          description={post.frontmatter.description}
+          readingTime={post.frontmatter.readingTime}
+          date={post.frontmatter.date}
+        />
+      ))}
+    </section>
+  </main>
+</GlobalLayout>
 
-.page-header.france .underlined {
-  border-image: linear-gradient(90deg,#000091,#000091 33%,#ededed 33%,#ededed 67%,#e1000f 67%,#e1000f) 1 1;
-}
-
-.page-header::before {
-  content: '';
-  position: absolute;
-  width: 72px;
-  height: 100%;
-  top: 4px;
-  left: 4px;
-  transform: rotate(15deg);
-  background-image: url('../assets/paw.svg');
-  background-size: 72px 72px;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-.page-header h1 {
-  margin: 0;
-  font-weight: 500;
-  font-size: 2.4rem;
-}
-
-.page-header h2 {
-  margin: 0;
-  font-weight: 400;
-  font-size: 1.6rem;
-}
+<style>
+  .blog-posts {
+    display: grid;
+    column-gap: 3rem;
+    row-gap: 4rem;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr))
+  }
+</style>

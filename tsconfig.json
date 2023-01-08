@@ -1,27 +1,3 @@
 {
-  "compilerOptions": {
-    "strict": true,
-    "alwaysStrict": true,
-    "strictNullChecks": true,
-    "strictBindCallApply": true,
-    "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitAny": true,
-    "allowUnreachableCode": false,
-    "allowSyntheticDefaultImports": true,
-    "allowJs": false,
-
-    "lib": [ "esnext", "dom" ],
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node"
-  },
-  "include": [ "./src/**/*", "astro.config.ts" ]
+  "extends": "astro/tsconfigs/strictest"
 }
