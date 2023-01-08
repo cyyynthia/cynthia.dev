@@ -1,6 +1,6 @@
 ---
 /*
- * Copyright (c) 2021-2023 Cynthia Rey, All rights reserved.
+ * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,6 +29,7 @@
 
 import GlobalLayout from '../layouts/GlobalLayout.astro'
 import PageHeader from '../components/PageHeader.astro'
+import Section from '../components/Section.astro'
 ---
 <GlobalLayout title="404 not found - cynthia's website">
   <PageHeader>
@@ -36,8 +37,8 @@ import PageHeader from '../components/PageHeader.astro'
     <Fragment slot='subtitle'>404 Not Found</Fragment>
   </PageHeader>
   <main>
-    <section class='section'>
+    <Section>
       There's nothing here. Not even a good 404 page. <a href='/'>Go back home</a>
-    </section>
+    </Section>
   </main>
 </GlobalLayout>

@@ -1,6 +1,6 @@
 ---
 /*
- * Copyright (c) 2021-2023 Cynthia Rey, All rights reserved.
+ * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,6 +29,7 @@
 
 import GlobalLayout from '../layouts/GlobalLayout.astro'
 import PageHeader from '../components/PageHeader.astro'
+import Section from '../components/Section.astro'
 import Donator from '../components/Donator.astro'
 
 import donatorsList from '../data/donators.json'
@@ -49,20 +50,27 @@ const subscribers = [
     Donators hall of fame
   </PageHeader>
   <main>
-    <section class='section'>
+    <Section>
       Massive thanks to everyone who donated to me. It means a lot, no matter the amount!
-    </section>
-    <section class='section'>
-      <h2 class='underlined'>Subscribers</h2>
+    </Section>
+    <Section title='Subscribers'>
       <div class='donators'>
         {subscribers.map(({ name, pic, date }) => <Donator name={name} pic={pic} date={date}/>)}
       </div>
-    </section>
-    <section class='section'>
-      <h2 class='underlined'>One-time & past subscribers</h2>
+    </Section>
+    <Section title='One-time & past subscribers'>
       <div class='donators'>
         {donators.map(({ name, pic, date }) => <Donator name={name} pic={pic} date={date}/>)}
       </div>
-    </section>
+    </Section>
   </main>
 </GlobalLayout>
+
+<style>
+  .donators {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+</style>

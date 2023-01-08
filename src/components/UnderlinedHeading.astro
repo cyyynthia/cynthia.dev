@@ -1,5 +1,6 @@
+---
 /*
- * Copyright (c) 2021-2023 Cynthia Rey, All rights reserved.
+ * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,49 +27,22 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-.paws {
-  display: none;
-  position: fixed;
-  overflow: hidden;
-  top: -115%;
-  left: 0;
-  z-index: 0;
+import type { AstroBuiltinAttributes } from 'astro'
 
-  width: 72px;
-  height: 200%;
-
-  background-image: url('../assets/paw-steps.svg');
-  background-size: 100% auto;
-  background-repeat: repeat;
-
-  transform: translate3d(100px, 100px, 0) rotate(45deg);
-  animation: paw-steps-slide 10s linear infinite;
+export interface Props {
+  level: number
+  class?: AstroBuiltinAttributes['class:list']
 }
 
-@media (min-width: 970px) {
-  .paws {
-    display: block;
+const { level, class: className } = Astro.props
+const Heading = `h${level}`
+---
+<Heading class:list={[ 'underlined', className ]}><slot/></Heading>
+<style>
+  .underlined {
+    padding-bottom: .05em;
+    margin-bottom: .05em;
+    border-bottom: .10em solid #f49898;
+    width: fit-content;
   }
-}
-
-@media (min-width: 1060px) {
-  .paws {
-    top: -110%;
-  }
-}
-
-@media (min-width: 1180px) {
-  .paws {
-    top: -100%;
-  }
-}
-
-@keyframes paw-steps-slide {
-  from {
-    transform: translate3d(100px, 100px, 0) rotate(45deg);
-  }
-
-  to {
-    transform: translate3d(202px, -2px, 0) rotate(45deg);
-  }
-}
+</style>

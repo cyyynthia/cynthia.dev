@@ -1,5 +1,6 @@
+---
 /*
- * Copyright (c) 2021-2023 Cynthia Rey, All rights reserved.
+ * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
  * Redistribution and use in source and binary forms, with or without
@@ -26,50 +27,29 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-.donators {
-  margin-top: 16px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+import type { AstroBuiltinAttributes } from 'astro';
+import UnderlinedHeading from './UnderlinedHeading.astro'
+
+export interface Props {
+  title?: string
+  class?: AstroBuiltinAttributes['class:list']
 }
 
-.donator {
-  display: flex;
-  align-items: center;
-  border-radius: 8px;
-  gap: 24px;
-  height: 72px;
-  background-color: #eee;
-  padding: 8px 16px;
-}
+const { title, class: className } = Astro.props
+---
+<section class:list={className}>
+  {title && <UnderlinedHeading level={2} class='title'>{title}</UnderlinedHeading>}
+  <slot/>
+</section>
 
-.donator-pic {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-}
-
-.donator-pic-default {
-  width: 40px;
-  height: 40px;
-}
-
-.donator-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.donator-name {
-  margin-bottom: 4px;
-}
-
-.donator-date {
-  opacity: 0.8;
-  font-size: 0.8em;
-}
-
-@media (prefers-color-scheme: dark) {
-  .donator {
-    background-color: #202020;
+<style>
+  section {
+    margin-bottom: 2rem;
   }
-}
+
+  .title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 400;
+  }
+</style>

@@ -1,6 +1,6 @@
 ---
 /*
- * Copyright (c) 2021-2023 Cynthia Rey, All rights reserved.
+ * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,50 +27,47 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 ---
-<div id='activity' class='activity-widget hidden'>
-  <h3 id='activity-title'>I'm currently listening to</h3>
-  <div id='activity-name'></div>
-  <div id='activity-detail'></div>
+<div id='activity' class='activity hidden'>
+  <span id='activity-title'>I'm currently listening to</span>
+  <span id='activity-name'></span>
+  <span id='activity-detail'></span>
 </div>
 
 <style>
-  .activity-widget {
+  .activity {
     display: none;
-    position: fixed;
-    bottom: 16px;
-    right: 16px;
-    text-align: right;
-    opacity: 1;
-    width: 230px;
-    transition: opacity .3s, right .3s;
-    user-select: none;
-  }
-
-  .activity-widget div {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    line-height: 1.25em;
-  }
-
-  .activity-widget h3 {
-    margin: 0;
-    font-weight: 400;
-    font-size: 0.85rem;
-  }
-
-  .activity-widget b {
-    font-weight: 400;
-  }
-
-  .activity-widget.hidden {
-    right: -16px;
-    opacity: 0;
   }
 
   @media (min-width: 1160px) {
-    .activity-widget {
-      display: block;
+    .activity {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      text-align: right;
+      opacity: 1;
+      width: 230px;
+      transition: opacity .3s, right .3s;
+      user-select: none;
+    }
+
+    #activity-name, #activity-detail {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      line-height: 1.25em;
+    }
+
+    #activity-title {
+      margin: 0;
+      font-weight: 400;
+      font-size: 0.85rem;
+    }
+
+    .activity.hidden {
+      right: -16px;
+      opacity: 0;
     }
   }
 </style>

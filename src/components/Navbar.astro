@@ -1,6 +1,6 @@
 ---
 /*
- * Copyright (c) 2021-2023 Cynthia Rey, All rights reserved.
+ * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,7 +27,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import '../styles/navbar.css'
 import Link from '../components/Link.astro'
 ---
 <nav class='nav'>
@@ -37,3 +36,17 @@ import Link from '../components/Link.astro'
   <Link href='/contact' activeClass='active'>Contact</Link>
   <Link href='/donators' activeClass='active'>Donators</Link>
 </nav>
+
+<style>
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 0.25rem;
+    margin-bottom: 2rem;
+    gap: 6px 32px;
+  }
+
+  .nav .active::after {
+    width: 100%;
+  }
+</style>

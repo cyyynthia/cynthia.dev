@@ -1,5 +1,6 @@
+---
 /*
- * Copyright (c) 2021-2023 Cynthia Rey, All rights reserved.
+ * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,15 +26,53 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+---
+<div/>
+<style>
+  div {
+    display: none;
+    position: fixed;
+    overflow: hidden;
+    top: -115%;
+    left: 0;
+    z-index: 0;
 
-.nav {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 0.25rem;
-  margin-bottom: 2rem;
-  gap: 6px 32px;
-}
+    width: 72px;
+    height: 200%;
 
-.nav .active::after {
-  width: 100%;
-}
+    background-image: url('../assets/paw-steps.svg');
+    background-size: 100% auto;
+    background-repeat: repeat;
+
+    transform: translate3d(100px, 100px, 0) rotate(45deg);
+    animation: paw-steps-slide 10s linear infinite;
+  }
+
+  @media (min-width: 970px) {
+    div {
+      display: block;
+    }
+  }
+
+  @media (min-width: 1060px) {
+    div {
+      top: -110%;
+    }
+  }
+
+  @media (min-width: 1180px) {
+    div {
+      top: -100%;
+    }
+  }
+
+  @keyframes paw-steps-slide {
+    from {
+      transform: translate3d(100px, 100px, 0) rotate(45deg);
+    }
+
+    to {
+      transform: translate3d(202px, -2px, 0) rotate(45deg);
+    }
+  }
+</style>

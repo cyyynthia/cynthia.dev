@@ -1,6 +1,6 @@
 ---
 /*
- * Copyright (c) 2021-2023 Cynthia Rey, All rights reserved.
+ * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,6 +29,7 @@
 
 import GlobalLayout from '../layouts/GlobalLayout.astro'
 import PageHeader from '../components/PageHeader.astro'
+import Section from '../components/Section.astro'
 
 const birthDate = new Date('2002-05-30')
 const today = new Date()
@@ -58,13 +59,12 @@ const description = descriptions[Math.random() * descriptions.length | 0]
     <Fragment slot='subtitle'>Catgirl who {description}</Fragment>
   </PageHeader>
   <main>
-    <section class='section'>
+    <Section>
       Henlo, I'm a {age} years old software engineer from Toulouse, France, who spends more time procrastinating than typing in a code
       editor. While procrastinating, some of the things I do include playing games, eating cookies, challenging
       Einstein's theory of relativity, and starting an infinite amount of side projects.
-    </section>
-    <section class='section'>
-      <h2 class='underlined'>My projects</h2>
+    </Section>
+    <Section title='My projects'>
       <ul>
         <li>
           <a href='https://pronoundb.org' target='_blank' rel='noreferrer'>pronoundb.org</a>, a browser extension to
@@ -78,9 +78,8 @@ const description = descriptions[Math.random() * descriptions.length | 0]
           ...and way too much unfinished projects &amp; "side" projects
         </li>
       </ul>
-    </section>
-    <section class='section'>
-      <h2 class='underlined'>My work</h2>
+    </Section>
+    <Section title='My work'>
       <p>
         I'm currently wrangling software at <a href='https://tolgee.io' target='_blank' rel='noreferrer'>tolgee.io</a>,
         an open-core localization platform you can selfhost if you're not into SaaS. I highly recommend checking it out
@@ -103,6 +102,6 @@ const description = descriptions[Math.random() * descriptions.length | 0]
           ...and some contributions to <a href='https://github.com/tolgee/tolgee-platform' target='_blank' rel='noreferrer'>Tolgee itself</a>.
         </li>
       </ul>
-    </section>
+    </Section>
   </main>
 </GlobalLayout>

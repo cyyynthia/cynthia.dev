@@ -1,6 +1,6 @@
 ---
 /*
- * Copyright (c) 2021-2023 Cynthia Rey, All rights reserved.
+ * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
  * Redistribution and use in source and binary forms, with or without
@@ -56,9 +56,9 @@ const { title, description, date, readingTime } = Astro.props.frontmatter
         </div>
       </div>
     </PageHeader>
-    <div class='blog-contents'>
+    <main class='blog-contents'>
       <slot/>
-    </div>
+    </main>
     <hr/>
     <div class='blog-license'>
       Written with love by Cynthia. Contents of this blog are licensed under a <a href='https://creativecommons.org/licenses/by-sa/4.0/' target='_blank' rel='noreferrer'>Creative Commons Attribution-ShareAlike 4.0 International License</a>,
@@ -117,14 +117,6 @@ const { title, description, date, readingTime } = Astro.props.frontmatter
 
   .blog-license {
     font-size: 0.85em;
-  }
-
-  .blog-license a {
-    text-decoration: underline;
-  }
-
-  .blog-license a::before, .blog-license a::after {
-    display: none;
   }
 
   @media (prefers-color-scheme: dark) {

@@ -1,6 +1,6 @@
 ---
 /*
- * Copyright (c) 2021-2023 Cynthia Rey, All rights reserved.
+ * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,16 +29,16 @@
 
 import GlobalLayout from '../layouts/GlobalLayout.astro'
 import PageHeader from '../components/PageHeader.astro'
+import Section from '../components/Section.astro'
 ---
 <GlobalLayout title="contact me - cynthia's website">
   <PageHeader>Contact me</PageHeader>
   <main>
-    <section class='section'>
+    <Section>
       Want to contact me? You can either reach me on one of my <a href='/socials'>socials</a>, or shoot me an email
       if you're more into old-school tech.
-    </section>
-    <section class='section'>
-      <h2 class='underlined'>Email</h2>
+    </Section>
+    <Section title='Email'>
       <p>
         Emails in 2022?? Yeah. I read these, and I even reply to them! Except if you're sending me weird stuff or spam.
       </p>
@@ -51,17 +51,22 @@ import PageHeader from '../components/PageHeader.astro'
           professional inquiries
         </li>
       </ul>
-    </section>
-    <section class='section'>
-      <h2 class='underlined'>PGP</h2>
+    </Section>
+    <Section title='PGP'>
       <p>
         You can use PGP to encrypt your emails if you want. Make sure your public key is available somewhere, or I'll
         have to reply in boring plaintext...
       </p>
       <ul>
         <li>key: <a href='/pgp.txt' target='_blank'>https://cynthia.dev/pgp.txt</a></li>
-        <li>fingerprint: <code class='uppercase'>FDDF 5DD9 34DC 5814 6C8B 3E8B CB56 1F74 DCEA E23B</code></li>
+        <li>fingerprint: <code>FDDF 5DD9 34DC 5814 6C8B 3E8B CB56 1F74 DCEA E23B</code></li>
       </ul>
-    </section>
+    </Section>
   </main>
 </GlobalLayout>
+
+<style>
+  code {
+    text-transform: uppercase;
+  }
+</style>
