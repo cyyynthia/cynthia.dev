@@ -48,6 +48,18 @@ let loadPage = (url: string): Promise<Page> => {
         }
       })
 
+      if (import.meta.env.DEV) {
+        // This is not required in production, let's avoid shipping it.
+        dummy.querySelectorAll<HTMLScriptElement>('script[src]').forEach((js) => {
+          if (!document.head.querySelector(`script[src=${JSON.stringify(js.src)}]`)) {
+            const script = document.createElement('script')
+            script.type = 'module'
+            script.src = js.src
+            document.head.appendChild(script)
+          }
+        })
+      }
+
       return {
         title: dummy.querySelector('title')!.innerText,
         meta: Array.from(dummy.querySelectorAll('meta')),
@@ -56,18 +68,13 @@ let loadPage = (url: string): Promise<Page> => {
     })
 }
 
-let clickHandler = async (e: MouseEvent) => {
-  if (!(e.target instanceof HTMLAnchorElement)) return
-  if (e.target.host !== location.host) return
-
-  e.preventDefault()
-  history.pushState(null, document.title, e.target.href)
-  let page = cache[e.target.href]
+let handleNavigation = async (href: string) => {
+  let page = cache[href]
   if (!page) {
     document.body.classList.add('loading')
     let timeout = setTimeout(() => location.reload(), 10e3)
-    page = await loadPage(e.target.href)
-    cache[e.target.href] = page
+    page = await loadPage(href)
+    cache[href] = page
     clearTimeout(timeout)
     document.body.classList.remove('loading')
   }
@@ -81,6 +88,19 @@ let clickHandler = async (e: MouseEvent) => {
   document.scrollingElement!.scrollTop = 0
 }
 
+let clickHandler = (e: MouseEvent) => {
+  if (!(e.target instanceof HTMLAnchorElement)) return
+  if (e.target.host !== location.host) return
+
+  e.preventDefault()
+  history.pushState(null, document.title, e.target.href)
+  handleNavigation(e.target.href)
+}
+
+let handleStateChange = () => handleNavigation(location.href)
+
+window.addEventListener('popstate', handleStateChange)
+window.addEventListener('pushstate', handleStateChange)
 document.addEventListener('click', clickHandler)
 document.addEventListener('DOMContentLoaded', () => {
   cache[location.href] = {
