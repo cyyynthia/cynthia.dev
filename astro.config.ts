@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config'
 import node from '@astrojs/node'
 import mdx from '@astrojs/mdx'
+import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
 import rehypeExternalLinks from 'rehype-external-links'
 
 import image from './build/image.js'
@@ -16,7 +17,8 @@ export default defineConfig({
     syntaxHighlight: 'shiki',
     extendDefaultPlugins: true,
     remarkPlugins: [ readingTime ],
-    rehypePlugins: [ [ rehypeExternalLinks, { target: '_blank', rel: 'noreferrer' } ] ],
+    // types...
+    rehypePlugins: [ rehypeAccessibleEmojis as any, [ rehypeExternalLinks, { target: '_blank', rel: 'noreferrer' } ] ],
     shikiConfig: {
       theme: darkFeminineItalic as any, // it works despite not being the right type :shrug:
     },
