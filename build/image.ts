@@ -78,7 +78,7 @@ function imgPlugin (): Exclude<AstroConfig['vite']['plugins'], undefined>[number
       return `export default "/@dev/images/${path}"`
     },
     configureServer (server) {
-      server.middlewares.use(async (req, res, next) => {
+      server.middlewares.use((req, res, next) => {
         if (req.url?.startsWith('/@dev/images/')) {
           const [, path] = req.url.split('/@dev/images/')
           const file = new URL(path!, config.srcDir)
@@ -90,7 +90,7 @@ function imgPlugin (): Exclude<AstroConfig['vite']['plugins'], undefined>[number
     },
     renderChunk (code) {
       for (const match of code.matchAll(HANDLE_RE)) {
-        code = code.replace(match[0], JSON.stringify(this.getFileName(match[1]!)))
+        code = code.replace(match[0], JSON.stringify(`/${this.getFileName(match[1]!)}`))
       }
 
       return {

@@ -71,7 +71,7 @@ const { title, description } = Astro.props
     font-family: 'Lexend';
     font-style: normal;
     font-display: swap;
-    src: url(../assets/fonts/lexend-regular.woff2) format('truetype');
+    src: url(../assets/fonts/lexend-regular.woff2) format('woff2');
   }
 
   @font-face {
@@ -79,7 +79,7 @@ const { title, description } = Astro.props
     font-style: normal;
     font-weight: 500;
     font-display: swap;
-    src: url(../assets/fonts/lexend-medium.woff2) format('truetype');
+    src: url(../assets/fonts/lexend-medium.woff2) format('woff2');
   }
 
   @font-face {
@@ -87,7 +87,14 @@ const { title, description } = Astro.props
     font-style: normal;
     font-weight: 700;
     font-display: swap;
-    src: url(../assets/fonts/lexend-bold.woff2) format('truetype');
+    src: url(../assets/fonts/lexend-bold.woff2) format('woff2');
+  }
+
+  @font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-display: swap;
+    src: url(../assets/fonts/jetbrains-mono-regular.woff2) format('woff2');
   }
 
   /** DOCUMENT */
