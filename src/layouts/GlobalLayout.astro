@@ -32,12 +32,17 @@ import Navbar from '../components/Navbar.astro'
 import Footer from '../components/Footer.astro'
 import Activity from '../components/Activity.astro'
 
+import socialImage from '../assets/social-image.png'
+
 interface Props {
   title: string
   description?: string
 }
 
-const { title, description } = Astro.props
+const { title, description: d } = Astro.props
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site)
+const socialImageUrl = new URL(socialImage, Astro.site)
+const description = d || 'meow meow meow meow meow meow'
 ---
 <html lang='en'>
   <head>
@@ -47,11 +52,21 @@ const { title, description } = Astro.props
     <link rel='shortcut icon' href='/favicon.ico'/>
 
     <title>{title}</title>
-    <meta name='og:site_name' content='cynthia.dev'/>
-    <meta name='og:title' content={title}/>
-    <!-- todo: og:image -->
-    <meta name='description' content={description || 'meow meow meow meow meow meow'}/>
-    <meta name='og:description' content={description || 'meow meow meow meow meow meow'}/>
+    <meta name='description' content={description}/>
+    <link rel='canonical' href={canonicalUrl}/>
+
+    <meta property='og:site_name' content='cynthia.dev'/>
+    <meta property='og:type' property='og:type' content='website'>
+    <meta property='og:url' content={canonicalUrl}/>
+    <meta property='og:title' content={title}/>
+    <meta property='og:description' content={description}/>
+    <meta property='og:image' content={socialImageUrl}/>
+
+    <meta name='twitter:card' content='summary'/>
+    <meta name='twitter:site' content='@cyyynthia_'/>
+    <meta name='twitter:title' content={title}/>
+    <meta name='twitter:description' content={description}/>
+    <meta name='twitter:image' content={socialImageUrl}/>
   </head>
   <body>
     <Paws/>
