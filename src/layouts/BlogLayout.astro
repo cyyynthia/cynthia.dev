@@ -74,7 +74,8 @@ const { title, description, date, readingTime } = Astro.props.frontmatter
 
   .blog-info {
     display: flex;
-    gap: 32px;
+    flex-direction: column;
+    gap: 4px;
   }
 
   .blog-info-item {
@@ -164,6 +165,13 @@ const { title, description, date, readingTime } = Astro.props.frontmatter
 
     .blog-contents :global(blockquote) {
       border-color: #444;
+    }
+  }
+
+  @media (min-width: 610px) {
+    .blog-info {
+      flex-direction: row;
+      gap: 32px;
     }
   }
 </style>

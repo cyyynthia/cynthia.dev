@@ -7,12 +7,12 @@
 
 layout: ../../layouts/BlogLayout.astro
 title: The state of SVGs on the Web
-description: SVG (Scalable Vector Graphics) is a widely used image format on the Web. However, due to its nature, it tends to be heavily misused and some popular tools encourage such misues. Let's sit back and look at what's wrong, and what we can do to fix it.
+description: SVG (Scalable Vector Graphics) is a widely used image format on the Web. However, due to its nature, it tends to be heavily misused and some popular tools encourage such misue. Let's sit back and look at what's wrong, and what we can do to fix it.
 date: 2023-01-10
 ---
 
 SVG (Scalable Vector Graphics) is a widely used image format on the Web. However, due to its nature, it tends to be
-heavily misused and some popular tools encourage such misues. Let's sit back and look at what's wrong, and what we
+heavily misused and some popular tools encourage such misue. Let's sit back and look at what's wrong, and what we
 can do to fix it.
 
 ## The embedding problem
@@ -26,12 +26,11 @@ early 2021, which acted as a real eye opener.
 >
 > -- <cite>Jason Miller (@_developit)</cite>
 
-The elephant in the room here is the amount of dead code served, due to the lack of icons filtering in the case Jason
-describes. But the story doesn't end there, and in fact is only the tip of the iceberg.
+The elephant in the room here is the amount of dead code served, due to the lack of icon filtering in the case Jason
+describes. But the story doesn't end there, and in fact, is only the tip of the iceberg.
 
 I used to do the same thing, and import SVG components as JSX. But after reading this tweet, as I try to take extra
-care making my software decently efficient, I digged this rabbit hole further, and the findings were very...
-disappointing.
+care making my software decently efficient, I dug this rabbit hole further, and the findings were very... disappointing.
 
 ### A costly practice
 When rendering a plain HTML document with embedded SVGs in them, the SVG is pretty much only download cost. Browser
@@ -44,7 +43,7 @@ such as **First Contentful Paint** for fully client-side rendered apps (when con
 #### JavaScript parsing cost
 Parsing JavaScript is surprisingly costly. So costly in fact, that for large data objects it is faster to serialize
 them as string and use `JSON.parse` at runtime. It was found to be 1.7× faster in **all** JavaScript engines!
-(source: [V8 blog post](https://v8.dev/blog/cost-of-javascript-2019#json)).
+(source: [V8 blog post](https://v8.dev/blog/cost-of-javascript-2019#json)).
 
 The story is similar for the DOM: the browser can parse this much faster (and it'd already be in the format it needs,
 more on that later).
@@ -67,7 +66,7 @@ being like.
 
 #### Duplicate symbols
 In many cases, some SVGs are rendered many times throughout an app. This may look innocent, but this actually
-demultiplies the issue! Instead of using a single shared symbols (more on them later), this effectively creates
+worsens the issue! Instead of using a single shared symbol (more on them later), this effectively creates
 a brand new SVG element every time, instead of efficiently cloning an already-parsed element.
 
 This also adds a lot of weight on your pages when served pre-rendered over HTTP: imagine if for every `createElement`
@@ -88,13 +87,13 @@ we discussed earlier. But if your app uses SSR pre-rendering (or even is fully S
 every time a page is rendered. You're also likely to serve duplicate symbols and waste bandwidth.
 
 Admittedly, the performance penalty here isn't nearly as huge as on the client (e.g. only a single cold-start), but
-it still is additonal overhead you're dealing with for every single request, which adds up.
+it still is additional overhead you're dealing with for every single request, which adds up.
 
-Yes, efficiency does matter. I may in the future write in more details about why making efficient software isn't just
+Yes, efficiency does matter. I may in the future write in more detail about why making efficient software isn't just
 about serving requests faster, but also an important player in *greener and more responsible programming*.
 
 ### An approach promoted by popular tools
-At this point, you may wonder why such a harmful practice is so popular. Well, multiple factors at at play here. First,
+At this point, you may wonder why such a harmful practice is so popular. Well, multiple factors are at play here. First,
 this issue is quite poorly documented and there is very little knowledge about it. This is a common problem when looking
 for information about high-performance web development, where there seem to be very limited amount of resources on
 lower level concerns such as JS parsing and execution cost vs. browser parsing cost.
@@ -104,14 +103,14 @@ performance-critical knowledge, and that's totally fine. People want to get job 
 nitpicking on small details. In many cases, we expect library and tool developers to carry this knowledge and make
 their software take into account such concerns.
 
-This is a huge thing you see in cybersecurity related workloads: any expert will **strongly** advise against rolling
+This is a huge thing you see in cybersecurity-related workloads: any expert will **strongly** advise against rolling
 your own cryptographic code, because getting it right is an extremely complex task you probably cannot ever achieve
-alone. Even highly qualified teams stuggle to get it right!
+alone. Even highly qualified teams struggle to get it right!
 
 One big player in the SVG ecosystem is SVGR. It's a library that allows you to simply import your SVGs and use them as
 React components. Great, right?! You can use `currentColor`, and easily use components with little to no effort, how
 cool is that?!! Turns out, very uncool. SVGR converts SVGs into complete React components, precisely what I've been
-describing as harmful in this blog post. With 9.3k stars on GitHub and 21 millions downloads a month on NPM at the
+describing as harmful in this blog post. With 9.3k stars on GitHub and 21 million downloads a month on NPM at the
 time of writing, it is a *big* player and a lot of teams are using it, spreading the embedding problem like wildfire.
 
 ## A simple solution
@@ -132,7 +131,7 @@ Yep. Thankfully! However, adoption of these other tools is quite small, and I've
 and in fact, with SVG tooling in general. I do believe SVGs are under-exploited and the current ecosystem doesn't
 do a great job at allowing SVGs to shine to their full brightness.
 
-Note that I'm rating the out-of-the-box experiences I had here. The some lacking features concern features that are
+Note that I'm rating the out-of-the-box experiences I had here. The lacking features concern features that are
 part of the SVG standard and that I expect to see supported by tooling as such, and not something that should be the
 job of a plugin of some sort.
 
@@ -150,7 +149,7 @@ For referenced bitmaps, this is an issue that cannot be solved. (No, `data:image
 #### Lack of icons filtering
 Some tooling doesn't allow you to selectively filter icons as you use them, and just bundle **all** icons. This is
 very common with manual, CLI-based tools which don't run as part of the bundling process. It is an understandable
-limitation, but I'd rather not import the 2.4k+ icons from simple-icons just beause I use 1 logo... :D
+limitation, but I'd rather not import the 2.4k+ icons from simple-icons just because I use 1 logo... :D
 
 Jason's tweet is an example of what this can lead to. Half of your build, effectively dead code.
 
@@ -182,14 +181,14 @@ inner SVG references processing. It also included SVGO processing.
 
 But it wasn't perfect. Actually, very far from it. The code itself is quite ugly internally, introduced some
 non-standard behavior with how it processed the SVGs, and had little to no customization possible. You couldn't tweak
-the SVGO config, you couldn't easily use custom code generator, etc...
+the SVGO config, you couldn't easily use a custom code generator, etc...
 
 ### Starting from scratch
-As you can tell, I wasn't satisified enough with that solution. I also recently started using [Astro](https://astro.build)
+As you can tell, I wasn't satisfied enough with that solution. I also recently started using [Astro](https://astro.build)
 for some of my projects (like this very website!), and wish to bring my tooling to Astro as well. Rather than coping
 with my poor design choices from almost 2 years ago, I decided to start fresh.
 
-I've called this new project SVGSoup. For not specifc reason other than it came up in my brain and I found it had a
+I've called this new project SVGSoup. For no specific reason other than it came up in my brain and I found it had a
 nice balance of being silly and cute. It's not ready yet, and I'm still working on it. But it's pretty much the
 successor to vite-plugin-magical-svg, and I hope to make it in a better way this time!
 
@@ -199,5 +198,5 @@ doesn't get pointed out enough, and the tooling we have today is a bit underwhel
 try to reinvent the wheel (*cough cough* vercel), I want to contribute to solving actual problems. And I do!
 
 I love toying with bundlers, and try to bring my own solutions to problems that haven't been solved in a way that I
-find satisfiable. I don't have much hope for a swift shift, but I hope we can focus on making sure future websites can
+find good enough. I don't have much hope for a swift shift, but I hope we can focus on making sure future websites can
 benefit from the lessons we're learning today.
