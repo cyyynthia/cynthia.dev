@@ -1,33 +1,33 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@astrojs/mdx': ^0.15.1
+  '@astrojs/mdx': ^0.15.2
   '@astrojs/node': ^5.0.1
   '@types/node': ^18.11.18
   '@types/sharp': ^0.31.1
-  astro: ^2.0.2
+  astro: ^2.0.4
   feather-icons: ^4.29.0
   mdast-util-to-string: ^3.1.1
   reading-time: ^1.5.0
   rehype-accessible-emojis: ^0.3.2
   rehype-external-links: ^2.0.1
   sharp: ^0.31.3
-  typescript: ^4.9.4
+  typescript: ^4.9.5
   unist-util-visit: ^4.1.2
 
 devDependencies:
-  '@astrojs/mdx': 0.15.1_astro@2.0.2
-  '@astrojs/node': 5.0.1_astro@2.0.2
+  '@astrojs/mdx': 0.15.2_astro@2.0.4
+  '@astrojs/node': 5.0.1_astro@2.0.4
   '@types/node': 18.11.18
   '@types/sharp': 0.31.1
-  astro: 2.0.2_@types+node@18.11.18
+  astro: 2.0.4_@types+node@18.11.18
   feather-icons: 4.29.0
   mdast-util-to-string: 3.1.1
   reading-time: 1.5.0
   rehype-accessible-emojis: 0.3.2
   rehype-external-links: 2.0.1
   sharp: 0.31.3
-  typescript: 4.9.4
+  typescript: 4.9.5
   unist-util-visit: 4.1.2
 
 packages:
@@ -66,13 +66,13 @@ packages:
       vscode-uri: 3.0.7
     dev: true
 
-  /@astrojs/markdown-remark/2.0.1_astro@2.0.2:
+  /@astrojs/markdown-remark/2.0.1_astro@2.0.4:
     resolution: {integrity: sha512-xQF1rXGJN18m+zZucwRRtmNehuhPMMhZhi6HWKrtpEAKnHSPk8lqf1GXgKH7/Sypglu8ivdECZ+EGs6kOYVasQ==}
     peerDependencies:
       astro: ^2.0.2
     dependencies:
       '@astrojs/prism': 2.0.0
-      astro: 2.0.2_@types+node@18.11.18
+      astro: 2.0.4_@types+node@18.11.18
       github-slugger: 1.5.0
       import-meta-resolve: 2.2.1
       rehype-raw: 6.1.1
@@ -89,11 +89,11 @@ packages:
       - supports-color
     dev: true
 
-  /@astrojs/mdx/0.15.1_astro@2.0.2:
-    resolution: {integrity: sha512-RzrJ2vq+XnAtqvhRdIeONYBINFEWetXnfAqiB2V4s/FB/jd+8y9fSOtBtGpWCGpRZfidtMYPIiQ/damz0yJxVA==}
+  /@astrojs/mdx/0.15.2_astro@2.0.4:
+    resolution: {integrity: sha512-vrv1fw5kLZqaV0FHr6IKR46Rq5DENHhqUVZIXpAbvpRG/qXxHpg9QVN9ji+3bgLDKvG2Yz4wi8CYvSjmUtJHBQ==}
     engines: {node: '>=16.12.0'}
     dependencies:
-      '@astrojs/markdown-remark': 2.0.1_astro@2.0.2
+      '@astrojs/markdown-remark': 2.0.1_astro@2.0.4
       '@astrojs/prism': 2.0.0
       '@mdx-js/mdx': 2.2.1
       '@mdx-js/rollup': 2.2.1
@@ -116,13 +116,13 @@ packages:
       - supports-color
     dev: true
 
-  /@astrojs/node/5.0.1_astro@2.0.2:
+  /@astrojs/node/5.0.1_astro@2.0.4:
     resolution: {integrity: sha512-PCOIs25LtZ/FXTz+URINiShSRN2zkDmR6W2N02JMGm7LPVMdaUoX63oVJzQ862Ow7e1aWNgSImmlNsxKsRnEuQ==}
     peerDependencies:
       astro: ^2.0.2
     dependencies:
       '@astrojs/webapi': 2.0.0
-      astro: 2.0.2_@types+node@18.11.18
+      astro: 2.0.4_@types+node@18.11.18
       send: 0.18.0
     transitivePeerDependencies:
       - supports-color
@@ -912,14 +912,14 @@ packages:
     hasBin: true
     dev: true
 
-  /astro/2.0.2_@types+node@18.11.18:
-    resolution: {integrity: sha512-47N1jLWNxSri7kWfIfgcEnQJZWTvd0gXhNC3P2ZHiiurl4nOxFC5ULsW5MDDTjTzQ1S7y1RoaL9XxYm+Rury7w==}
+  /astro/2.0.4_@types+node@18.11.18:
+    resolution: {integrity: sha512-VSxFONW4hazODUIzjpoPdSZ4eRMz86pQn375277GhJDDRq/kfA5tSfvDFtySlAeEWrsE9W8tC2Jj3HuYcRYRig==}
     engines: {node: '>=16.12.0', npm: '>=6.14.0'}
     hasBin: true
     dependencies:
       '@astrojs/compiler': 1.0.1
       '@astrojs/language-server': 0.28.3
-      '@astrojs/markdown-remark': 2.0.1_astro@2.0.2
+      '@astrojs/markdown-remark': 2.0.1_astro@2.0.4
       '@astrojs/telemetry': 2.0.0
       '@astrojs/webapi': 2.0.0
       '@babel/core': 7.20.12
@@ -962,7 +962,7 @@ packages:
       strip-ansi: 7.0.1
       supports-esm: 1.0.0
       tsconfig-resolver: 3.0.1
-      typescript: 4.9.4
+      typescript: 4.9.5
       unist-util-visit: 4.1.2
       vfile: 5.3.6
       vite: 4.0.4_@types+node@18.11.18
@@ -3495,8 +3495,8 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  /typescript/4.9.4:
-    resolution: {integrity: sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==}
+  /typescript/4.9.5:
+    resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true

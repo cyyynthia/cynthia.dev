@@ -37,7 +37,7 @@ export interface Props {
   title: string
   description: string
   readingTime: string
-  date: string
+  date: Date
 }
 
 const dateFormatter = new Intl.DateTimeFormat('en-GB', {
@@ -56,7 +56,7 @@ const { url, title, description, readingTime, date } = Astro.props
   <div class='metadata'>
     <div class='metadata-item'>
       <img src={calendar} alt='Calendar icon'/>
-      <time datetime={date.slice(0, 10)}>{dateFormatter.format(new Date(date))}</time>
+      <time datetime={date.toISOString().slice(0, 10)}>{dateFormatter.format(date)}</time>
     </div>
     <div class='metadata-item'>
       <img src={clock} alt='Calendar icon'/>
@@ -101,8 +101,8 @@ const { url, title, description, readingTime, date } = Astro.props
     height: 1.2em;
   }
 
-  a::before, a::after {
-    content: none;
+  a {
+    background: none;
   }
 
   @media (prefers-color-scheme: dark) {

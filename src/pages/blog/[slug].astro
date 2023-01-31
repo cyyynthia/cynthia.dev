@@ -1,0 +1,188 @@
+---
+/*
+ * Copyright (c) Cynthia Rey, All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the copyright holder nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software without
+ *    specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+
+import { getEntryBySlug, getCollection } from 'astro:content'
+
+import Layout from '../../layouts/GlobalLayout.astro'
+import PageHeader from '../../components/PageHeader.astro'
+
+import calendar from 'feather-icons/dist/icons/calendar.svg'
+import clock from 'feather-icons/dist/icons/clock.svg'
+
+export async function getStaticPaths() {
+  // I *want* to pregen it but muh quirky footer ;w;
+  const blogEntries = await getCollection('blog')
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry: entry },
+  }))
+}
+
+const dateFormatter = new Intl.DateTimeFormat('en-GB', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+})
+
+// const { entry } = Astro.props
+const { slug } = Astro.params
+const entry = await getEntryBySlug('blog', slug!)
+if (!entry) {
+  return new Response(null, { status: 404, statusText: 'Not found' })
+}
+
+const { Content, remarkPluginFrontmatter } = await entry.render()
+---
+<Layout title={`${entry.data.title} - cynthia's blog`} description={entry.data.description}>
+  <div class='blog-wrapper'>
+    <PageHeader>
+      <Fragment>{entry.data.title}</Fragment>
+      <div class='blog-info' slot='subtitle'>
+        <div class='blog-info-item'>
+          <img src={calendar} alt='Calendar icon'/>
+          <time datetime={entry.data.date.toISOString().slice(0, 10)}>{dateFormatter.format(entry.data.date)}</time>
+        </div>
+        <div class='blog-info-item'>
+          <img src={clock} alt='Calendar icon'/>
+          <span>{remarkPluginFrontmatter.readingTime}</span>
+        </div>
+      </div>
+    </PageHeader>
+    <main class='blog-contents'>
+      <Content/>
+    </main>
+    <hr/>
+    <div class='blog-license'>
+      Written with love by Cynthia. Contents of this blog are licensed under a <a href='https://creativecommons.org/licenses/by-sa/4.0/' target='_blank' rel='noreferrer'>Creative Commons Attribution-ShareAlike 4.0 International License</a>,
+      unless stated otherwise. A link to the original blog post suffice as attribution.
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .blog-wrapper {
+    text-transform: initial;
+  }
+
+  .blog-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .blog-info-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .blog-contents {
+    text-align: justify;
+  }
+
+  .blog-contents :global(:is(h2, h3, h4, h5, h6)) {
+    margin-bottom: .05em;
+    border-bottom: .15em solid #f49898;
+    margin-top: 1rem;
+    width: fit-content;
+    font-weight: 500;
+  }
+
+  .blog-contents :global(h2) {
+    font-size: 1.5em;
+  }
+
+  .blog-contents :global(h3) {
+    font-size: 1.3em;
+  }
+
+  .blog-contents :global(h4) {
+    font-size: 1.1em;
+  }
+
+  .blog-contents :global(h5) {
+    font-size: 1em;
+  }
+
+  .blog-contents :global(h6) {
+    font-size: .9em;
+  }
+
+  .blog-contents :global(code) {
+    padding: .1em .3em;
+    border-radius: 4px;
+    background-color: #e0e0e0;
+  }
+
+  .blog-contents :global(blockquote) {
+    margin: 1em 0;
+    padding: .6em 0 .6em 1.5em;
+    border-left: 5px #bbb solid;
+  }
+
+  .blog-contents :global(blockquote p:first-child) {
+    margin-top: 0;
+  }
+
+  .blog-contents :global(blockquote p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .blog-contents :global(.astro-code) {
+    padding: 16px;
+  }
+
+  .blog-license {
+    font-size: 0.85em;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .blog-info-item img {
+      filter: invert();
+    }
+
+    .blog-contents :global(code) {
+      padding: .1em .3em;
+      border-radius: 4px;
+      background-color: #333;
+    }
+
+    .blog-contents :global(blockquote) {
+      border-color: #444;
+    }
+  }
+
+  @media (min-width: 610px) {
+    .blog-info {
+      flex-direction: row;
+      gap: 32px;
+    }
+  }
+</style>

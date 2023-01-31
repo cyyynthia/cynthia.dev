@@ -1,4 +1,3 @@
----
 /*
  * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
@@ -27,74 +26,16 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import bird from '../assets/bird.svg'
-const files: Record<string, { default: string }> = import.meta.glob('../assets/donators/*.png', { eager: true })
+import { z, defineCollection } from 'astro:content'
 
-export interface Props {
-  name: string
-  pic: string | null
-  date: string
+const blogCollection = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    date: z.date(),
+  }),
+})
+
+export const collections = {
+  blog: blogCollection,
 }
-
-function formatDate (str: string) {
-  const date = new Date(str)
-  const d = date.getDate().toString().padStart(2, '0')
-  const m = (date.getMonth() + 1).toString().padStart(2, '0')
-  const y = date.getFullYear()
-  return `${d}/${m}/${y}`
-}
-
-const { name, pic, date } = Astro.props
----
-<div class='donator'>
-  {pic
-    ? <img class='donator-pic' src={files[`../assets/donators/${pic}`]!.default} alt={`${name}'s profile picture'`}/>
-    : <img class='donator-pic-default' src={bird} alt={`${name}'s profile picture'`}/>}
-  <div class='donator-info'>
-    <span class='donator-name'>{name}</span>
-    <span class='donator-date'>{formatDate(date)}</span>
-  </div>
-</div>
-
-<style>
-  .donator {
-    display: flex;
-    align-items: center;
-    border-radius: 8px;
-    gap: 24px;
-    height: 4.5rem;
-    background-color: #eee;
-    padding: 0.5rem 1rem;
-  }
-
-  .donator-pic {
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 50%;
-  }
-
-  .donator-pic-default {
-    width: 2.5rem;
-    height: 2.5rem;
-  }
-
-  .donator-info {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .donator-name {
-    margin-bottom: 4px;
-  }
-
-  .donator-date {
-    opacity: 0.8;
-    font-size: 0.8em;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .donator {
-      background-color: #202020;
-    }
-  }
-</style>

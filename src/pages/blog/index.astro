@@ -27,32 +27,30 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import GlobalLayout from '../layouts/GlobalLayout.astro'
-import PageHeader from '../components/PageHeader.astro'
-import Section from '../components/Section.astro'
-import BlogPost from '../components/BlogPost.astro'
+import GlobalLayout from '../../layouts/GlobalLayout.astro'
+import PageHeader from '../../components/PageHeader.astro'
+import Section from '../../components/Section.astro'
+import BlogPost from '../../components/BlogPost.astro'
 
-const posts = await Astro.glob('./blog/*.mdx')
-  .then((posts) => posts.filter((p) => !p.frontmatter.draft))
+
+import { getCollection } from 'astro:content';
+const posts = await getCollection('blog').then((posts) => Promise.all(posts.map(async (p) => ({ ...p, ...await p.render() }))));
+
 ---
 <GlobalLayout title="cynthia's blog">
   <PageHeader>
     Cynthia's blog
   </PageHeader>
   <main>
-    <Section>
-      {posts.length
-        ? <Fragment>I write stuff that may be midly interesting.</Fragment>
-        : <Fragment>I may eventually write stuff that may be midly interesting. For now, I hope you're hungry... for nothing! >:)</Fragment>}
-    </Section>
+    <Section>I write stuff that may be midly interesting.</Section>
     <Section class='blog-posts'>
       {posts.map((post) => (
         <BlogPost
-          url={post.url}
-          title={post.frontmatter.title}
-          description={post.frontmatter.description}
-          readingTime={post.frontmatter.readingTime}
-          date={post.frontmatter.date}
+          url={`/blog/${post.slug}`}
+          title={post.data.title}
+          description={post.data.description}
+          readingTime={post.remarkPluginFrontmatter.readingTime}
+          date={post.data.date}
         />
       ))}
     </Section>
@@ -64,6 +62,6 @@ const posts = await Astro.glob('./blog/*.mdx')
     display: grid;
     column-gap: 3rem;
     row-gap: 4rem;
-    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr))
+    grid-template-columns: repeat(auto-fill, minmax(370px, 1fr))
   }
 </style>
