@@ -43,7 +43,8 @@ let loadPage = (url: string): Promise<Page> => {
       dummy.innerHTML = html
 
       dummy.querySelectorAll<HTMLLinkElement>('link[rel=stylesheet]').forEach((css) => {
-        if (!document.head.querySelector(`link[href=${JSON.stringify(css.href)}]`)) {
+        const path = css.href.slice(location.origin.length)
+        if (!document.head.querySelector(`link[href="${path}"]`)) {
           document.head.appendChild(css)
         }
       })
@@ -51,7 +52,8 @@ let loadPage = (url: string): Promise<Page> => {
       if (import.meta.env.DEV) {
         // This is not required in production, let's avoid shipping it.
         dummy.querySelectorAll<HTMLScriptElement>('script[src]').forEach((js) => {
-          if (!document.head.querySelector(`script[src=${JSON.stringify(js.src)}]`)) {
+          const path = js.src.slice(location.origin.length)
+          if (!document.head.querySelector(`script[src="${path}"]`)) {
             const script = document.createElement('script')
             script.type = 'module'
             script.src = js.src
