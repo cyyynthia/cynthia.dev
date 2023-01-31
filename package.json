@@ -13,18 +13,18 @@
 		"preview": "astro preview"
 	},
 	"devDependencies": {
-		"@astrojs/mdx": "^0.14.0",
-		"@astrojs/node": "^4.0.0",
+		"@astrojs/mdx": "^0.15.1",
+		"@astrojs/node": "^5.0.1",
 		"@types/node": "^18.11.18",
 		"@types/sharp": "^0.31.1",
-		"astro": "^1.9.1",
+		"astro": "^2.0.2",
 		"feather-icons": "^4.29.0",
-		"mdast-util-to-string": "^3.1.0",
+		"mdast-util-to-string": "^3.1.1",
 		"reading-time": "^1.5.0",
 		"rehype-accessible-emojis": "^0.3.2",
 		"rehype-external-links": "^2.0.1",
 		"sharp": "^0.31.3",
 		"typescript": "^4.9.4",
-		"unist-util-visit": "^4.1.1"
+		"unist-util-visit": "^4.1.2"
 	}
 }

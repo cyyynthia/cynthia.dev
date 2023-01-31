@@ -15,7 +15,6 @@ export default defineConfig({
   integrations: [ image(), mdx() ],
   markdown: {
     syntaxHighlight: 'shiki',
-    extendDefaultPlugins: true,
     remarkPlugins: [ readingTime ],
     // types...
     rehypePlugins: [ rehypeAccessibleEmojis as any, [ rehypeExternalLinks, { target: '_blank', rel: 'noreferrer' } ] ],

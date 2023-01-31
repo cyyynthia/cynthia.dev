@@ -34,7 +34,7 @@ import Activity from '../components/Activity.astro'
 
 import socialImage from '../assets/social-image.png'
 
-interface Props {
+export interface Props {
   title: string
   description?: string
 }
@@ -172,31 +172,17 @@ const description = d || 'meow meow meow meow meow meow'
     color: inherit;
     text-decoration: none;
     position: relative;
+
+    background-image: linear-gradient(to right, #f49898, #f49898 50%, #000 50%, #000);
+    background-position: 100% 1.18em;
+    background-repeat: repeat-x;
+    background-size: 200% 1px;
+
+    transition: background-position .3s;
   }
 
-  a::before, a::after {
-    content: '';
-    display: block;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    height: 1px;
-  }
-
-  a::before {
-    width: 100%;
-    background-color: currentColor;
-  }
-
-  a::after {
-    width: 0;
-    transition: width .3s;
-    background-color: #f49898;
-  }
-
-  a:hover::after {
-    width: 100%;
+  a:hover {
+    background-position: 0 1.18em;
   }
 
   /** LISTS */
