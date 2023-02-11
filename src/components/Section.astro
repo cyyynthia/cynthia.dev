@@ -1,5 +1,5 @@
 ---
-/*
+/*!
  * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -31,25 +31,25 @@ import type { AstroBuiltinAttributes } from 'astro';
 import UnderlinedHeading from './UnderlinedHeading.astro'
 
 export interface Props {
-  title?: string
-  class?: AstroBuiltinAttributes['class:list']
+	title?: string
+	class?: AstroBuiltinAttributes['class:list']
 }
 
 const { title, class: className } = Astro.props
 ---
 <section class:list={[ className ]}>
-  {title && <UnderlinedHeading level={2} class='title'>{title}</UnderlinedHeading>}
-  <slot/>
+	{title && <UnderlinedHeading level={2} class='title'>{title}</UnderlinedHeading>}
+	<slot/>
 </section>
 
 <style>
-  section {
-    margin-bottom: 2rem;
-  }
+	section {
+		margin-bottom: 2rem;
+	}
 
-  .title {
-    margin: 0;
-    font-size: 1.25rem;
-    font-weight: 400;
-  }
+	.title {
+		margin: 0;
+		font-size: 1.25rem;
+		font-weight: 400;
+	}
 </style>

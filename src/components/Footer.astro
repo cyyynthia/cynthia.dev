@@ -1,5 +1,5 @@
 ---
-/*
+/*!
  * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -31,59 +31,59 @@ import quotes from '../data/quotes.json'
 
 const date = new Date().toISOString().slice(5, 10)
 const quote = date in quotes.special
-  ? quotes.special[date as keyof typeof quotes.special]
-  : quotes.classic[Math.random() * quotes.classic.length | 0]
+	? quotes.special[date as keyof typeof quotes.special]
+	: quotes.classic[Math.random() * quotes.classic.length | 0]
 ---
 <footer>
-  <div class='footer-links'>
-    <span>meow</span>
-    <div class='separator'/>
-    <span><a href='https://github.com/cyyynthia/cynthia.dev' target='_blank' rel='noreferrer'>sauce code</a></span>
-    <div class='separator'/>
-    <span><a href='https://ko-fi.com/cyyynthia' target='_blank' rel='noreferrer'>feed me</a></span>
-    <div class='separator'/>
-    <span>meow</span>
-  </div>
-  <div class='footer-comment'>
-    {quote}
-  </div>
+	<div class='footer-links'>
+		<span>meow</span>
+		<div class='separator'/>
+		<span><a href='https://github.com/cyyynthia/cynthia.dev' target='_blank' rel='noreferrer'>sauce code</a></span>
+		<div class='separator'/>
+		<span><a href='https://ko-fi.com/cyyynthia' target='_blank' rel='noreferrer'>feed me</a></span>
+		<div class='separator'/>
+		<span>meow</span>
+	</div>
+	<div class='footer-comment'>
+		{quote}
+	</div>
 </footer>
 
 <style>
-  footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    margin-top: auto;
-    padding: 2rem 16px 16px;
-  }
+	footer {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+		margin-top: auto;
+		padding: 2rem 16px 16px;
+	}
 
-  .footer-links {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    font-size: 0.9em;
-  }
+	.footer-links {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		font-size: 0.9em;
+	}
 
-  .footer-comment {
-    font-size: 0.75em;
-    text-align: center;
-  }
+	.footer-comment {
+		font-size: 0.75em;
+		text-align: center;
+	}
 
-  .separator {
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
-    background-color: #000;
-    margin-top: 2px;
-  }
+	.separator {
+		width: 3px;
+		height: 3px;
+		border-radius: 50%;
+		background-color: #000;
+		margin-top: 2px;
+	}
 
-  @media (prefers-color-scheme: dark) {
-    .separator {
-      background-color: #cfcfcf;
-    }
-  }
+	@media (prefers-color-scheme: dark) {
+		.separator {
+			background-color: #cfcfcf;
+		}
+	}
 </style>

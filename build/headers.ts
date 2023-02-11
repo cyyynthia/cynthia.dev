@@ -26,17 +26,22 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z, defineCollection } from 'astro:content'
+import { visit } from 'unist-util-visit'
 
-const blogCollection = defineCollection({
-	schema: z.object({
-		title: z.string(),
-		description: z.string(),
-		date: z.date(),
-		tags: z.array(z.string()),
-	}),
-})
+export default function () {
+	return function (ast: any) {
+		visit(ast, 'element', (node: any) => {
+			if ([ 'h1', 'h2', 'h3', 'h4', 'h5', 'h6' ].includes(node.tagName)) {
+				node.children = [
+					{
+						type: 'element',
+						tagName: 'span',
+						children: node.children,
+					}
+				]
+			}
+		})
 
-export const collections = {
-	blog: blogCollection,
+		return ast
+	}
 }

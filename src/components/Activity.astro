@@ -1,5 +1,5 @@
 ---
-/*
+/*!
  * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -28,74 +28,74 @@
  */
 ---
 <div id='activity' class='activity hidden'>
-  <span id='activity-title'>I'm currently listening to</span>
-  <span id='activity-name'></span>
-  <span id='activity-detail'></span>
+	<span id='activity-title'>I'm currently listening to</span>
+	<span id='activity-name'></span>
+	<span id='activity-detail'></span>
 </div>
 
 <style>
-  .activity {
-    display: none;
-  }
+	.activity {
+		display: none;
+	}
 
-  @media (min-width: 1160px) {
-    .activity {
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      bottom: 16px;
-      right: 16px;
-      text-align: right;
-      opacity: 1;
-      width: 230px;
-      transition: opacity .3s, right .3s;
-      user-select: none;
-    }
+	@media (min-width: 1160px) {
+		.activity {
+			display: flex;
+			flex-direction: column;
+			position: fixed;
+			bottom: 16px;
+			right: 16px;
+			text-align: right;
+			opacity: 1;
+			width: 230px;
+			transition: opacity .3s, right .3s;
+			user-select: none;
+		}
 
-    #activity-name, #activity-detail {
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      line-height: 1.25em;
-    }
+		#activity-name, #activity-detail {
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			line-height: 1.25em;
+		}
 
-    #activity-title {
-      margin: 0;
-      font-weight: 400;
-      font-size: 0.85rem;
-    }
+		#activity-title {
+			margin: 0;
+			font-weight: 400;
+			font-size: 0.85rem;
+		}
 
-    .activity.hidden {
-      right: -16px;
-      opacity: 0;
-    }
-  }
+		.activity.hidden {
+			right: -16px;
+			opacity: 0;
+		}
+	}
 </style>
 
 <script>
-  type Activity = { playing: boolean, name: string, artist: string }
+	type Activity = { playing: boolean, name: string, artist: string }
 
-  const widget = document.getElementById('activity')!
-  // const title = document.getElementById('activity-title')!
-  const name = document.getElementById('activity-name')!
-  const detail = document.getElementById('activity-detail')!
+	const widget = document.getElementById('activity')!
+	// const title = document.getElementById('activity-title')!
+	const name = document.getElementById('activity-name')!
+	const detail = document.getElementById('activity-detail')!
 
-  function onMessage (activity: Activity) {
-    if (!activity.playing) {
-      widget.classList.add('hidden')
-      return
-    }
+	function onMessage (activity: Activity) {
+		if (!activity.playing) {
+			widget.classList.add('hidden')
+			return
+		}
 
-    widget.classList.remove('hidden')
-    name.innerText = name.title = activity.name
-    detail.innerText = detail.title = 'by ' + activity.artist
-  }
+		widget.classList.remove('hidden')
+		name.innerText = name.title = activity.name
+		detail.innerText = detail.title = 'by ' + activity.artist
+	}
 
-  function connect () {
-    const ws = new WebSocket('wss://cynthia.rest/activity')
-    ws.addEventListener('message', (e) => onMessage(JSON.parse(e.data)))
-    ws.addEventListener('close', () => setTimeout(connect, 250))
-  }
+	function connect () {
+		const ws = new WebSocket('wss://cynthia.rest/activity')
+		ws.addEventListener('message', (e) => onMessage(JSON.parse(e.data)))
+		ws.addEventListener('close', () => setTimeout(connect, 250))
+	}
 
-  connect()
+	connect()
 </script>

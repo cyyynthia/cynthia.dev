@@ -1,4 +1,4 @@
-/*
+/*!
  * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -38,84 +38,84 @@ const IMAGE_MAX_HEIGHT = 550
 let config: AstroConfig
 
 async function loadImage (path: string) {
-  const img = sharp(path)
-  const meta = await img.metadata()
-  return sharp(path)
-    .webp({ quality: 85 })
-    .resize({
-      width: Math.min(meta.width || Infinity, IMAGE_MAX_WIDTH),
-      height: Math.min(meta.height || Infinity, IMAGE_MAX_HEIGHT),
-      fit: 'inside',
-    })
+	const img = sharp(path)
+	const meta = await img.metadata()
+	return sharp(path)
+		.webp({ quality: 85 })
+		.resize({
+			width: Math.min(meta.width || Infinity, IMAGE_MAX_WIDTH),
+			height: Math.min(meta.height || Infinity, IMAGE_MAX_HEIGHT),
+			fit: 'inside',
+		})
 }
 
 function imgPlugin (): Exclude<AstroConfig['vite']['plugins'], undefined>[number] {
-  let prod = false
+	let prod = false
 
-  return {
-    name: '@cynthia/image',
+	return {
+		name: '@cynthia/image',
 		enforce: 'pre',
-    configResolved (cfg) {
-      prod = cfg.mode === 'production'
-    },
-    async load (id) {
-      if (!IMAGE_RE.test(id)) return
+		configResolved (cfg) {
+			prod = cfg.mode === 'production'
+		},
+		async load (id) {
+			if (!IMAGE_RE.test(id)) return
 
-      const imgPath = new URL(id, 'file://').pathname
-      if (prod) {
-        const file = await loadImage(imgPath)
-        const rawName = basename(imgPath)
-        const handle = this.emitFile({
-          name: rawName.replace(extname(rawName), '.webp'),
-          source: await file.toBuffer(),
-          type: 'asset',
-        })
+			const imgPath = new URL(id, 'file://').pathname
+			if (prod) {
+				const file = await loadImage(imgPath)
+				const rawName = basename(imgPath)
+				const handle = this.emitFile({
+					name: rawName.replace(extname(rawName), '.webp'),
+					source: await file.toBuffer(),
+					type: 'asset',
+				})
 
-        return `export default __PLACEHOLDER_IMAGE_${handle}__`
-      }
+				return `export default __PLACEHOLDER_IMAGE_${handle}__`
+			}
 
-      const path = relative(config.srcDir.pathname, imgPath)
-      return `export default "/@dev/images/${path}"`
-    },
-    configureServer (server) {
-      server.middlewares.use((req, res, next) => {
-        if (req.url?.startsWith('/@dev/images/')) {
-          const [, path] = req.url.split('/@dev/images/')
-          const file = new URL(path!, config.srcDir)
-          return loadImage(file.pathname).then((i) => i.pipe(res))
-        }
+			const path = relative(config.srcDir.pathname, imgPath)
+			return `export default "/@dev/images/${path}"`
+		},
+		configureServer (server) {
+			server.middlewares.use((req, res, next) => {
+				if (req.url?.startsWith('/@dev/images/')) {
+					const [, path] = req.url.split('/@dev/images/')
+					const file = new URL(path!, config.srcDir)
+					return loadImage(file.pathname).then((i) => i.pipe(res))
+				}
 
-        return next()
-      })
-    },
-    renderChunk (code) {
-      for (const match of code.matchAll(HANDLE_RE)) {
-        code = code.replace(match[0], JSON.stringify(`/${this.getFileName(match[1]!)}`))
-      }
+				return next()
+			})
+		},
+		renderChunk (code) {
+			for (const match of code.matchAll(HANDLE_RE)) {
+				code = code.replace(match[0], JSON.stringify(`/${this.getFileName(match[1]!)}`))
+			}
 
-      return {
-        code: code
-      }
-    }
-  }
+			return {
+				code: code
+			}
+		}
+	}
 }
 
 export default function image (): AstroIntegration {
-  return {
-    name: 'image',
-    hooks: {
-      'astro:config:setup': (ctx) => {
-        ctx.updateConfig({
-          vite: {
-            plugins: [
-              imgPlugin(),
-            ],
-          },
-        })
-      },
-      'astro:config:done': (ctx) => {
-        config = ctx.config
-      },
-    },
-  }
+	return {
+		name: 'image',
+		hooks: {
+			'astro:config:setup': (ctx) => {
+				ctx.updateConfig({
+					vite: {
+						plugins: [
+							imgPlugin(),
+						],
+					},
+				})
+			},
+			'astro:config:done': (ctx) => {
+				config = ctx.config
+			},
+		},
+	}
 }

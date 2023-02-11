@@ -1,5 +1,5 @@
 ---
-/*
+/*!
  * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -27,41 +27,44 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { getCollection } from 'astro:content'
+
 import GlobalLayout from '../../layouts/GlobalLayout.astro'
 import PageHeader from '../../components/PageHeader.astro'
 import Section from '../../components/Section.astro'
 import BlogPost from '../../components/BlogPost.astro'
 
-
-import { getCollection } from 'astro:content';
-const posts = await getCollection('blog').then((posts) => Promise.all(posts.map(async (p) => ({ ...p, ...await p.render() }))));
-
+const posts = await getCollection('blog')
+	// No other way to get the readTime than to render it
+	.then((posts) => Promise.all(posts.map(async (p) => ({ ...p, ...await p.render() }))))
+	.then((posts) => posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime()))
 ---
 <GlobalLayout title="cynthia's blog">
-  <PageHeader>
-    Cynthia's blog
-  </PageHeader>
-  <main>
-    <Section>I write stuff that may be midly interesting.</Section>
-    <Section class='blog-posts'>
-      {posts.map((post) => (
-        <BlogPost
-          url={`/blog/${post.slug}`}
-          title={post.data.title}
-          description={post.data.description}
-          readingTime={post.remarkPluginFrontmatter.readingTime}
-          date={post.data.date}
-        />
-      ))}
-    </Section>
-  </main>
+	<PageHeader>
+		Cynthia's blog
+	</PageHeader>
+	<main>
+		<Section>I write stuff that may be midly interesting.</Section>
+		<Section class='blog-posts'>
+			{posts.map((post) => (
+				<BlogPost
+					url={`/blog/${post.slug}`}
+					title={post.data.title}
+					description={post.data.description}
+					tags={post.data.tags}
+					readingTime={post.remarkPluginFrontmatter.readingTime}
+					date={post.data.date}
+				/>
+			))}
+		</Section>
+	</main>
 </GlobalLayout>
 
 <style>
-  .blog-posts {
-    display: grid;
-    column-gap: 3rem;
-    row-gap: 4rem;
-    grid-template-columns: repeat(auto-fill, minmax(370px, 1fr))
-  }
+	.blog-posts {
+		display: grid;
+		column-gap: 3rem;
+		row-gap: 4rem;
+		grid-template-columns: repeat(auto-fill, minmax(370px, 1fr))
+	}
 </style>

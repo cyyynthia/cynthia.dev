@@ -1,5 +1,5 @@
 ---
-/*
+/*!
  * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -39,69 +39,69 @@ const dYears = today.getUTCFullYear() - birthDate.getUTCFullYear()
 const age = dYears - +(dMonths < 0 || (dMonths === 0 && dDays < 0))
 
 const descriptions = [
-  // catgirl who...
-  'meows and sleeps',
-  'bites and scwatches',
-  'eats cookies',
-  'drinks coffee',
-  'sometimes writes code',
-  'lives the night',
-  'procrastinates 24/7',
-  'uses arch btw',
-  'purrs when headpatted',
+	// catgirl who...
+	'meows and sleeps',
+	'bites and scwatches',
+	'eats cookies',
+	'drinks coffee',
+	'sometimes writes code',
+	'lives the night',
+	'procrastinates 24/7',
+	'uses arch btw',
+	'purrs when headpatted',
 ]
 
 const description = descriptions[Math.random() * descriptions.length | 0]
 ---
 <GlobalLayout title="cynthia's website">
-  <PageHeader>
-    Hi, I'm Cynthia
-    <Fragment slot='subtitle'>Catgirl who {description}</Fragment>
-  </PageHeader>
-  <main>
-    <Section>
-      Henlo, I'm a {age} years old software engineer from Toulouse, France, who spends more time procrastinating than typing in a code
-      editor. While procrastinating, some of the things I do include playing games, eating cookies, challenging
-      Einstein's theory of relativity, and starting an infinite amount of side projects.
-    </Section>
-    <Section title='My projects'>
-      <ul>
-        <li>
-          <a href='https://pronoundb.org' target='_blank' rel='noreferrer'>pronoundb.org</a>, a browser extension to
-          see people's pronouns on the internet
-        </li>
-        <li>
-          <a href='https://cynthia.rest' target='_blank' rel='noreferrer'>cynthia.rest</a>, a website where you can
-          interact with me over https
-        </li>
-        <li>
-          ...and way too much unfinished projects &amp; "side" projects
-        </li>
-      </ul>
-    </Section>
-    <Section title='My work'>
-      <p>
-        I'm currently wrangling software at <a href='https://tolgee.io' target='_blank' rel='noreferrer'>tolgee.io</a>,
-        an open-core localization platform you can selfhost if you're not into SaaS. I highly recommend checking it out
-        if you're looking for an alternative to proprietary crowdin or bloated weblate. 🙌
-      </p>
-      <p>
-        Some of my work includes:
-      </p>
-      <ul>
-        <li>
-          <a href='https://github.com/tolgee/tolgee-cli' target='_blank' rel='noreferrer'>tolgee-cli</a>, a cli to
-          interact with Tolgee easily and extract strings from your code automagically.
-        </li>
-        <li>
-          <a href='https://github.com/tolgee/vite-plugin-i18n-tolgee' target='_blank' rel='noreferrer'>vite-plugin-i18n-tolgee</a>,
-          a proof of concept at compile-time based localization tooling for the Web via a Vite plugin, featuring ICU
-          pre-processing, static analysis and error-checking, and more.
-        </li>
-        <li>
-          ...and some contributions to <a href='https://github.com/tolgee/tolgee-platform' target='_blank' rel='noreferrer'>Tolgee itself</a>.
-        </li>
-      </ul>
-    </Section>
-  </main>
+	<PageHeader>
+		Hi, I'm Cynthia
+		<Fragment slot='subtitle'>Catgirl who {description}</Fragment>
+	</PageHeader>
+	<main>
+		<Section>
+			Henlo, I'm a {age} years old software engineer from Toulouse, France, who spends more time procrastinating than typing in a code
+			editor. While procrastinating, some of the things I do include playing games, eating cookies, challenging
+			Einstein's theory of relativity, and starting an infinite amount of side projects.
+		</Section>
+		<Section title='My projects'>
+			<ul>
+				<li>
+					<a href='https://pronoundb.org' target='_blank' rel='noreferrer'>pronoundb.org</a>, a browser extension to
+					see people's pronouns on the internet
+				</li>
+				<li>
+					<a href='https://cynthia.rest' target='_blank' rel='noreferrer'>cynthia.rest</a>, a website where you can
+					interact with me over https
+				</li>
+				<li>
+					...and way too much unfinished projects &amp; "side" projects
+				</li>
+			</ul>
+		</Section>
+		<Section title='My work'>
+			<p>
+				I'm currently wrangling software at <a href='https://tolgee.io' target='_blank' rel='noreferrer'>tolgee.io</a>,
+				an open-core localization platform you can selfhost if you're not into SaaS. I highly recommend checking it out
+				if you're looking for an alternative to proprietary crowdin or bloated weblate. 🙌
+			</p>
+			<p>
+				Some of my work includes:
+			</p>
+			<ul>
+				<li>
+					<a href='https://github.com/tolgee/tolgee-cli' target='_blank' rel='noreferrer'>tolgee-cli</a>, a cli to
+					interact with Tolgee easily and extract strings from your code automagically.
+				</li>
+				<li>
+					<a href='https://github.com/tolgee/vite-plugin-i18n-tolgee' target='_blank' rel='noreferrer'>vite-plugin-i18n-tolgee</a>,
+					a proof of concept at compile-time based localization tooling for the Web via a Vite plugin, featuring ICU
+					pre-processing, static analysis and error-checking, and more.
+				</li>
+				<li>
+					...and some contributions to <a href='https://github.com/tolgee/tolgee-platform' target='_blank' rel='noreferrer'>Tolgee itself</a>.
+				</li>
+			</ul>
+		</Section>
+	</main>
 </GlobalLayout>

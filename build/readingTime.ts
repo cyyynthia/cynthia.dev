@@ -1,4 +1,4 @@
-/*
+/*!
  * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -30,8 +30,8 @@ import getReadingTime from 'reading-time'
 import { toString } from 'mdast-util-to-string'
 
 export default function () {
-  return (tree: any, { data }: any) => {
-    const text = toString(tree)
-    data.astro.frontmatter.readingTime = getReadingTime(text).text
-  }
+	return (tree: any, { data }: any) => {
+		const text = toString(tree)
+		data.astro.frontmatter.readingTime = getReadingTime(text).text
+	}
 }

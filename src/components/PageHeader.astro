@@ -1,5 +1,5 @@
 ---
-/*
+/*!
  * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -33,59 +33,59 @@ const now = new Date()
 const france = now.getDate() === 14 && now.getMonth() === 6
 ---
 <header class:list={{ 'has-subtitle': Astro.slots.has('subtitle'), france }}>
-  <UnderlinedHeading level={1} class='title'>
-    <slot/>
-  </UnderlinedHeading>
-  {Astro.slots.has('subtitle') && (
-    <div class='subtitle'>
-      <slot name='subtitle'/>
-    </div>
-  )}
+	<UnderlinedHeading level={1} class='title'>
+		<slot/>
+	</UnderlinedHeading>
+	{Astro.slots.has('subtitle') && (
+		<div class='subtitle'>
+			<slot name='subtitle'/>
+		</div>
+	)}
 </header>
 
 <style>
-  header {
-    margin-bottom: 1.5rem;
-    padding-left: 5.75rem;
-    position: relative;
-    display: flex;
-    min-height: 5.5em;
-    flex-direction: column;
-    justify-content: center;
-  }
+	header {
+		margin-bottom: 1.5rem;
+		padding-left: 5.75rem;
+		position: relative;
+		display: flex;
+		min-height: 5.5em;
+		flex-direction: column;
+		justify-content: center;
+	}
 
-  .has-subtitle {
-    margin-bottom: 1.75rem;
-  }
+	.has-subtitle {
+		margin-bottom: 1.75rem;
+	}
 
-  .france .title :global(span) {
-    background-image: linear-gradient(90deg, #000091, #000091 33%, #ededed 33%, #ededed 67%, #e1000f 67%, #e1000f);
-  }
+	.france .title :global(span) {
+		background-image: linear-gradient(90deg, #000091, #000091 33%, #ededed 33%, #ededed 67%, #e1000f 67%, #e1000f);
+	}
 
-  header::before {
-    content: '';
-    position: absolute;
-    width: 4.5rem;
-    height: 100%;
-    top: 4px;
-    left: 4px;
-    transform: rotate(15deg);
-    background-image: url('../assets/paw.svg');
-    background-size: 4.5rem 4.5rem;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
+	header::before {
+		content: '';
+		position: absolute;
+		width: 4.5rem;
+		height: 100%;
+		top: 4px;
+		left: 4px;
+		transform: rotate(15deg);
+		background-image: url('../assets/paw.svg');
+		background-size: 4.5rem 4.5rem;
+		background-position: center;
+		background-repeat: no-repeat;
+	}
 
-  .title {
-    margin: 0;
-    font-weight: 500;
-    font-size: 2.4rem;
-  }
+	.title {
+		margin: 0;
+		font-weight: 500;
+		font-size: 2.4rem;
+	}
 
-  .subtitle {
-    margin: 0;
-    margin-top: -0.1rem;
-    font-weight: 400;
-    font-size: 1.6rem;
-  }
+	.subtitle {
+		margin: 0;
+		margin-top: -0.1rem;
+		font-weight: 400;
+		font-size: 1.6rem;
+	}
 </style>

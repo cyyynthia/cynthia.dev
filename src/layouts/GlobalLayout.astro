@@ -1,5 +1,5 @@
 ---
-/*
+/*!
  * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -35,8 +35,8 @@ import Activity from '../components/Activity.astro'
 import socialImage from '../assets/social-image.png'
 
 export interface Props {
-  title: string
-  description?: string
+	title: string
+	description?: string
 }
 
 const { title, description: d } = Astro.props
@@ -45,184 +45,190 @@ const socialImageUrl = new URL(socialImage, Astro.site)
 const description = d || 'meow meow meow meow meow meow'
 ---
 <html lang='en'>
-  <head>
-    <meta charset='utf8'/>
-    <meta name='theme-color' content='#f49898'/>
-    <meta name='viewport' content='width=device-width, initial-scale=1'/>
-    <link rel='shortcut icon' href='/favicon.ico'/>
+	<head>
+		<meta charset='utf8'/>
+		<meta name='theme-color' content='#f49898'/>
+		<meta name='viewport' content='width=device-width, initial-scale=1'/>
+		<link rel='shortcut icon' href='/favicon.ico'/>
 
-    <title>{title}</title>
-    <meta name='description' content={description}/>
-    <link rel='canonical' href={canonicalUrl}/>
+		<title>{title}</title>
+		<meta name='description' content={description}/>
+		<link rel='canonical' href={canonicalUrl}/>
 
-    <meta property='og:site_name' content='cynthia.dev'/>
-    <meta property='og:type' property='og:type' content='website'>
-    <meta property='og:url' content={canonicalUrl}/>
-    <meta property='og:title' content={title}/>
-    <meta property='og:description' content={description}/>
-    <meta property='og:image' content={socialImageUrl}/>
+		<meta property='og:site_name' content='cynthia.dev'/>
+		<meta property='og:type' property='og:type' content='website'>
+		<meta property='og:url' content={canonicalUrl}/>
+		<meta property='og:title' content={title}/>
+		<meta property='og:description' content={description}/>
+		<meta property='og:image' content={socialImageUrl}/>
 
-    <meta name='twitter:card' content='summary'/>
-    <meta name='twitter:site' content='@cyyynthia_'/>
-    <meta name='twitter:title' content={title}/>
-    <meta name='twitter:description' content={description}/>
-    <meta name='twitter:image' content={socialImageUrl}/>
-  </head>
-  <body>
-    <Paws/>
-    <div id='page-contents'>
-      <Navbar/>
-      <slot/>
-    </div>
-    <Footer/>
-    <Activity/>
-    <script src='../assets/spa.js'></script>
-  </body>
+		<meta name='twitter:card' content='summary'/>
+		<meta name='twitter:site' content='@cyyynthia_'/>
+		<meta name='twitter:title' content={title}/>
+		<meta name='twitter:description' content={description}/>
+		<meta name='twitter:image' content={socialImageUrl}/>
+	</head>
+	<body>
+		<Paws/>
+		<div id='page-contents'>
+			<Navbar/>
+			<slot/>
+		</div>
+		<Footer/>
+		<Activity/>
+		<script src='../assets/spa.js'></script>
+	</body>
 </html>
 
 <style is:global>
-  /** FONTS */
-  @font-face {
-    font-family: 'Lexend';
-    font-style: normal;
-    font-display: swap;
-    src: url(../assets/fonts/lexend-regular.woff2) format('woff2');
-  }
+	/** FONTS */
+	@font-face {
+		font-family: 'Lexend';
+		font-style: normal;
+		font-display: swap;
+		src: url(../assets/fonts/lexend-regular.woff2) format('woff2');
+	}
 
-  @font-face {
-    font-family: 'Lexend';
-    font-style: normal;
-    font-weight: 500;
-    font-display: swap;
-    src: url(../assets/fonts/lexend-medium.woff2) format('woff2');
-  }
+	@font-face {
+		font-family: 'Lexend';
+		font-style: normal;
+		font-weight: 500;
+		font-display: swap;
+		src: url(../assets/fonts/lexend-medium.woff2) format('woff2');
+	}
 
-  @font-face {
-    font-family: 'Lexend';
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: url(../assets/fonts/lexend-bold.woff2) format('woff2');
-  }
+	@font-face {
+		font-family: 'Lexend';
+		font-style: normal;
+		font-weight: 700;
+		font-display: swap;
+		src: url(../assets/fonts/lexend-bold.woff2) format('woff2');
+	}
 
-  @font-face {
-    font-family: 'JetBrains Mono';
-    font-style: normal;
-    font-display: swap;
-    src: url(../assets/fonts/jetbrains-mono-regular.woff2) format('woff2');
-  }
+	@font-face {
+		font-family: 'JetBrains Mono';
+		font-style: normal;
+		font-display: swap;
+		src: url(../assets/fonts/jetbrains-mono-regular.woff2) format('woff2');
+	}
 
-  /** DOCUMENT */
-  * { box-sizing: border-box; }
+	/** DOCUMENT */
+	* { box-sizing: border-box; }
 
-  html, body {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-  }
+	:root {
+		--text-color: #000;
+		--background-color: #fff;
+	}
 
-  body {
-    display: flex;
-    flex-direction: column;
+	html, body {
+		width: 100%;
+		height: 100%;
+		padding: 0;
+		margin: 0;
+	}
 
-    font-family: 'Lexend', sans-serif;
-    text-rendering: optimizeLegibility;
-    text-transform: lowercase;
+	body {
+		display: flex;
+		flex-direction: column;
 
-    background-color: #fff;
-    color: #000;
-  }
+		font-family: 'Lexend', sans-serif;
+		text-rendering: optimizeLegibility;
+		text-transform: lowercase;
 
-  body.loading::before {
-    content: '';
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    width: 24px;
-    height: 24px;
-    border: 3px solid #f49898;
-    border-bottom-color: transparent;
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
-  }
+		background-color: var(--background-color);
+		color: var(--text-color);
+	}
 
-  /** MAIN CONTAINER */
-  #page-contents {
-    display: flex;
-    flex-direction: column;
-    padding: 0 1rem;
-    margin: 0 auto;
+	body.loading::before {
+		content: '';
+		position: absolute;
+		top: 16px;
+		right: 16px;
+		width: 24px;
+		height: 24px;
+		border: 3px solid #f49898;
+		border-bottom-color: transparent;
+		border-radius: 50%;
+		display: inline-block;
+		box-sizing: border-box;
+		animation: rotation 1s linear infinite;
+	}
 
-    position: relative;
-    z-index: 1;
-  }
+	/** MAIN CONTAINER */
+	#page-contents {
+		display: flex;
+		flex-direction: column;
+		padding: 0 1rem;
+		margin: 0 auto;
+		width: 100%;
 
-  @media (min-width: 720px) {
-    #page-contents {
-      width: 45%;
-      min-width: 720px;
-    }
-  }
+		position: relative;
+		z-index: 1;
+	}
 
-  /** LINKS */
-  a {
-    color: inherit;
-    text-decoration: none;
-    position: relative;
+	@media (min-width: 720px) {
+		#page-contents {
+			width: 45%;
+			min-width: 720px;
+		}
+	}
 
-    background-image: linear-gradient(to right, #f49898, #f49898 50%, #000 50%, #000);
-    background-position: 100% 1.18em;
-    background-repeat: repeat-x;
-    background-size: 200% 0.06rem;
+	/** LINKS */
+	a {
+		color: inherit;
+		text-decoration: none;
+		position: relative;
 
-    transition: background-position-x .3s;
-  }
+		background-image: linear-gradient(to right, #f49898, #f49898 50%, currentColor 50%, currentColor);
+		background-position: 100% 1.18em;
+		background-repeat: repeat-x;
+		background-size: 200% 0.06rem;
 
-  a:hover {
-    background-position-x: 0;
-  }
+		transition: background-position-x .3s;
+	}
 
-  /** LISTS */
-  ol, ul {
-    margin: 1em 0 0;
-  }
+	a:hover {
+		background-position-x: 0;
+	}
 
-  li:not(:last-child) {
-    margin-bottom: 0.25rem;
-  }
+	/** LISTS */
+	ol, ul {
+		margin: 1em 0 0;
+	}
 
-  /** MISC */
-  code {
-    font-size: 0.825rem;
-    font-family: monospace;
-    font-weight: 500;
-  }
+	li:not(:last-child) {
+		margin-bottom: 0.25rem;
+	}
 
-  hr {
-    display: block;
-    border: 0;
-    background-color: #ccc;
-    height: 1px;
-    width: 100%;
-  }
+	/** MISC */
+	code {
+		font-size: 0.825rem;
+		font-family: monospace;
+		font-weight: 500;
+	}
 
-  /** DARK THEME */
-  @media (prefers-color-scheme: dark) {
-    body {
-      background-color: #202020;
-      color: #cfcfcf;
-    }
+	hr {
+		display: block;
+		border: 0;
+		background-color: #ccc;
+		height: 1px;
+		width: 100%;
+	}
 
-    hr {
-      background-color: #444;
-    }
-  }
+	/** DARK THEME */
+	@media (prefers-color-scheme: dark) {
+		:root {
+			--text-color: #cfcfcf;
+			--background-color: #202020;
+		}
 
-  @keyframes rotation {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
+		hr {
+			background-color: #444;
+		}
+	}
+
+	@keyframes rotation {
+		from { transform: rotate(0deg); }
+		to { transform: rotate(360deg); }
+	}
 </style>

@@ -1,5 +1,5 @@
 
-/*
+/*!
  * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -28,75 +28,75 @@
  */
 
 type Page = {
-  title: string
-  meta: HTMLMetaElement[]
-  contents: HTMLElement
+	title: string
+	meta: HTMLMetaElement[]
+	contents: HTMLElement
 }
 
 let cache: Record<string, Page> = {}
 
 let loadPage = (url: string): Promise<Page> => {
-  return fetch(url)
-    .then((r) => r.text())
-    .then((html) => {
-      let dummy = document.createElement('html')
-      dummy.innerHTML = html
+	return fetch(url)
+		.then((r) => r.text())
+		.then((html) => {
+			let dummy = document.createElement('html')
+			dummy.innerHTML = html
 
-      dummy.querySelectorAll<HTMLLinkElement>('link[rel=stylesheet]').forEach((css) => {
-        const path = css.href.slice(location.origin.length)
-        if (!document.head.querySelector(`link[href="${path}"]`)) {
-          document.head.appendChild(css)
-        }
-      })
+			dummy.querySelectorAll<HTMLLinkElement>('link[rel=stylesheet]').forEach((css) => {
+				const path = css.href.slice(location.origin.length)
+				if (!document.head.querySelector(`link[href="${path}"]`)) {
+					document.head.appendChild(css)
+				}
+			})
 
-      if (import.meta.env.DEV) {
-        // This is not required in production, let's avoid shipping it.
-        dummy.querySelectorAll<HTMLScriptElement>('script[src]').forEach((js) => {
-          const path = js.src.slice(location.origin.length)
-          if (!document.head.querySelector(`script[src="${path}"]`)) {
-            const script = document.createElement('script')
-            script.type = 'module'
-            script.src = js.src
-            document.head.appendChild(script)
-          }
-        })
-      }
+			if (import.meta.env.DEV) {
+				// This is not required in production, let's avoid shipping it.
+				dummy.querySelectorAll<HTMLScriptElement>('script[src]').forEach((js) => {
+					const path = js.src.slice(location.origin.length)
+					if (!document.head.querySelector(`script[src="${path}"]`)) {
+						const script = document.createElement('script')
+						script.type = 'module'
+						script.src = js.src
+						document.head.appendChild(script)
+					}
+				})
+			}
 
-      return {
-        title: dummy.querySelector('title')!.innerText,
-        meta: Array.from(dummy.querySelectorAll('meta')),
-        contents: dummy.querySelector('#page-contents')!,
-      }
-    })
+			return {
+				title: dummy.querySelector('title')!.innerText,
+				meta: Array.from(dummy.querySelectorAll('meta')),
+				contents: dummy.querySelector('#page-contents')!,
+			}
+		})
 }
 
 let handleNavigation = async (href: string) => {
-  let page = cache[href]
-  if (!page) {
-    document.body.classList.add('loading')
-    let timeout = setTimeout(() => location.reload(), 10e3)
-    page = await loadPage(href)
-    cache[href] = page
-    clearTimeout(timeout)
-    document.body.classList.remove('loading')
-  }
+	let page = cache[href]
+	if (!page) {
+		document.body.classList.add('loading')
+		let timeout = setTimeout(() => location.reload(), 10e3)
+		page = await loadPage(href)
+		cache[href] = page
+		clearTimeout(timeout)
+		document.body.classList.remove('loading')
+	}
 
-  document.title = page.title
-  const container = document.getElementById('page-contents')!
+	document.title = page.title
+	const container = document.getElementById('page-contents')!
 
-  document.querySelectorAll('meta').forEach((m) => m.remove())
-  document.head.append(...page.meta)
-  container.replaceWith(page.contents.cloneNode(true))
-  document.scrollingElement!.scrollTop = 0
+	document.querySelectorAll('meta').forEach((m) => m.remove())
+	document.head.append(...page.meta)
+	container.replaceWith(page.contents.cloneNode(true))
+	document.scrollingElement!.scrollTop = 0
 }
 
 let clickHandler = (e: MouseEvent) => {
-  if (!(e.target instanceof HTMLAnchorElement)) return
-  if (e.target.host !== location.host) return
+	if (!(e.target instanceof HTMLAnchorElement)) return
+	if (e.target.host !== location.host) return
 
-  e.preventDefault()
-  history.pushState(null, document.title, e.target.href)
-  handleNavigation(e.target.href)
+	e.preventDefault()
+	history.pushState(null, document.title, e.target.href)
+	handleNavigation(e.target.href)
 }
 
 let handleStateChange = () => handleNavigation(location.href)
@@ -105,11 +105,11 @@ window.addEventListener('popstate', handleStateChange)
 window.addEventListener('pushstate', handleStateChange)
 document.addEventListener('click', clickHandler)
 document.addEventListener('DOMContentLoaded', () => {
-  cache[location.href] = {
-    title: document.title,
-    meta: Array.from(document.querySelectorAll('meta')),
-    contents: document.getElementById('page-contents')!.cloneNode(true) as HTMLElement,
-  }
+	cache[location.href] = {
+		title: document.title,
+		meta: Array.from(document.querySelectorAll('meta')),
+		contents: document.getElementById('page-contents')!.cloneNode(true) as HTMLElement,
+	}
 })
 
 export {}

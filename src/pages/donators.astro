@@ -1,5 +1,5 @@
 ---
-/*
+/*!
  * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -38,39 +38,39 @@ type Donator = typeof donatorsList['others'][number]
 
 const donators = donatorsList.others
 const subscribers = [
-  ...donatorsList.diamond,
-  ...donatorsList.emerald,
-  ...donatorsList.gold,
-  ...donatorsList.silver,
-  ...donatorsList.bronze,
+	...donatorsList.diamond,
+	...donatorsList.emerald,
+	...donatorsList.gold,
+	...donatorsList.silver,
+	...donatorsList.bronze,
 ]
 ---
 <GlobalLayout title="donators - cynthia's website">
-  <PageHeader>
-    Donators hall of fame
-  </PageHeader>
-  <main>
-    <Section>
-      Massive thanks to everyone who donated to me. It means a lot, no matter the amount!
-    </Section>
-    <Section title='Subscribers'>
-      <div class='donators'>
-        {subscribers.map(({ name, pic, date }) => <Donator name={name} pic={pic} date={date}/>)}
-      </div>
-    </Section>
-    <Section title='One-time & past subscribers'>
-      <div class='donators'>
-        {donators.map(({ name, pic, date }) => <Donator name={name} pic={pic} date={date}/>)}
-      </div>
-    </Section>
-  </main>
+	<PageHeader>
+		Donators hall of fame
+	</PageHeader>
+	<main>
+		<Section>
+			Massive thanks to everyone who donated to me. It means a lot, no matter the amount!
+		</Section>
+		<Section title='Subscribers'>
+			<div class='donators'>
+				{subscribers.map(({ name, pic, date }) => <Donator name={name} pic={pic} date={date}/>)}
+			</div>
+		</Section>
+		<Section title='One-time & past subscribers'>
+			<div class='donators'>
+				{donators.map(({ name, pic, date }) => <Donator name={name} pic={pic} date={date}/>)}
+			</div>
+		</Section>
+	</main>
 </GlobalLayout>
 
 <style>
-  .donators {
-    margin-top: 16px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
+	.donators {
+		margin-top: 16px;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16px;
+	}
 </style>

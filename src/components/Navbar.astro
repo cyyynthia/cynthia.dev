@@ -1,5 +1,5 @@
 ---
-/*
+/*!
  * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -30,23 +30,23 @@
 import Link from '../components/Link.astro'
 ---
 <nav class='nav'>
-  <Link href='/' activeClass='active' exact>About me</Link>
-  <Link href='/blog' activeClass='active'>Blog</Link>
-  <Link href='/socials' activeClass='active'>Links &amp; socials</Link>
-  <Link href='/contact' activeClass='active'>Contact</Link>
-  <Link href='/donators' activeClass='active'>Donators</Link>
+	<Link href='/' activeClass='active' exact>About me</Link>
+	<Link href='/blog' activeClass='active'>Blog</Link>
+	<Link href='/socials' activeClass='active'>Links &amp; socials</Link>
+	<Link href='/contact' activeClass='active'>Contact</Link>
+	<Link href='/donators' activeClass='active'>Donators</Link>
 </nav>
 
 <style>
-  .nav {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 0.25rem;
-    margin-bottom: 2rem;
-    gap: 6px 32px;
-  }
+	.nav {
+		display: flex;
+		flex-wrap: wrap;
+		margin-top: 0.25rem;
+		margin-bottom: 2rem;
+		gap: 6px 32px;
+	}
 
-  .nav .active {
-    background-position-x: 0;
-  }
+	.nav .active {
+		background-position-x: 0;
+	}
 </style>
