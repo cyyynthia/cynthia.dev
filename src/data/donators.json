@@ -8,7 +8,8 @@
 	"gold": [],
 	"silver": [],
 	"bronze": [
-		{ "name": "fabbe50", "pic": "fabbe50.png", "date": "2022-10-04" }
+		{ "name": "fabbe50", "pic": "fabbe50.png", "date": "2022-10-04" },
+		{ "name": "Hazel", "pic": "hazel.png", "date": "2023-04-17" }
 	],
 	"others": [
 		{ "name": "Mari", "pic": "mari.png", "date": "2021-12-24" },

@@ -17,10 +17,15 @@ export default defineConfig({
 	markdown: {
 		syntaxHighlight: 'shiki',
 		remarkPlugins: [ readingTime ],
-		// types...
-		rehypePlugins: [ rehypeAccessibleEmojis as any, headers, [ rehypeExternalLinks, { target: '_blank', rel: 'noreferrer' } ] ],
+		rehypePlugins: [
+			// @ts-expect-error -- ok TS
+			rehypeAccessibleEmojis,
+			headers,
+			[ rehypeExternalLinks, { target: '_blank', rel: 'noreferrer' } ]
+		],
 		shikiConfig: {
-			theme: darkFeminineItalic as any, // it works despite not being the right type :shrug:
+			// @ts-expect-error -- ok TS
+			theme: darkFeminineItalic,
 		},
 	},
 	vite: {
