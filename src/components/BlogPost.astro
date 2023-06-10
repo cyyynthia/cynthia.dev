@@ -1,0 +1,128 @@
+---
+/*!
+ * Copyright (c) Cynthia Rey, All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the copyright holder nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software without
+ *    specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+import UnderlinedHeading from './UnderlinedHeading.astro'
+
+import calendar from 'feather-icons/dist/icons/calendar.svg'
+import clock from 'feather-icons/dist/icons/clock.svg'
+
+export interface Props {
+	url: string
+	title: string
+	description: string
+	tags: string[]
+	readingTime: string
+	date: Date
+}
+
+const dateFormatter = new Intl.DateTimeFormat('en-GB', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+})
+
+const { url, title, description, tags, readingTime, date } = Astro.props
+---
+<article class='blog-post'>
+	<UnderlinedHeading level={2}>
+		<a href={url} class='title'>{title}</a>
+	</UnderlinedHeading>
+	<p class='description'>{description}</p>
+	<div class='tags'>
+		{tags.map((t) => <a href={`/blog/tags/${t}`}>#{t}</a>)}
+	</div>
+	<footer class='metadata'>
+		<div class='metadata-item'>
+			<img src={calendar} alt='Calendar icon'/>
+			<time datetime={date.toISOString().slice(0, 10)}>{dateFormatter.format(date)}</time>
+		</div>
+		<div class='metadata-item'>
+			<img src={clock} alt='Calendar icon'/>
+			<span>{readingTime}</span>
+		</div>
+	</footer>
+</article>
+
+<style>
+	.blog-post {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.blog-post h2 {
+		font-weight: 400;
+		margin: 0;
+	}
+
+	.description {
+		margin: 0;
+	}
+
+	.tags {
+		display: flex;
+		row-gap: 4px;
+		column-gap: 8px;
+		flex-wrap: wrap;
+	}
+
+	.metadata {
+		display: flex;
+		flex-direction: column;
+		border-top: 1px #ddd solid;
+		font-size: .9em;
+		padding-top: .8em;
+		gap: .6em;
+	}
+
+	.metadata-item {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+	}
+
+	.metadata-item img {
+		width: 1.2em;
+		height: 1.2em;
+	}
+
+	.title {
+		background: none;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		.metadata {
+			border-color: #333;
+		}
+
+		.metadata-item img {
+			filter: invert();
+		}
+	}
+</style>

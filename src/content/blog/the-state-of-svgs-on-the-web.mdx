@@ -1,0 +1,202 @@
+---
+#! Copyright (c) Cynthia Rey, All rights reserved.
+#! SPDX-License-Identifier: CC-BY-SA-4.0
+#!
+#! Contents of this file are licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+#! https://creativecommons.org/licenses/by-sa/4.0/
+
+title: The state of SVGs on the Web
+description: SVG (Scalable Vector Graphics) is a widely used image format on the Web. However, due to its nature, it tends to be heavily misused and some popular tools encourage such misue. Let's sit back and look at what's wrong, and what we can do to fix it.
+date: 2023-01-10
+tags: [software, performance]
+---
+
+SVG (Scalable Vector Graphics) is a widely used image format on the Web. However, due to its nature, it tends to be
+heavily misused and some popular tools encourage such misue. Let's sit back and look at what's wrong, and what we
+can do to fix it.
+
+## The embedding problem
+I read a [tweet](https://twitter.com/_developit/status/1382838799420514317) from Preact creator's Jason Miller back in
+early 2021, which acted as a real eye opener.
+
+> Please don't import SVGs as JSX. It's the most expensive form of sprite sheet: costs a minimum of 3x more than other
+> techniques, and hurts both runtime (rendering) performance and memory usage.
+>
+> [A] bundle from a popular site is almost 50% SVG icons (250kb), and most are unused.
+>
+> -- <cite>Jason Miller (@_developit)</cite>
+
+The elephant in the room here is the amount of dead code served, due to the lack of icon filtering in the case Jason
+describes. But the story doesn't end there, and in fact, is only the tip of the iceberg.
+
+I used to do the same thing, and import SVG components as JSX. But after reading this tweet, as I try to take extra
+care making my software decently efficient, I dug this rabbit hole further, and the findings were very... disappointing.
+
+### A costly practice
+When rendering a plain HTML document with embedded SVGs in them, the SVG is pretty much only download cost. Browser
+parsers are extremely efficient, and actual rendering happens in a separate thread (read: we can ignore this cost).
+
+But when embedded in JavaScript bundles, there is a *lot* of additional costs, directly affecting critical metrics
+such as **First Contentful Paint** for fully client-side rendered apps (when content starts to appear on the page), and
+**Time to Interactive** (when the page can respond to user interactions). Let's look at them in order.
+
+#### JavaScript parsing cost
+Parsing JavaScript is surprisingly costly. So costly in fact, that for large data objects it is faster to serialize
+them as string and use `JSON.parse` at runtime. It was found to be 1.7× faster in **all** JavaScript engines!
+(source: [V8 blog post](https://v8.dev/blog/cost-of-javascript-2019#json)).
+
+The story is similar for the DOM: the browser can parse this much faster (and it'd already be in the format it needs,
+more on that later).
+
+#### Virtual DOM
+React, Vue, and many more libraries use an abstraction around the native DOM: the Virtual DOM. When rendering, your
+embedded SVG will cause many function calls, that'll create many objects, that'll be held in memory. The more complex
+your SVG, the greater the cost.
+
+For libraries like Svelte, which do not use a VDOM, this does not apply. But don't think these are exempt yet! These
+are still non-zero cost abstractions when it comes to this issue.
+
+#### DOM objects construction
+The last step is creating the final HTML tree and appending it to the DOM for it to show up. This is often a cost
+people ignore, but it is more expensive to create DOM objects with JavaScript code and append them to the document,
+than it is for the browser to directly parse them from markup.
+
+All libraries are subject to this cost, and once again: the greater the complexity of your SVG, the worse this ends up
+being like.
+
+#### Duplicate symbols
+In many cases, some SVGs are rendered many times throughout an app. This may look innocent, but this actually
+worsens the issue! Instead of using a single shared symbol (more on them later), this effectively creates
+a brand new SVG element every time, instead of efficiently cloning an already-parsed element.
+
+This also adds a lot of weight on your pages when served pre-rendered over HTTP: imagine if for every `createElement`
+call, you had to carry the whole function declaration, and have V8 parse it every single time! Here, you'd have the
+whole SVG markup that you'd have to parse every time.
+
+#### Caching
+You're quite unlikely to change your SVGs, but very likely to change your code. For every code change, instead of only
+having to invalidate the JS bundle and have the SVGs cached in a separate file that wouldn't be invalidated, you
+invalidate both the JS app code, and your SVGs. This does lower the efficiency of caching which results in more
+bandwidth for your users and your servers.
+
+This could be addressed with a separate bundle file for all your icons, but it will solve none of the above problems.
+
+### A problem even on the server
+This isn't a problem that solely affects the clients. First obvious cost is bandwidth, due to cache invalidation issues
+we discussed earlier. But if your app uses SSR pre-rendering (or even is fully SSR'd), you're facing the same costs
+every time a page is rendered. You're also likely to serve duplicate symbols and waste bandwidth.
+
+Admittedly, the performance penalty here isn't nearly as huge as on the client (e.g. only a single cold-start), but
+it still is additional overhead you're dealing with for every single request, which adds up.
+
+Yes, efficiency does matter. I may in the future write in more detail about why making efficient software isn't just
+about serving requests faster, but also an important player in *greener and more responsible programming*.
+
+### An approach promoted by popular tools
+At this point, you may wonder why such a harmful practice is so popular. Well, multiple factors are at play here. First,
+this issue is quite poorly documented and there is very little knowledge about it. This is a common problem when looking
+for information about high-performance web development, where there seem to be very limited amount of resources on
+lower level concerns such as JS parsing and execution cost vs. browser parsing cost.
+
+But there's an even bigger player here: the ecosystem. Not all developers may want to carry the whole baggage of
+performance-critical knowledge, and that's totally fine. People want to get job done, not spend countless hours
+nitpicking on small details. In many cases, we expect library and tool developers to carry this knowledge and make
+their software take into account such concerns.
+
+This is a huge thing you see in cybersecurity-related workloads: any expert will **strongly** advise against rolling
+your own cryptographic code, because getting it right is an extremely complex task you probably cannot ever achieve
+alone. Even highly qualified teams struggle to get it right!
+
+One big player in the SVG ecosystem is SVGR. It's a library that allows you to simply import your SVGs and use them as
+React components. Great, right?! You can use `currentColor`, and easily use components with little to no effort, how
+cool is that?!! Turns out, very uncool. SVGR converts SVGs into complete React components, precisely what I've been
+describing as harmful in this blog post. With 9.3k stars on GitHub and 21 million downloads a month on NPM at the
+time of writing, it is a *big* player and a lot of teams are using it, spreading the embedding problem like wildfire.
+
+## A simple solution
+The worst (or best!) part is that there is a very simple solution to this problem: [`<use>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/use).
+This tag allows you to reference a symbol (embedded in the document, or from an external spritesheet) and directly
+*use* it as if the SVG was just here. Full support for `currentColor` as well!
+
+This tag isn't even new. It is widely supported, even IE 11 does have support for it! (source: [caniuse.com](https://caniuse.com/mdn-svg_elements_use)).
+It does solve the problem sorta transparently, which means it probably doesn't even require any code change within
+your codebase to migrate to this, as you can make 1 cheap React component and reuse it throughout the app.
+
+Side note: In some cases, like when doing complex animations on specific elements, you don't have a choice and
+importing the full SVG *does* make sense. But these scenarios are minimal and probably concern 0.1% of all the SVGs
+who have been embedded as React components...
+
+### But tooling like that already exists!
+Yep. Thankfully! However, adoption of these other tools is quite small, and I've found many issues related to them,
+and in fact, with SVG tooling in general. I do believe SVGs are under-exploited and the current ecosystem doesn't
+do a great job at allowing SVGs to shine to their full brightness.
+
+Note that I'm rating the out-of-the-box experiences I had here. The lacking features concern features that are
+part of the SVG standard and that I expect to see supported by tooling as such, and not something that should be the
+job of a plugin of some sort.
+
+Here is a smol list of the major issues I've been facing with existing tooling:
+
+#### Lack of inner processing
+This is by far the biggest issue I have. I sometimes in my SVGs embed bitmap graphics via `<image>`, or already am
+using `<use>` for some complex SVGs and reference other SVG files. But these are all ignored: referenced assets never
+get processed and this results in my SVGs breaking.
+
+I do love SVGs, and sometimes I deal with somewhat complex logos and they require proper handling of these cases in
+order to work. For `<use>` I *could* embed it myself and deal with duplicate code, but I'd rather avoid this if I can.
+For referenced bitmaps, this is an issue that cannot be solved. (No, `data:image/png;` is not a solution. Stop it.)
+
+#### Lack of icons filtering
+Some tooling doesn't allow you to selectively filter icons as you use them, and just bundle **all** icons. This is
+very common with manual, CLI-based tools which don't run as part of the bundling process. It is an understandable
+limitation, but I'd rather not import the 2.4k+ icons from simple-icons just because I use 1 logo... :D
+
+Jason's tweet is an example of what this can lead to. Half of your build, effectively dead code.
+
+#### Lack of code-splitting
+Most tools don't take into account code-splitting. The final result is a single sprite, that some tools don't even
+let you externalize the spritesheet, and it is forcefully embedded into your HTML template file.
+
+Parsing SVGs is cheap, but imagine if you have an admin portal with a handful of icons unique to this context: all of
+your users would still download and parse every single icon from this portal despite them being effectively dead code
+for them.
+
+#### Lack of special case handling capability
+I've experienced in some rare cases (especially when dealing with `clip-path`), that throwing the SVG in a spritesheet
+and referencing it via `<use>` completely breaks it. I just thought to myself, as it happened to be a logo: "not a big
+deal! I'll just use `<img>` for this one". Ha, you thought!
+
+Some tools don't let you break free from the process of turning the SVG into a symbol at all, and at best you give up
+on all processing related to the SVG, which includes compressing the SVG with a tool like SVGO.
+
+## My original answer
+Looking at this, and with a list of must-have features, in May 2021 I started putting together my own solution:
+[vite-plugin-magical-svg](https://github.com/cyyynthia/vite-plugin-magical-svg). A Vite plugin that answered most of
+what I wanted, and which worked great for my personal projects (e.g. [PronounDB](https://pronoundb.org/)), and some of
+my friends.
+
+It's not perfect, but it did what I wanted it to do. It had support for (manual-only) code-splitting (or rather,
+sprite-splitting), import as a plain file (as if it was an image asset, for use with `<img>`), and had support for
+inner SVG references processing. It also included SVGO processing.
+
+But it wasn't perfect. Actually, very far from it. The code itself is quite ugly internally, introduced some
+non-standard behavior with how it processed the SVGs, and had little to no customization possible. You couldn't tweak
+the SVGO config, you couldn't easily use a custom code generator, etc...
+
+### Starting from scratch
+As you can tell, I wasn't satisfied enough with that solution. I also recently started using [Astro](https://astro.build)
+for some of my projects (like this very website!), and wish to bring my tooling to Astro as well. Rather than coping
+with my poor design choices from almost 2 years ago, I decided to start fresh.
+
+I've called this new project SVGSoup. For no specific reason other than it came up in my brain and I found it had a
+nice balance of being silly and cute. It's not ready yet, and I'm still working on it. But it's pretty much the
+successor to vite-plugin-magical-svg, and I hope to make it in a better way this time!
+
+## Final thoughts
+I think the SVG ecosystem is a bit underwhelming in its current shape. The embedding problem is a major issue that
+doesn't get pointed out enough, and the tooling we have today is a bit underwhelming. As some hype-driven companies
+try to reinvent the wheel (*cough cough* vercel), I want to contribute to solving actual problems. And I do!
+
+I love toying with bundlers, and try to bring my own solutions to problems that haven't been solved in a way that I
+find good enough. I don't have much hope for a swift shift, but I hope we can focus on making sure future websites can
+benefit from the lessons we're learning today.

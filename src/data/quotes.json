@@ -1,0 +1,23 @@
+{
+	"special": {
+		"01-01": "Happy new year!",
+		"05-30": "🎂 cake day. i don't know why i haven't jumped off a bridge yet 🤠",
+		"07-14": "🇫🇷 Bonne fête nationale à toutes & tous les français 🇫🇷",
+		"09-21": "On 21 September 2001 at 10h17, an explosion occurred at the AZF factory in Toulouse, France, killing 31 and injuring 2,500. The explosion was equivalent to ~20-30 tons of TNT and heard 80 km away.",
+		"12-25": "Merry Christmas!"
+	},
+	"classic": [
+		"note to self: github's \"Request re-review\" drops all the other pending reviewers. oops 💀",
+		"Building a JS library is accepting the pain of having @types dependencies in your package.json",
+		"The more I use TypeScript the more I want to grgrhizegrhzgrzg.",
+		"EventTarget is a fine Web API. haha just kidding (:",
+		"I have yet-another-side-project to work on 🥲",
+		"Yaml is a horrible format",
+		"I created types which behave way better when I explicitly set some properties to never oh god oh fuck what sort of monster did I create",
+		"\"Web2\" and \"Web3\" are terms that don't make sense and that should be left to cryptobros. Let's stick to simply \"Web\".",
+		"I specialize in being an annoying burden",
+		".gg TLD stands for \"gamer girl\"",
+		"We've been joking about backend devs doing css for years, but these days frontend devs are doing backend and it's honestly not going great 💀",
+		"meow meow nya~ hehe uwu"
+	]
+}
