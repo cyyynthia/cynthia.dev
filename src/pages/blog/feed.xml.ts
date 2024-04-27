@@ -32,7 +32,7 @@ import rss from '@astrojs/rss'
 
 export const prerender = true
 
-export async function get ({ site }: APIContext) {
+export async function GET ({ site }: APIContext) {
 	const blog = await getCollection('blog')
 	return rss({
 		title: 'cynthia\'s blog',

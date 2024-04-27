@@ -14,6 +14,7 @@ export default defineConfig({
 	output: 'server',
 	adapter: node({ mode: 'standalone' }),
 	integrations: [ image(), mdx() ],
+	scopedStyleStrategy: 'where',
 	markdown: {
 		syntaxHighlight: 'shiki',
 		remarkPlugins: [ readingTime ],

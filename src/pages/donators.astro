@@ -34,8 +34,6 @@ import Donator from '../components/Donator.astro'
 
 import donatorsList from '../data/donators.json'
 
-type Donator = typeof donatorsList['others'][number]
-
 const donators = donatorsList.others
 const subscribers = [
 	...donatorsList.diamond,

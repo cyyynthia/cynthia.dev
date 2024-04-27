@@ -59,11 +59,11 @@ const { url, title, description, tags, readingTime, date } = Astro.props
 	</div>
 	<footer class='metadata'>
 		<div class='metadata-item'>
-			<img src={calendar} alt='Calendar icon'/>
+			<img src={calendar.src} alt='Calendar icon'/>
 			<time datetime={date.toISOString().slice(0, 10)}>{dateFormatter.format(date)}</time>
 		</div>
 		<div class='metadata-item'>
-			<img src={clock} alt='Calendar icon'/>
+			<img src={clock.src} alt='Calendar icon'/>
 			<span>{readingTime}</span>
 		</div>
 	</footer>

@@ -46,13 +46,13 @@ function formatDate (str: string) {
 
 const { name, pic, date } = Astro.props
 ---
-<div class='donator'>
+<div class="donator">
 	{pic
-		? <img class='donator-pic' src={files[`../assets/donators/${pic}`]!.default} alt={`${name}'s profile picture'`}/>
-		: <img class='donator-pic-default' src={bird} alt={`${name}'s profile picture'`}/>}
-	<div class='donator-info'>
-		<span class='donator-name'>{name}</span>
-		<span class='donator-date'>{formatDate(date)}</span>
+		? <img class="donator-pic" src={files[`../assets/donators/${pic}`]!.default.src} alt={`${name}'s profile picture'`}/>
+		: <img class="donator-pic-default" src={bird.src} alt={`${name}'s profile picture'`}/>}
+	<div class="donator-info">
+		<span class="donator-name">{name}</span>
+		<span class="donator-date">{formatDate(date)}</span>
 	</div>
 </div>
 
@@ -94,7 +94,7 @@ const { name, pic, date } = Astro.props
 
 	@media (prefers-color-scheme: dark) {
 		.donator {
-			background-color: #202020;
+			background-color: #303030;
 		}
 	}
 </style>

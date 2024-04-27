@@ -37,46 +37,48 @@ import socialImage from '../assets/social-image.png'
 export interface Props {
 	title: string
 	description?: string
+	rss?: string
 }
 
-const { title, description: d } = Astro.props
+const { title, description: d, rss } = Astro.props
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site)
-const socialImageUrl = new URL(socialImage, Astro.site)
+const socialImageUrl = new URL(socialImage.src, Astro.site)
 const description = d || 'meow meow meow meow meow meow'
 ---
-<html lang='en'>
+<html lang="en">
 	<head>
-		<meta charset='utf8'/>
-		<meta name='theme-color' content='#f49898'/>
-		<meta name='viewport' content='width=device-width, initial-scale=1'/>
-		<link rel='shortcut icon' href='/favicon.ico'/>
+		<meta charset="utf8"/>
+		<meta name="theme-color" content="#f49898"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<link rel="shortcut icon" href="/favicon.ico"/>
 
 		<title>{title}</title>
-		<meta name='description' content={description}/>
-		<link rel='canonical' href={canonicalUrl}/>
+		<meta name="description" content={description}/>
+		<link rel="canonical" href={canonicalUrl}/>
+		{rss && <link rel="alternate" type="application/rss+xml" href={rss}/>}
 
-		<meta property='og:site_name' content='cynthia.dev'/>
-		<meta property='og:type' property='og:type' content='website'>
-		<meta property='og:url' content={canonicalUrl}/>
-		<meta property='og:title' content={title}/>
-		<meta property='og:description' content={description}/>
-		<meta property='og:image' content={socialImageUrl}/>
+		<meta property="og:site_name" content="cynthia.dev"/>
+		<meta property="og:type" content="website">
+		<meta property="og:url" content={canonicalUrl}/>
+		<meta property="og:title" content={title}/>
+		<meta property="og:description" content={description}/>
+		<meta property="og:image" content={socialImageUrl}/>
 
-		<meta name='twitter:card' content='summary'/>
-		<meta name='twitter:site' content='@cyyynthia_'/>
-		<meta name='twitter:title' content={title}/>
-		<meta name='twitter:description' content={description}/>
-		<meta name='twitter:image' content={socialImageUrl}/>
+		<meta name="twitter:card" content="summary"/>
+		<meta name="twitter:site" content="@cyyynthia_"/>
+		<meta name="twitter:title" content={title}/>
+		<meta name="twitter:description" content={description}/>
+		<meta name="twitter:image" content={socialImageUrl}/>
 	</head>
 	<body>
 		<Paws/>
-		<div id='page-contents'>
+		<div id="page-contents">
 			<Navbar/>
 			<slot/>
 		</div>
 		<Footer/>
 		<Activity/>
-		<script src='../assets/spa.js'></script>
+		<script src="../assets/spa.js"></script>
 	</body>
 </html>
 
@@ -113,7 +115,9 @@ const description = d || 'meow meow meow meow meow meow'
 	}
 
 	/** DOCUMENT */
-	* { box-sizing: border-box; }
+	* {
+		box-sizing: border-box;
+	}
 
 	:root {
 		--text-color: #000;
@@ -228,7 +232,11 @@ const description = d || 'meow meow meow meow meow meow'
 	}
 
 	@keyframes rotation {
-		from { transform: rotate(0deg); }
-		to { transform: rotate(360deg); }
+		from {
+			transform: rotate(0deg);
+		}
+		to {
+			transform: rotate(360deg);
+		}
 	}
 </style>

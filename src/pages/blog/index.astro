@@ -39,13 +39,13 @@ const posts = await getCollection('blog')
 	.then((posts) => Promise.all(posts.map(async (p) => ({ ...p, ...await p.render() }))))
 	.then((posts) => posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime()))
 ---
-<GlobalLayout title="cynthia's blog">
+<GlobalLayout title="cynthia's blog" rss="/blog/feed.xml">
 	<PageHeader>
 		Cynthia's blog
 	</PageHeader>
 	<main>
-		<Section>I write stuff that may be midly interesting.</Section>
-		<Section class='blog-posts'>
+		<Section>I write stuff that may be mildly interesting. <a href="/blog/feed.xml" target="_blank">RSS Feed</a></Section>
+		<Section class="blog-posts">
 			{posts.map((post) => (
 				<BlogPost
 					url={`/blog/${post.slug}`}
