@@ -92,7 +92,6 @@ let handleNavigation = async (href: string) => {
 
 let clickHandler = (e: MouseEvent) => {
 	if (!(e.target instanceof HTMLAnchorElement)) return
-	console.log(e.target.target)
 	if (e.target.host !== location.host || e.target.target === '_blank') return
 
 	e.preventDefault()
