@@ -29,18 +29,67 @@
 
 import UnderlinedHeading from './UnderlinedHeading.astro'
 
+const transition = {
+	forwards: {
+		old: [
+			{
+				name: "astroFadeOut",
+				duration: "90ms"
+			},
+			{
+				name: "slideToBottom",
+				duration: "220ms"
+			}
+		],
+		new: [
+			{
+				name: "astroFadeIn",
+				duration: "210ms"
+			},
+			{
+				name: "slideFromTop",
+				duration: "220ms"
+			}
+		]
+	},
+	backwards: {
+		old: [
+			{
+				name: "astroFadeOut",
+				duration: "90ms"
+			},
+			{
+				name: "slideToTop",
+				duration: "220ms"
+			}
+		],
+		new: [
+			{
+				name: "astroFadeIn",
+				duration: "210ms"
+			},
+			{
+				name: "slideFromBottom",
+				duration: "220ms"
+			}
+		]
+	}
+}
+
 const now = new Date()
 const france = now.getDate() === 14 && now.getMonth() === 6
 ---
 <header class:list={{ 'has-subtitle': Astro.slots.has('subtitle'), france }}>
-	<UnderlinedHeading level={1} class='title'>
-		<slot/>
-	</UnderlinedHeading>
-	{Astro.slots.has('subtitle') && (
-		<div class='subtitle'>
-			<slot name='subtitle'/>
-		</div>
-	)}
+	<div transition:animate={transition}>
+		<UnderlinedHeading level={1} class='title'>
+			<slot/>
+		</UnderlinedHeading>
+		{Astro.slots.has('subtitle') && (
+			<div class='subtitle'>
+				<slot name='subtitle'/>
+			</div>
+		)}
+	</div>
 </header>
 
 <style>
@@ -52,10 +101,7 @@ const france = now.getDate() === 14 && now.getMonth() === 6
 		min-height: 5.5em;
 		flex-direction: column;
 		justify-content: center;
-	}
-
-	.has-subtitle {
-		margin-bottom: 1.75rem;
+		transform: translateY(0);
 	}
 
 	.france .title :global(span) {
@@ -86,5 +132,29 @@ const france = now.getDate() === 14 && now.getMonth() === 6
 		margin: -0.1rem 0 0;
 		font-weight: 400;
 		font-size: 1.6rem;
+	}
+
+	@keyframes slideFromBottom {
+		from {
+			transform: translateY(50%);
+		}
+	}
+
+	@keyframes slideFromTop {
+		from {
+			transform: translateY(-50%);
+		}
+	}
+
+	@keyframes slideToBottom {
+		to {
+			transform: translateY(50%);
+		}
+	}
+
+	@keyframes slideToTop {
+		to {
+			transform: translateY(-50%);
+		}
 	}
 </style>

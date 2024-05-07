@@ -27,6 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import type { CollectionEntry, Render } from 'astro:content'
 import { getCollection } from 'astro:content'
 
 import GlobalLayout from '../../../layouts/GlobalLayout.astro'
@@ -34,27 +35,46 @@ import PageHeader from '../../../components/PageHeader.astro'
 import Section from '../../../components/Section.astro'
 import BlogPost from '../../../components/BlogPost.astro'
 
-const posts = await getCollection('blog')
-	.then((posts) => posts.filter((p) => p.data.tags.includes(Astro.params.tag!)))
-	// No other way to get the readTime than to render it
-	.then((posts) => Promise.all(posts.map(async (p) => ({ ...p, ...await p.render() }))))
+type TagsData = {
+	params: { tag: string }
+	props: { entries: Array<CollectionEntry<'blog'> & Awaited<Render['.mdx']>> }
+}
 
-if (!posts.length) {
-	return new Response(null, { status: 404, statusText: 'Not found' })
+export async function getStaticPaths () {
+	const tags: Record<string, TagsData> = {}
+
+	const blogEntries = await getCollection('blog')
+	for (const entry of blogEntries) {
+		const rendered = await entry.render()
+		const merged = { ...entry, ...rendered }
+
+		for (const tag of entry.data.tags) {
+			if (!(tag in tags)) {
+				tags[tag] = {
+					params: { tag },
+					props: { entries: [] }
+				}
+			}
+
+			tags[tag]!.props.entries.push(merged)
+		}
+	}
+
+	return Object.values(tags)
 }
 ---
 <GlobalLayout title="cynthia's blog">
 	<PageHeader>
 		Cynthia's blog
-		<Fragment slot='subtitle'>#{Astro.params.tag} posts</Fragment>
+		<Fragment slot="subtitle">#{Astro.params.tag} posts</Fragment>
 	</PageHeader>
 	<main>
 		<Section>
 			I write stuff that may be mildly interesting. Here are all the posts tagged with #{Astro.params.tag}.
-			<a href='/blog'>See all posts</a>
+			<a href="/blog">See all posts</a>
 		</Section>
-		<Section class='blog-posts'>
-			{posts.map((post) => (
+		<Section class="blog-posts">
+			{Astro.props.entries.map((post) => (
 				<BlogPost
 					url={`/blog/${post.slug}`}
 					title={post.data.title}

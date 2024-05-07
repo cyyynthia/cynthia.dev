@@ -50,13 +50,19 @@ const descriptions = [
 	'uses arch btw',
 	'purrs when headpatted',
 ]
-
-const description = descriptions[Math.random() * descriptions.length | 0]
 ---
 <GlobalLayout title="cynthia's website">
 	<PageHeader>
 		Hi, I'm Cynthia
-		<Fragment slot='subtitle'>Catgirl who {description}</Fragment>
+		<Fragment slot='subtitle'>
+			<span>Catgirl who </span>
+			<!-- Put a "default" description, so it works even w/o JS -->
+			<span id="main-page-catgirl-description">{descriptions[Math.random() * descriptions.length | 0]}</span>
+			<script is:inline define:vars={{ descriptions }}>
+				const t = descriptions[Math.random() * descriptions.length | 0]
+				document.getElementById('main-page-catgirl-description').innerText = t
+			</script>
+		</Fragment>
 	</PageHeader>
 	<main>
 		<Section>

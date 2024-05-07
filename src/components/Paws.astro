@@ -27,50 +27,50 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 ---
-<div/>
-<style>
-	div {
+<div id="paws"/>
+
+<style is:global>
+	#paws {
 		display: none;
 		position: fixed;
-		overflow: hidden;
 		top: -115%;
 		left: 0;
-		z-index: 0;
 
 		width: 72px;
 		height: 200%;
 
 		background-image: url('../assets/paw-steps.svg');
 		background-size: 100% auto;
-		background-repeat: repeat;
 
 		transform: translate3d(100px, 100px, 0) rotate(45deg);
 		animation: paw-steps-slide 10s linear infinite;
 	}
 
-	@media (min-width: 970px) {
-		div {
+	@media (min-width: 960px) {
+		#paws {
 			display: block;
 		}
 	}
 
-	@media (min-width: 1060px) {
-		div {
+	@media (min-width: 1050px) {
+		#paws {
 			top: -110%;
 		}
 	}
 
-	@media (min-width: 1180px) {
-		div {
+	@media (min-width: 1140px) {
+		#paws {
+			top: -105%;
+		}
+	}
+
+	@media (min-width: 1240px) {
+		#paws {
 			top: -100%;
 		}
 	}
 
 	@keyframes paw-steps-slide {
-		from {
-			transform: translate3d(100px, 100px, 0) rotate(45deg);
-		}
-
 		to {
 			transform: translate3d(202px, -2px, 0) rotate(45deg);
 		}

@@ -27,6 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { ViewTransitions } from 'astro:transitions'
 import Paws from '../components/Paws.astro'
 import Navbar from '../components/Navbar.astro'
 import Footer from '../components/Footer.astro'
@@ -37,10 +38,9 @@ import socialImage from '../assets/social-image.png'
 export interface Props {
 	title: string
 	description?: string
-	rss?: string
 }
 
-const { title, description: d, rss } = Astro.props
+const { title, description: d } = Astro.props
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site)
 const socialImageUrl = new URL(socialImage.src, Astro.site)
 const description = d || 'meow meow meow meow meow meow'
@@ -55,7 +55,6 @@ const description = d || 'meow meow meow meow meow meow'
 		<title>{title}</title>
 		<meta name="description" content={description}/>
 		<link rel="canonical" href={canonicalUrl}/>
-		{rss && <link rel="alternate" type="application/rss+xml" href={rss}/>}
 
 		<meta property="og:site_name" content="cynthia.dev"/>
 		<meta property="og:type" content="website">
@@ -69,6 +68,9 @@ const description = d || 'meow meow meow meow meow meow'
 		<meta name="twitter:title" content={title}/>
 		<meta name="twitter:description" content={description}/>
 		<meta name="twitter:image" content={socialImageUrl}/>
+
+		<slot name="head"/>
+		<ViewTransitions/>
 	</head>
 	<body>
 		<Paws/>
@@ -78,7 +80,6 @@ const description = d || 'meow meow meow meow meow meow'
 		</div>
 		<Footer/>
 		<Activity/>
-		<script src="../assets/spa.js"></script>
 	</body>
 </html>
 
@@ -141,21 +142,6 @@ const description = d || 'meow meow meow meow meow meow'
 
 		background-color: var(--background-color);
 		color: var(--text-color);
-	}
-
-	body.loading::before {
-		content: '';
-		position: absolute;
-		top: 16px;
-		right: 16px;
-		width: 24px;
-		height: 24px;
-		border: 3px solid #f49898;
-		border-bottom-color: transparent;
-		border-radius: 50%;
-		display: inline-block;
-		box-sizing: border-box;
-		animation: rotation 1s linear infinite;
 	}
 
 	/** MAIN CONTAINER */
@@ -228,15 +214,6 @@ const description = d || 'meow meow meow meow meow meow'
 
 		hr {
 			background-color: #444;
-		}
-	}
-
-	@keyframes rotation {
-		from {
-			transform: rotate(0deg);
-		}
-		to {
-			transform: rotate(360deg);
 		}
 	}
 </style>

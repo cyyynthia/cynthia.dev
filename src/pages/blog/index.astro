@@ -39,7 +39,11 @@ const posts = await getCollection('blog')
 	.then((posts) => Promise.all(posts.map(async (p) => ({ ...p, ...await p.render() }))))
 	.then((posts) => posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime()))
 ---
-<GlobalLayout title="cynthia's blog" rss="/blog/feed.xml">
+<GlobalLayout title="cynthia's blog">
+	<Fragment slot="head">
+		<link rel="alternate" type="application/rss+xml" href="/blog/feed.xml"/>
+	</Fragment>
+
 	<PageHeader>
 		Cynthia's blog
 	</PageHeader>

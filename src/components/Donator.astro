@@ -48,7 +48,7 @@ const { name, pic, date } = Astro.props
 ---
 <div class="donator">
 	{pic
-		? <img class="donator-pic" src={files[`../assets/donators/${pic}`]!.default.src} alt={`${name}'s profile picture'`}/>
+		? <img class="donator-pic" src={(files[`../assets/donators/${pic}`]!.default as any).src} alt={`${name}'s profile picture'`}/>
 		: <img class="donator-pic-default" src={bird.src} alt={`${name}'s profile picture'`}/>}
 	<div class="donator-info">
 		<span class="donator-name">{name}</span>

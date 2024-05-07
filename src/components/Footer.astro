@@ -28,25 +28,26 @@
  */
 
 import quotes from '../data/quotes.json'
-
-const date = new Date().toISOString().slice(5, 10)
-const quote = date in quotes.special
-	? quotes.special[date as keyof typeof quotes.special]
-	: quotes.classic[Math.random() * quotes.classic.length | 0]
 ---
-<footer>
-	<div class='footer-links'>
+<footer transition:persist>
+	<div class="footer-links">
 		<span>meow</span>
-		<div class='separator'/>
-		<span><a href='https://github.com/cyyynthia/cynthia.dev' target='_blank' rel='noreferrer'>sauce code</a></span>
-		<div class='separator'/>
-		<span><a href='https://github.com/sponsors/cyyynthia' target='_blank' rel='noreferrer'>feed me</a></span>
-		<div class='separator'/>
+		<div class="separator"/>
+		<span><a href="https://github.com/cyyynthia/cynthia.dev" target="_blank" rel="noreferrer">sauce code</a></span>
+		<div class="separator"/>
+		<span><a href="https://github.com/sponsors/cyyynthia" target="_blank" rel="noreferrer">feed me</a></span>
+		<div class="separator"/>
 		<span>meow</span>
 	</div>
-	<div class='footer-comment'>
-		{quote}
+	<div class="footer-comment" id="footer-quote-container">
+		<!-- Put a "default" quote, so it works even w/o JS -->
+		{quotes.classic[Math.random() * quotes.classic.length | 0]}
 	</div>
+	<script is:inline define:vars={{ quotes }}>
+		const date = new Date().toISOString().slice(5, 10)
+		const t = date in quotes.special ? quotes.special[date] : quotes.classic[Math.random() * quotes.classic.length | 0]
+		document.getElementById('footer-quote-container').innerText = t
+	</script>
 </footer>
 
 <style>

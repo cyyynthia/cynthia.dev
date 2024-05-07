@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { getEntryBySlug, getCollection } from 'astro:content'
+import { getCollection } from 'astro:content'
 
 import Layout from '../../layouts/GlobalLayout.astro'
 import PageHeader from '../../components/PageHeader.astro'
@@ -35,8 +35,7 @@ import PageHeader from '../../components/PageHeader.astro'
 import calendar from 'feather-icons/dist/icons/calendar.svg'
 import clock from 'feather-icons/dist/icons/clock.svg'
 
-export async function getStaticPaths() {
-	// I *want* to pregen it but muh quirky footer ;w;
+export async function getStaticPaths () {
 	const blogEntries = await getCollection('blog')
 	return blogEntries.map(entry => ({
 		params: { slug: entry.slug },
@@ -50,36 +49,33 @@ const dateFormatter = new Intl.DateTimeFormat('en-GB', {
 	day: 'numeric',
 })
 
-// const { entry } = Astro.props
-const { slug } = Astro.params
-const entry = await getEntryBySlug('blog', slug!)
-if (!entry) {
-	return new Response(null, { status: 404, statusText: 'Not found' })
-}
-
+const { entry } = Astro.props
 const { Content, remarkPluginFrontmatter } = await entry.render()
 ---
 <Layout title={`${entry.data.title} - cynthia's blog`} description={entry.data.description}>
-	<div class='blog-wrapper'>
+	<div class="blog-wrapper">
 		<PageHeader>
 			<Fragment>{entry.data.title}</Fragment>
-			<div class='blog-info' slot='subtitle'>
-				<div class='blog-info-item'>
-					<img src={calendar.src} alt=''/>
-					<time datetime={entry.data.date.toISOString().slice(0, 10)}>{dateFormatter.format(entry.data.date)}</time>
+			<div class="blog-info" slot="subtitle">
+				<div class="blog-info-item">
+					<img src={calendar.src} alt=""/>
+					<time
+						datetime={entry.data.date.toISOString().slice(0, 10)}>{dateFormatter.format(entry.data.date)}</time>
 				</div>
-				<div class='blog-info-item'>
-					<img src={clock.src} alt=''/>
+				<div class="blog-info-item">
+					<img src={clock.src} alt=""/>
 					<span>{remarkPluginFrontmatter.readingTime}</span>
 				</div>
 			</div>
 		</PageHeader>
-		<main class='blog-contents'>
+		<main class="blog-contents">
 			<Content/>
 		</main>
 		<hr/>
-		<div class='blog-license'>
-			Written with love by Cynthia. Contents of this blog are licensed under a <a href='https://creativecommons.org/licenses/by-sa/4.0/' target='_blank' rel='noreferrer'>Creative Commons Attribution-ShareAlike 4.0 International License</a>,
+		<div class="blog-license">
+			Written with love by Cynthia. Contents of this blog are licensed under a <a
+			href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer">Creative Commons
+			Attribution-ShareAlike 4.0 International License</a>,
 			unless stated otherwise. A link to the original blog post suffice as attribution.
 		</div>
 	</div>
