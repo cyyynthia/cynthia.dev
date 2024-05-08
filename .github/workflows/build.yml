@@ -35,4 +35,4 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           ssh-keyscan -p "${{ secrets.SSH_PORT }}" -H "${{ secrets.SSH_HOSTNAME }}" > ~/.ssh/known_hosts
       - name: Push to server with rsync
-        run: rsync -a --no-o --no-g --ignore-existing --rsh "ssh -p ${{ secrets.SSH_PORT }}" dist/ "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOSTNAME }}:$DEPLOY_PATH"
+        run: rsync -a --no-o --no-g --ignore-existing --rsh "ssh -p ${{ secrets.SSH_PORT }}" dist/ "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOSTNAME }}:${{ vars.DEPLOY_PATH }}"
