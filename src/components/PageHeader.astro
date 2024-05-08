@@ -33,60 +33,72 @@ const transition = {
 	forwards: {
 		old: [
 			{
-				name: "astroFadeOut",
-				duration: "90ms"
+				name: 'astroFadeOut',
+				duration: '90ms',
+				fillMode: 'both',
 			},
 			{
-				name: "slideToBottom",
-				duration: "220ms"
-			}
+				name: 'slideToBottom',
+				duration: '90ms',
+				fillMode: 'both',
+			},
 		],
 		new: [
 			{
-				name: "astroFadeIn",
-				duration: "210ms"
+				name: 'astroFadeIn',
+				duration: '90ms',
+				fillMode: 'both',
+				delay: '90ms',
 			},
 			{
-				name: "slideFromTop",
-				duration: "220ms"
-			}
-		]
+				name: 'slideFromTop',
+				duration: '90ms',
+				fillMode: 'both',
+				delay: '90ms',
+			},
+		],
 	},
 	backwards: {
 		old: [
 			{
-				name: "astroFadeOut",
-				duration: "90ms"
+				name: 'astroFadeOut',
+				duration: '90ms',
+				fillMode: 'both',
 			},
 			{
-				name: "slideToTop",
-				duration: "220ms"
-			}
+				name: 'slideToTop',
+				duration: '90ms',
+				fillMode: 'both',
+			},
 		],
 		new: [
 			{
-				name: "astroFadeIn",
-				duration: "210ms"
+				name: 'astroFadeIn',
+				duration: '90ms',
+				fillMode: 'both',
+				delay: '90ms',
 			},
 			{
-				name: "slideFromBottom",
-				duration: "220ms"
-			}
-		]
-	}
+				name: 'slideFromBottom',
+				duration: '90ms',
+				fillMode: 'both',
+				delay: '90ms',
+			},
+		],
+	},
 }
 
 const now = new Date()
 const france = now.getDate() === 14 && now.getMonth() === 6
 ---
 <header class:list={{ 'has-subtitle': Astro.slots.has('subtitle'), france }}>
-	<div transition:animate={transition}>
-		<UnderlinedHeading level={1} class='title'>
+	<div class="transition-wrapper" transition:animate={transition}>
+		<UnderlinedHeading level={1} class="title">
 			<slot/>
 		</UnderlinedHeading>
 		{Astro.slots.has('subtitle') && (
-			<div class='subtitle'>
-				<slot name='subtitle'/>
+			<div class="subtitle">
+				<slot name="subtitle"/>
 			</div>
 		)}
 	</div>
@@ -98,14 +110,9 @@ const france = now.getDate() === 14 && now.getMonth() === 6
 		padding-left: 5.75rem;
 		position: relative;
 		display: flex;
-		min-height: 5.5em;
+		min-height: 5.5rem;
 		flex-direction: column;
 		justify-content: center;
-		transform: translateY(0);
-	}
-
-	.france .title :global(span) {
-		background-image: linear-gradient(90deg, #000091, #000091 33%, #ededed 33%, #ededed 67%, #e1000f 67%, #e1000f);
 	}
 
 	header::before {
@@ -122,10 +129,21 @@ const france = now.getDate() === 14 && now.getMonth() === 6
 		background-repeat: no-repeat;
 	}
 
+	.transition-wrapper {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		height: 100%;
+	}
+
 	.title {
 		margin: 0;
 		font-weight: 500;
 		font-size: 2.4rem;
+	}
+
+	.france .title :global(span) {
+		background-image: linear-gradient(90deg, #000091, #000091 33%, #ededed 33%, #ededed 67%, #e1000f 67%, #e1000f);
 	}
 
 	.subtitle {
@@ -136,25 +154,25 @@ const france = now.getDate() === 14 && now.getMonth() === 6
 
 	@keyframes slideFromBottom {
 		from {
-			transform: translateY(50%);
+			transform: translateY(15%);
 		}
 	}
 
 	@keyframes slideFromTop {
 		from {
-			transform: translateY(-50%);
+			transform: translateY(-15%);
 		}
 	}
 
 	@keyframes slideToBottom {
 		to {
-			transform: translateY(50%);
+			transform: translateY(15%);
 		}
 	}
 
 	@keyframes slideToTop {
 		to {
-			transform: translateY(-50%);
+			transform: translateY(-15%);
 		}
 	}
 </style>
