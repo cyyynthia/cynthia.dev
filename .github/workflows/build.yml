@@ -32,6 +32,6 @@ jobs:
         run: |
           install -m 600 -D /dev/null ~/.ssh/id_ed25519
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          ssh-keyscan -H "${{ secrets.SSH_HOST }}:${{ secrets.SSH_PORT }}" > ~/.ssh/known_hosts
+          ssh-keyscan -p "${{ secrets.SSH_PORT }}" -H "${{ secrets.SSH_HOST }}" > ~/.ssh/known_hosts
       - name: Push to server with rsync
         run: rsync -a --no-o --no-g --ignore-existing --rsh "ssh -p ${{ secrets.SSH_PORT }}" dist/ "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:$DEPLOY_PATH"
