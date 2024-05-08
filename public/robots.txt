@@ -6,3 +6,5 @@ Disallow: /
 
 User-agent: ChatGPT-User
 Disallow: /
+
+Sitemap: https://cynthia.dev/sitemap-index.xml

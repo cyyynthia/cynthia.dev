@@ -16,6 +16,7 @@
 		"@astrojs/check": "^0.6.0",
 		"@astrojs/mdx": "^2.3.1",
 		"@astrojs/rss": "^4.0.5",
+		"@astrojs/sitemap": "^3.1.4",
 		"@types/node": "^20.12.10",
 		"astro": "^4.7.1",
 		"feather-icons": "^4.29.2",

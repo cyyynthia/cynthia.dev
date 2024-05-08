@@ -28,6 +28,7 @@
 
 import { defineConfig } from 'astro/config'
 import mdx from '@astrojs/mdx'
+import sitemap from '@astrojs/sitemap'
 import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
 import rehypeExternalLinks from 'rehype-external-links'
 
@@ -38,7 +39,7 @@ import darkFeminineItalic from './src/assets/dark-feminine-italic-color-theme.js
 
 export default defineConfig({
 	site: 'https://cynthia.dev/',
-	integrations: [ image(), mdx() ],
+	integrations: [ image(), mdx(), sitemap() ],
 	scopedStyleStrategy: 'where',
 	markdown: {
 		syntaxHighlight: 'shiki',
