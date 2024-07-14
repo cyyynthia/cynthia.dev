@@ -89,11 +89,6 @@ const transition = {
 }
 ---
 <header class:list={{ 'has-subtitle': Astro.slots.has('subtitle') }} id="main-header">
-	<script is:inline>
-		let now = new Date()
-		if (now.getDate() === 14 && now.getMonth() === 6)
-			document.getElementById('main-header').classList.add('france')
-	</script>
 	<div class="transition-wrapper" transition:animate={transition}>
 		<UnderlinedHeading level={1} class="title">
 			<slot/>
@@ -103,6 +98,12 @@ const transition = {
 				<slot name="subtitle"/>
 			</div>
 		)}
+
+		<script is:inline>
+			let now = new Date()
+			if (now.getDate() === 14 && now.getMonth() === 6)
+				document.getElementById('main-header').classList.add('france')
+		</script>
 	</div>
 </header>
 
