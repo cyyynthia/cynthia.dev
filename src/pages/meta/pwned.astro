@@ -1,0 +1,86 @@
+---
+/*!
+ * Copyright (c) Cynthia Rey, All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *		list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *		this list of conditions and the following disclaimer in the
+ *		documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the copyright holder nor the names of its contributors
+ *		may be used to endorse or promote products derived from this software without
+ *		specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+import GlobalLayout from '../../layouts/GlobalLayout.astro'
+import PageHeader from '../../components/PageHeader.astro'
+import Section from '../../components/Section.astro'
+
+---
+<GlobalLayout title="pwned! - cynthia's website">
+	<PageHeader>
+		<Fragment>oh, hello there!</Fragment>
+		<Fragment slot="subtitle">
+			you just got pwned, hehe... >:)
+		</Fragment>
+	</PageHeader>
+	<main>
+		<Section>
+			If you landed here <i>unexpectedly</i>, it probably means you've clicked on a link or button without checking...
+			Thankfully, this time, it's harmless and just a silly page! 🍯
+		</Section>
+		<Section title='The risks of untrusted links'>
+			<p>
+				Clicking on links in emails, or online, may seem harmless especially if they look legitimate. However, you
+				should <b>always</b> double check!
+			</p>
+			<p>
+				Most software shows the real target in the <b>bottom left</b> of the window, when <b>hovering</b> the link.
+				Always check, one day you might not be redirected on a harmless page like here...
+			</p>
+			<p>
+			</p>
+			<ul>
+				<li>
+					<a href="https://en.wikipedia.org/wiki/Phishing">Wikipedia article on <i>Phishing</i></a>
+				</li>
+				<li>
+					<i>I wanted to list more resources, but haven't found ones I quite liked yet...</i>
+				</li>
+			</ul>
+			<p>
+				Stay safe out there! The Internet is a scary place... 👻
+			</p>
+		</Section>
+		<Section title='Mandatory Rick-Roll'>
+			<p>
+				This page wouldn't be complete without a Rick-Roll! Whether it's to punish yourself, or just genuinely enjoy
+				the music... Here's the link, as YouTube can't easily be embedded in a privacy-friendly manner.
+			</p>
+			<p style="text-transform: none">
+				<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">https://www.youtube.com/watch?v=dQw4w9WgXcQ</a>
+			</p>
+		</Section>
+	</main>
+</GlobalLayout>
+
+<style>
+	code {
+		text-transform: uppercase;
+	}
+</style>
