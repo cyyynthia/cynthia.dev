@@ -30,21 +30,26 @@ import type { APIContext } from 'astro'
 import { getCollection } from 'astro:content'
 import rss from '@astrojs/rss'
 
-export const prerender = true
-
 export async function GET ({ site }: APIContext) {
 	const blog = await getCollection('blog')
 	return rss({
 		title: 'cynthia\'s blog',
 		description: 'i write stuff that may be mildly interesting',
-		site: site as URL,
-		items: blog.map(post => ({
+		site: site!,
+		items: blog.map((post) => ({
 			title: post.data.title,
-			link: `/${post.collection}/${post.slug}`,
+			link: `/${post.collection}/${post.id}`,
 			description: post.data.description,
 			pubDate: post.data.date,
 			categories: post.data.tags,
 		})),
 		trailingSlash: false,
+		customData: `
+			<copyright>Copyright (c) Cynthia Rey. Licensed under CC-BY-SA 4.0 unless stated otherwise.</copyright>
+			<managingEditor>cynthia@cynthia.dev (Cynthia Rey)</managingEditor>
+			<webMaster>cynthia@cynthia.dev (Cynthia Rey)</webMaster>
+			<language>en-US</language>
+			<generator>@astrojs/rss</generator>
+		`,
 	})
 }

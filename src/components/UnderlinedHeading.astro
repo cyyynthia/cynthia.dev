@@ -38,7 +38,9 @@ const { level, class: className } = Astro.props
 const Heading = `h${level}`
 ---
 <Heading class:list={[ 'underlined', className ]}>
-	<span><slot/></span>
+	<span>
+		<slot />
+	</span>
 </Heading>
 <style>
 	.underlined {

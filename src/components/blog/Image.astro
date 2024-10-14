@@ -27,17 +27,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { Image as AstroImage } from 'astro:assets'
+
 export interface Props {
-	src: string
+	src: ImageMetadata
 	alt: string
 	caption?: string
-	invertable?: boolean
+	invertible?: boolean
 }
 
-const { src, alt, caption, invertable } = Astro.props
+const { src, alt, caption, invertible } = Astro.props
 ---
-<figure class:list={[ { invertable: invertable } ]}>
-	<img src={src} alt={alt}/>
+<figure class:list={[ { invertible } ]}>
+	<AstroImage src={src} alt={alt} />
 	<figcaption>{caption || alt}</figcaption>
 </figure>
 
@@ -52,6 +54,7 @@ const { src, alt, caption, invertable } = Astro.props
 	img {
 		align-self: center;
 		max-width: 100%;
+		height: auto;
 	}
 
 	figcaption {
@@ -69,7 +72,7 @@ const { src, alt, caption, invertable } = Astro.props
 			color: #bbb;
 		}
 
-		.invertable img {
+		.invertible img {
 			filter: invert(1);
 		}
 	}

@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { getCollection } from 'astro:content'
+import { getCollection, render } from 'astro:content'
 
 import Layout from '../../layouts/GlobalLayout.astro'
 import PageHeader from '../../components/PageHeader.astro'
@@ -35,10 +35,12 @@ import PageHeader from '../../components/PageHeader.astro'
 import calendar from 'feather-icons/dist/icons/calendar.svg'
 import clock from 'feather-icons/dist/icons/clock.svg'
 
+import 'remark-github-blockquote-alert/alert.css'
+
 export async function getStaticPaths () {
 	const blogEntries = await getCollection('blog')
 	return blogEntries.map(entry => ({
-		params: { slug: entry.slug },
+		params: { slug: entry.id },
 		props: { entry: entry },
 	}))
 }
@@ -50,7 +52,7 @@ const dateFormatter = new Intl.DateTimeFormat('en-GB', {
 })
 
 const { entry } = Astro.props
-const { Content, remarkPluginFrontmatter } = await entry.render()
+const { Content, remarkPluginFrontmatter } = await render(entry)
 ---
 <Layout title={`${entry.data.title} - cynthia's blog`} description={entry.data.description}>
 	<div class="blog-wrapper">
@@ -58,28 +60,33 @@ const { Content, remarkPluginFrontmatter } = await entry.render()
 			<Fragment>{entry.data.title}</Fragment>
 			<div class="blog-info" slot="subtitle">
 				<div class="blog-info-item">
-					<img src={calendar.src} alt=""/>
-					<time
-						datetime={entry.data.date.toISOString().slice(0, 10)}>{dateFormatter.format(entry.data.date)}</time>
+					<img src={calendar.src} alt="Published on" />
+					<time datetime={entry.data.date.toISOString().slice(0, 10)}>
+						{dateFormatter.format(entry.data.date)}
+					</time>
 				</div>
 				<div class="blog-info-item">
-					<img src={clock.src} alt=""/>
+					<img src={clock.src} alt="Time to read" />
 					<span>{remarkPluginFrontmatter.readingTime}</span>
 				</div>
 			</div>
 		</PageHeader>
 		<main class="blog-contents">
-			<Content/>
+			<Content />
 		</main>
-		<hr/>
+		<hr class="blog-footer-separator" />
 		<div class="blog-license">
-			Written with love by Cynthia. Contents of this blog are licensed under a <a
-			href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer">Creative Commons
-			Attribution-ShareAlike 4.0 International License</a>,
-			unless stated otherwise. A link to the original blog post suffice as attribution.
+			Written with love by Cynthia. Contents of this blog are licensed under a
+			<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer">
+				Creative Commons Attribution-ShareAlike 4.0 International License</a>,
+			unless stated otherwise. Acknowledgement & link to the this post suffice as attribution.
 		</div>
 	</div>
 </Layout>
+
+<script>
+	import 'bluesky-post-embed'
+</script>
 
 <style>
 	.blog-wrapper {
@@ -89,41 +96,60 @@ const { Content, remarkPluginFrontmatter } = await entry.render()
 	.blog-info {
 		display: flex;
 		flex-direction: column;
-		gap: 4px;
+		gap: 0.25rem;
 	}
 
 	.blog-info-item {
 		display: flex;
 		align-items: center;
-		gap: 12px;
+		gap: 0.75rem;
 	}
 
 	.blog-contents {
+		margin-top: 2rem;
+		font-size: 1.125rem;
 		text-align: justify;
 	}
 
+	.blog-contents :global(:is(p, li)) {
+		margin: 0;
+		line-height: 1.5rem;
+	}
+
+	.blog-contents :global(
+		:is(p, bluesky-post, ul, ol) + :is(p, bluesky-post, ul, ol)
+	) {
+		margin-top: 1.75em;
+	}
+
+	.blog-contents :global(li + li) {
+		margin-top: 0.75em;
+	}
+
 	.blog-contents :global(:is(h2, h3, h4, h5, h6)) {
+		margin-top: 2.75rem;
+		margin-bottom: 1rem;
 		font-weight: 500;
 	}
 
 	.blog-contents :global(:is(h2, h3, h4, h5, h6) span) {
 		background-image: linear-gradient(to right, #f49898, #f49898);
-		background-position: 0 1.18em;
-		background-repeat: repeat-x;
-		background-size: 100% .16em;
+		background-position: 0 1.2em;
+		background-repeat: no-repeat;
+		background-size: 25% .125em;
 		padding-bottom: .16em;
 	}
 
 	.blog-contents :global(h2) {
-		font-size: 1.5em;
+		font-size: 1.75em;
 	}
 
 	.blog-contents :global(h3) {
-		font-size: 1.3em;
+		font-size: 1.5em;
 	}
 
 	.blog-contents :global(h4) {
-		font-size: 1.1em;
+		font-size: 1.25em;
 	}
 
 	.blog-contents :global(h5) {
@@ -131,37 +157,61 @@ const { Content, remarkPluginFrontmatter } = await entry.render()
 	}
 
 	.blog-contents :global(h6) {
-		font-size: .9em;
+		font-size: 0.8em;
 	}
 
 	.blog-contents :global(code) {
-		padding: .1em .3em;
+		padding: 0 .2em;
+		margin: -.2em 0;
 		border-radius: 4px;
+		font-size: 85%;
+		line-height: 1.125em;
+		text-indent: 0;
+		white-space: pre-wrap;
 		background-color: #e0e0e0;
+		border: 1px #bbb solid;
 	}
 
 	.blog-contents :global(blockquote) {
-		margin: 1em 0;
+		margin: 1.75em 0;
 		padding: .6em 0 .6em 1.5em;
-		border-left: 5px #bbb solid;
+		border-left: 0.25em #bbb solid;
 	}
 
-	.blog-contents :global(blockquote p:first-child) {
+	.blog-contents :global(blockquote p + p) {
+		margin-top: 1em;
+	}
+
+	.blog-contents :global(.markdown-alert) {
+		margin: 1.75em 0;
+	}
+
+	.blog-contents :global(.markdown-alert p) {
 		margin-top: 0;
+		margin-bottom: 0.75em;
 	}
 
-	.blog-contents :global(blockquote p:last-child) {
-		margin-bottom: 0;
+	.blog-contents :global(.markdown-alert .markdown-alert-title) {
+		margin-top: 0;
+		margin-bottom: 1em;
+		font-weight: 500;
+		font-size: 1em;
 	}
 
 	.blog-contents :global(.astro-code) {
-		padding: 16px;
+		padding: 1em;
+		line-height: 1.2;
 	}
 
 	.blog-contents :global(.astro-code code) {
 		padding: 0;
 		background-color: transparent;
+		border-width: 0;
 		tab-size: 4;
+	}
+
+	.blog-footer-separator {
+		margin: 1.75em 0 0.5em 0;
 	}
 
 	.blog-license {
@@ -174,9 +224,8 @@ const { Content, remarkPluginFrontmatter } = await entry.render()
 		}
 
 		.blog-contents :global(code) {
-			padding: .1em .3em;
-			border-radius: 4px;
 			background-color: #333;
+			border: 1px #111 solid;
 		}
 
 		.blog-contents :global(blockquote) {
@@ -187,7 +236,7 @@ const { Content, remarkPluginFrontmatter } = await entry.render()
 	@media (min-width: 610px) {
 		.blog-info {
 			flex-direction: row;
-			gap: 32px;
+			gap: 1.75em;
 		}
 	}
 </style>

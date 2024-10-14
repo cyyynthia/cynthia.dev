@@ -28,7 +28,7 @@
  */
 
 import type { CollectionEntry, Render } from 'astro:content'
-import { getCollection } from 'astro:content'
+import { getCollection, render } from 'astro:content'
 
 import GlobalLayout from '../../../layouts/GlobalLayout.astro'
 import PageHeader from '../../../components/PageHeader.astro'
@@ -45,14 +45,14 @@ export async function getStaticPaths () {
 
 	const blogEntries = await getCollection('blog')
 	for (const entry of blogEntries) {
-		const rendered = await entry.render()
+		const rendered = await render(entry)
 		const merged = { ...entry, ...rendered }
 
 		for (const tag of entry.data.tags) {
 			if (!(tag in tags)) {
 				tags[tag] = {
 					params: { tag },
-					props: { entries: [] }
+					props: { entries: [] },
 				}
 			}
 
@@ -70,13 +70,13 @@ export async function getStaticPaths () {
 	</PageHeader>
 	<main>
 		<Section>
-			I write stuff that may be mildly interesting. Here are all the posts tagged with #{Astro.params.tag}.
+			Here are all the posts tagged with #{Astro.params.tag}.
 			<a href="/blog">See all posts</a>
 		</Section>
 		<Section class="blog-posts">
 			{Astro.props.entries.map((post) => (
 				<BlogPost
-					url={`/blog/${post.slug}`}
+					url={`/blog/${post.id}`}
 					title={post.data.title}
 					description={post.data.description}
 					tags={post.data.tags}

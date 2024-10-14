@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { getCollection } from 'astro:content'
+import { getCollection, render } from 'astro:content'
 
 import GlobalLayout from '../../layouts/GlobalLayout.astro'
 import PageHeader from '../../components/PageHeader.astro'
@@ -35,24 +35,26 @@ import Section from '../../components/Section.astro'
 import BlogPost from '../../components/BlogPost.astro'
 
 const posts = await getCollection('blog')
-	// No other way to get the readTime than to render it
-	.then((posts) => Promise.all(posts.map(async (p) => ({ ...p, ...await p.render() }))))
+	// No other way to get the readTime than to render it...
+	.then((posts) => Promise.all(posts.map(async (p) => ({ ...p, ...await render(p) }))))
 	.then((posts) => posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime()))
 ---
 <GlobalLayout title="cynthia's blog">
 	<Fragment slot="head">
-		<link rel="alternate" type="application/rss+xml" href="/blog/feed.xml"/>
+		<link rel="alternate" type="application/rss+xml" href="/blog/feed.xml" />
 	</Fragment>
 
 	<PageHeader>
 		Cynthia's blog
 	</PageHeader>
 	<main>
-		<Section>I write stuff that may be mildly interesting. <a href="/blog/feed.xml" target="_blank">RSS Feed</a></Section>
+		<Section>
+			I write stuff that may be mildly interesting. <a href="/blog/feed.xml" target="_blank">RSS Feed</a>
+		</Section>
 		<Section class="blog-posts">
 			{posts.map((post) => (
 				<BlogPost
-					url={`/blog/${post.slug}`}
+					url={`/blog/${post.id}`}
 					title={post.data.title}
 					description={post.data.description}
 					tags={post.data.tags}

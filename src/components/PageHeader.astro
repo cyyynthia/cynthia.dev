@@ -91,11 +91,11 @@ const transition = {
 <header class:list={{ 'has-subtitle': Astro.slots.has('subtitle') }} id="main-header">
 	<div class="transition-wrapper" transition:animate={transition}>
 		<UnderlinedHeading level={1} class="title">
-			<slot/>
+			<slot />
 		</UnderlinedHeading>
 		{Astro.slots.has('subtitle') && (
 			<div class="subtitle">
-				<slot name="subtitle"/>
+				<slot name="subtitle" />
 			</div>
 		)}
 
@@ -116,6 +116,7 @@ const transition = {
 		min-height: 5.5rem;
 		flex-direction: column;
 		justify-content: center;
+		line-height: 1.25;
 	}
 
 	header::before {

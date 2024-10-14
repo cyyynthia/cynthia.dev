@@ -29,12 +29,12 @@
 
 import Link from '../components/Link.astro'
 ---
-<nav class='nav'>
-	<Link href='/' activeClass='active' exact>About me</Link>
-	<Link href='/blog' activeClass='active'>Blog</Link>
-	<Link href='/socials' activeClass='active'>Links &amp; socials</Link>
-	<Link href='/contact' activeClass='active'>Contact</Link>
-	<Link href='/donators' activeClass='active'>Donators</Link>
+<nav class="nav">
+	<Link href="/" activeClass="active" exact>About me</Link>
+	<Link href="/blog" activeClass="active">Blog</Link>
+	<Link href="/socials" activeClass="active">Links &amp; Socials</Link>
+	<Link href="/contact" activeClass="active">Contact</Link>
+	<Link href="/donators" activeClass="active">Donators</Link>
 </nav>
 
 <style>
@@ -43,7 +43,8 @@ import Link from '../components/Link.astro'
 		flex-wrap: wrap;
 		margin-top: 0.25rem;
 		margin-bottom: 2rem;
-		gap: 6px 32px;
+		gap: 0.375rem 2rem;
+		line-height: 1.25;
 	}
 
 	.nav .active {

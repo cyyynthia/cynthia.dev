@@ -8,11 +8,11 @@
 title: Building Accessible Websites
 description: When building a website or an application, a lot of effort goes into making sure the application looks great, that is it aesthetically pleasing. However, we tend to forget not everyone can interact with a computer the same way, and that some people have special needs.
 date: 2023-02-11
-tags: [software, accessibility]
+tags: [software, accessibility, longform]
 ---
 
-import examplePageImage from '../../assets/blog/building-accessible-websites/example-page.png?preprocess'
-import titleTreeStructureImage from '../../assets/blog/building-accessible-websites/title-tree-structure.png?preprocess'
+import examplePageImage from '../../assets/blog/building-accessible-websites/example-page.png'
+import titleTreeStructureImage from '../../assets/blog/building-accessible-websites/title-tree-structure.png'
 import Image from '../../components/blog/Image.astro'
 
 When building a website or an application, a lot of effort goes into making sure the application looks great, and that
@@ -70,7 +70,7 @@ Take the following example "page":
 	src={examplePageImage}
 	alt=''
 	caption='An example page, with 2 main sections, 2 sub-sections in the first section, and a single sub-section in the second.'
-	invertable
+	invertible
 />
 
 If we convert it to a tree structure, we obtain the following tree:
@@ -79,7 +79,7 @@ If we convert it to a tree structure, we obtain the following tree:
 	src={titleTreeStructureImage}
 	alt=''
 	caption='A tree structure representing the title structure of the example document shown above, when applying the rules described earlier.'
-	invertable
+	invertible
 />
 
 Which follows all of my rules. This page is properly structured! Of course, this isn't a bulletproof test, but I find
@@ -194,7 +194,7 @@ your message. Example: "Error: the reader is way too cute".
 In some color-heavy illustrations, such as charts, you should consider making sure colors are distinguishable by
 colorblind people, or that they use other features than color to convey meaning. For example, line charts may use
 different shapes of points and line patterns (solid, dotted, dashes, ...), pie charts may use different patterns to
-fill each part of the pie instead of solid colors, etc.
+fill each part instead of solid colors, etc.
 
 #### Properly describe images
 When your website has images, which it probably does, it must be properly described. And by properly, I don't mean
@@ -246,14 +246,14 @@ does not point where the user thinks it does, further causing friction while nav
 Despite already being quite long, the list of things I gave is only some of the basics, and there are many, many more
 things to consider. Here's a still-non-exhaustive list of additional things to consider:
 
- - Responsive web design counts as accessibility. Making your application scale will make it behave correctly on many
-   devices (not everyone has access to a computer), many screen resolutions (some don't have the luxury of considering
-   16:9 1080p a minimum), etc.
- - Localizing your application is also making it accessible to foreign individuals. I recommend this
-   [blog post from Tolgee](https://tolgee.io/blog/benefits-challenges-software-localization) about the *Benefits and
-   Challenges of Software Localization*. (disclaimer: I am a collaborator on the project).
- - The weight of your app (JS bundle sizes, image optimizations, etc.) counts as accessibility. People with metered
-   and/or slow connections will struggle to access an application that loads 10 MB of JavaScript.
+- Responsive web design counts as accessibility. Making your application scale will make it behave correctly on many
+  devices (not everyone has access to a computer), many screen resolutions (some don't have the luxury of considering
+  16:9 1080p a minimum), etc.
+- Localizing your application is also making it accessible to foreign individuals. I recommend this
+  [blog post from Tolgee](https://tolgee.io/blog/benefits-challenges-software-localization) about the *Benefits and
+  Challenges of Software Localization*. (disclaimer: I am a collaborator on the project).
+- The weight of your app (JS bundle sizes, image optimizations, etc.) counts as accessibility. People with metered
+  and/or slow connections will struggle to access an application that loads 10 MB of JavaScript.
 
 And the list goes on. Thankfully, you don't need to be perfect. You may not need to deal with an international
 audience, or be in a case where providing your website in English is sufficient. And, while some components are
@@ -292,12 +292,12 @@ and accessibility concerns out of view, so your app is accessible by default.
 Radix isn't the only one, but it's my favorite. There are a few other alternative libraries, all with their pros and
 cons. While I personally fell in love with Radix, you might want to check these out:
 
- - [Headless UI](https://headlessui.com/), especially if you're using Tailwind
- - [Reach UI](https://reach.tech/), at the time of writing their website is... yeah. But it's a good library nonetheless!
- - [React Aria](https://react-spectrum.adobe.com/react-aria/) by Adobe
- - [Realkit](https://reakit.io/)
- - [ariakit](https://ariakit.org/)
- - ...and many others I didn't mention here!
+- [Headless UI](https://headlessui.com/), especially if you're using Tailwind
+- [Reach UI](https://reach.tech/), at the time of writing their website is... yeah. But it's a good library nonetheless!
+- [React Aria](https://react-spectrum.adobe.com/react-aria/) by Adobe
+- [Realkit](https://reakit.io/)
+- [ariakit](https://ariakit.org/)
+- ...and many others I didn't mention here!
 
 You may also want to check [shadcn/ui](https://ui.shadcn.com/) for beautiful components built with Radix and Tailwind.
 It's not developed as a package, but rather as things you can copy/paste into your code, so you can use it as a
@@ -311,5 +311,11 @@ In the next part of this series about accessibility, I will be tackling how ever
 Internet more accessible. Yes, everyone! Some things happen, especially on social media, which negatively affect
 accessibility. By raising awareness and correcting certain behaviors, we can make sure the Internet is more accessible.
 
-*Want to be notified when the next episode is out? Join my [Discord server](https://discord.gg/VnxPeNHHpG), and get
-the "blog updates" role to be notified, or follow me on [Twitter](https://twitter.com/cyyynthia_)!*
+> [!TIP]
+> *Want to be notified when the next episode is out? Join my [Discord server](https://discord.gg/VnxPeNHHpG), and get
+> the "blog updates" role to be notified, or follow me on [Twitter](https://twitter.com/cyyynthia_)!*
+
+> [!NOTE]
+> *Update (October 14, 2024)* -- Wow, it's been a while since I wrote that! Life has been a wild ride for me, and I
+> haven't managed to put together the next episodes of this "series" on accessibility. I'm still interested in writing
+> them, though I can't guarantee they'll come in a timely manner... 😅

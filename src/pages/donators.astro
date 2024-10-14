@@ -55,14 +55,16 @@ const subscribers = [
 		<Section>
 			Massive thanks to everyone who donated to me. It means a lot, no matter the amount!
 		</Section>
-		<Section title='Subscribers'>
-			<div class='donators'>
-				{subscribers.map(({ name, pic, date }) => <Donator name={name} pic={pic} date={date}/>)}
+		<Section title="Subscribers">
+			<div class="donators">
+				{subscribers.map(({ name, pic, date }) =>
+					<Donator name={name} pic={pic} date={date} />)}
 			</div>
 		</Section>
-		<Section title='One-time & past subscribers'>
-			<div class='donators'>
-				{donators.map(({ name, pic, date }) => <Donator name={name} pic={pic} date={date}/>)}
+		<Section title="One-time & past subscribers">
+			<div class="donators">
+				{donators.map(({ name, pic, date }) =>
+					<Donator name={name} pic={pic} date={date} />)}
 			</div>
 		</Section>
 	</main>

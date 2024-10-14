@@ -6,25 +6,25 @@
 #! https://creativecommons.org/licenses/by-sa/4.0/
 
 title: The state of SVGs on the Web
-description: SVG (Scalable Vector Graphics) is a widely used image format on the Web. However, due to its nature, it tends to be heavily misused and some popular tools encourage such misue. Let's sit back and look at what's wrong, and what we can do to fix it.
+description: SVG (Scalable Vector Graphics) is a widely used image format on the Web. However, due to its nature, it tends to be heavily misused and some popular tools encourage such misuse. Let's sit back and look at what's wrong, and what we can do to fix it.
 date: 2023-01-10
-tags: [software, performance]
+tags: [software, performance, longform]
 ---
 
 SVG (Scalable Vector Graphics) is a widely used image format on the Web. However, due to its nature, it tends to be
-heavily misused and some popular tools encourage such misue. Let's sit back and look at what's wrong, and what we
+heavily misused and some popular tools encourage such misuse. Let's sit back and look at what's wrong, and what we
 can do to fix it.
 
 ## The embedding problem
 I read a [tweet](https://twitter.com/_developit/status/1382838799420514317) from Preact creator's Jason Miller back in
-early 2021, which acted as a real eye opener.
+early 2021, which acted as a real eye-opener.
 
 > Please don't import SVGs as JSX. It's the most expensive form of sprite sheet: costs a minimum of 3x more than other
 > techniques, and hurts both runtime (rendering) performance and memory usage.
 >
 > [A] bundle from a popular site is almost 50% SVG icons (250kb), and most are unused.
 >
-> -- <cite>Jason Miller (@_developit)</cite>
+> -- <i>Jason Miller (@_developit)</i>
 
 The elephant in the room here is the amount of dead code served, due to the lack of icon filtering in the case Jason
 describes. But the story doesn't end there, and in fact, is only the tip of the iceberg.
@@ -138,18 +138,18 @@ job of a plugin of some sort.
 Here is a smol list of the major issues I've been facing with existing tooling:
 
 #### Lack of inner processing
-This is by far the biggest issue I have. I sometimes in my SVGs embed bitmap graphics via `<image>`, or already am
+This is by far the biggest issue I have. I sometimes in my SVGs embed bitmap graphics via `<image>`, or I already am
 using `<use>` for some complex SVGs and reference other SVG files. But these are all ignored: referenced assets never
 get processed and this results in my SVGs breaking.
 
-I do love SVGs, and sometimes I deal with somewhat complex logos and they require proper handling of these cases in
+I do love SVGs, and sometimes I deal with somewhat complex logos, and they require proper handling of these cases in
 order to work. For `<use>` I *could* embed it myself and deal with duplicate code, but I'd rather avoid this if I can.
 For referenced bitmaps, this is an issue that cannot be solved. (No, `data:image/png;` is not a solution. Stop it.)
 
 #### Lack of icons filtering
 Some tooling doesn't allow you to selectively filter icons as you use them, and just bundle **all** icons. This is
 very common with manual, CLI-based tools which don't run as part of the bundling process. It is an understandable
-limitation, but I'd rather not import the 2.4k+ icons from simple-icons just because I use 1 logo... :D
+limitation, but I'd rather not import the 2.4k+ icons from simple-icons just because I use 1 logo... 😃
 
 Jason's tweet is an example of what this can lead to. Half of your build, effectively dead code.
 
@@ -191,6 +191,11 @@ with my poor design choices from almost 2 years ago, I decided to start fresh.
 I've called this new project SVGSoup. For no specific reason other than it came up in my brain and I found it had a
 nice balance of being silly and cute. It's not ready yet, and I'm still working on it. But it's pretty much the
 successor to vite-plugin-magical-svg, and I hope to make it in a better way this time!
+
+> [!NOTE]
+> *Update (October 14, 2024)* -- Wow, it's been a while since I wrote that! Life has been a wild ride for me, and I've
+> had multiple people ask where this hypothetical successor's at now. I haven't had much time to invest in it, so
+> vite-plugin-magical-svg is still a very relevant solution today and for the foreseeable future.
 
 ## Final thoughts
 I think the SVG ecosystem is a bit underwhelming in its current shape. The embedding problem is a major issue that

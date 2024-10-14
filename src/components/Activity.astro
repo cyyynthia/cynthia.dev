@@ -27,10 +27,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 ---
-<div id='activity' class='activity hidden'>
-	<span id='activity-title'>I'm currently listening to</span>
-	<span id='activity-name'></span>
-	<span id='activity-detail'></span>
+<div id="activity" class="activity hidden">
+	<span id="activity-title">I'm currently listening to</span>
+	<span id="activity-name"></span>
+	<span id="activity-detail"></span>
 </div>
 
 <style>
@@ -75,27 +75,27 @@
 <script>
 	type Activity = { playing: boolean, name: string, artist: string }
 
-	const widget = document.getElementById('activity')!
-	// const title = document.getElementById('activity-title')!
-	const name = document.getElementById('activity-name')!
-	const detail = document.getElementById('activity-detail')!
+		const widget = document.getElementById('activity')!
+		// const title = document.getElementById('activity-title')!
+		const name = document.getElementById('activity-name')!
+		const detail = document.getElementById('activity-detail')!
 
-	function onMessage (activity: Activity) {
-		if (!activity.playing) {
-			widget.classList.add('hidden')
-			return
-		}
+		function onMessage (activity: Activity) {
+			if (!activity.playing) {
+				widget.classList.add('hidden')
+				return
+				}
 
-		widget.classList.remove('hidden')
-		name.innerText = name.title = activity.name
-		detail.innerText = detail.title = 'by ' + activity.artist
-	}
+			widget.classList.remove('hidden')
+			name.innerText = name.title = activity.name
+			detail.innerText = detail.title = 'by ' + activity.artist
+			}
 
-	function connect () {
-		const ws = new WebSocket('wss://cynthia.rest/activity')
-		ws.addEventListener('message', (e) => onMessage(JSON.parse(e.data)))
-		ws.addEventListener('close', () => setTimeout(connect, 250))
-	}
+		function connect () {
+			const ws = new WebSocket('wss://cynthia.rest/activity')
+			ws.addEventListener('message', (e) => onMessage(JSON.parse(e.data)))
+			ws.addEventListener('close', () => setTimeout(connect, 250))
+			}
 
-	connect()
+		connect()
 </script>

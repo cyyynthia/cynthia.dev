@@ -49,21 +49,21 @@ const dateFormatter = new Intl.DateTimeFormat('en-GB', {
 
 const { url, title, description, tags, readingTime, date } = Astro.props
 ---
-<article class='blog-post'>
+<article class="blog-post">
 	<UnderlinedHeading level={2}>
-		<a href={url} class='title'>{title}</a>
+		<a href={url} class="title">{title}</a>
 	</UnderlinedHeading>
-	<p class='description'>{description}</p>
-	<div class='tags'>
+	<p class="description">{description}</p>
+	<div class="tags">
 		{tags.map((t) => <a href={`/blog/tags/${t}`}>#{t}</a>)}
 	</div>
-	<footer class='metadata'>
-		<div class='metadata-item'>
-			<img src={calendar.src} alt='Calendar icon'/>
+	<footer class="metadata">
+		<div class="metadata-item">
+			<img src={calendar.src} alt="Published on" />
 			<time datetime={date.toISOString().slice(0, 10)}>{dateFormatter.format(date)}</time>
 		</div>
-		<div class='metadata-item'>
-			<img src={clock.src} alt='Calendar icon'/>
+		<div class="metadata-item">
+			<img src={clock.src} alt="Time to read" />
 			<span>{readingTime}</span>
 		</div>
 	</footer>

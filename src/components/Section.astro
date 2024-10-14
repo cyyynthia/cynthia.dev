@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import type { AstroBuiltinAttributes } from 'astro';
+import type { AstroBuiltinAttributes } from 'astro'
 import UnderlinedHeading from './UnderlinedHeading.astro'
 
 export interface Props {
@@ -38,8 +38,8 @@ export interface Props {
 const { title, class: className } = Astro.props
 ---
 <section class:list={[ className ]}>
-	{title && <UnderlinedHeading level={2} class='title'>{title}</UnderlinedHeading>}
-	<slot/>
+	{title && <UnderlinedHeading level={2} class="title">{title}</UnderlinedHeading>}
+	<slot />
 </section>
 
 <style>

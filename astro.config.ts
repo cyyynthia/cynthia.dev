@@ -29,24 +29,29 @@
 import { defineConfig } from 'astro/config'
 import mdx from '@astrojs/mdx'
 import sitemap from '@astrojs/sitemap'
-import { rehypeAccessibleEmojis } from 'rehype-accessible-emojis'
 import rehypeExternalLinks from 'rehype-external-links'
+import { remarkAlert } from 'remark-github-blockquote-alert'
 
-import image from './build/image.js'
 import headers from './build/headers.js'
 import readingTime from './build/readingTime.js'
 import darkFeminineItalic from './src/assets/dark-feminine-italic-color-theme.json'
 
 export default defineConfig({
 	site: 'https://cynthia.dev/',
-	integrations: [ image(), mdx(), sitemap() ],
+	integrations: [
+		mdx(),
+		sitemap({
+			filter: (page) =>
+				!page.startsWith('https://cynthia.dev/meta/')
+		})
+	],
 	scopedStyleStrategy: 'where',
 	markdown: {
-		syntaxHighlight: 'shiki',
-		remarkPlugins: [ readingTime ],
+		remarkPlugins: [
+			readingTime,
+			remarkAlert,
+		],
 		rehypePlugins: [
-			// @ts-expect-error -- ok TS
-			rehypeAccessibleEmojis,
 			headers,
 			[ rehypeExternalLinks, { target: '_blank', rel: 'noreferrer' } ]
 		],

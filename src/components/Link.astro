@@ -42,5 +42,5 @@ const matches = exact
 	: Astro.url.pathname.startsWith(href)
 ---
 <a href={href} class:list={[ cls, matches && activeClass ]}>
-	<slot/>
+	<slot />
 </a>

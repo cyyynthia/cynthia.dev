@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { ViewTransitions } from 'astro:transitions'
+import { ClientRouter } from 'astro:transitions'
 import Paws from '../components/Paws.astro'
 import Navbar from '../components/Navbar.astro'
 import Footer from '../components/Footer.astro'
@@ -38,49 +38,51 @@ import socialImage from '../assets/social-image.png'
 export interface Props {
 	title: string
 	description?: string
+	robotsHidden?: boolean
 }
 
-const { title, description: d } = Astro.props
+const { title, description: d, robotsHidden } = Astro.props
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site)
 const socialImageUrl = new URL(socialImage.src, Astro.site)
 const description = d || 'meow meow meow meow meow meow'
 ---
 <html lang="en">
 	<head>
-		<meta charset="utf8"/>
-		<meta name="theme-color" content="#f49898"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1"/>
-		<link rel="shortcut icon" href="/favicon.ico"/>
+		<meta charset="utf8" />
+		<meta name="theme-color" content="#f49898" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="shortcut icon" href="/favicon.ico" />
 
 		<title>{title}</title>
-		<meta name="description" content={description}/>
-		<link rel="canonical" href={canonicalUrl}/>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalUrl} />
 
-		<meta property="og:site_name" content="cynthia.dev"/>
+		<meta property="og:site_name" content="cynthia.dev" />
 		<meta property="og:type" content="website">
-		<meta property="og:url" content={canonicalUrl}/>
-		<meta property="og:title" content={title}/>
-		<meta property="og:description" content={description}/>
-		<meta property="og:image" content={socialImageUrl}/>
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={socialImageUrl} />
 
-		<meta name="twitter:card" content="summary"/>
-		<meta name="twitter:site" content="@cyyynthia_"/>
-		<meta name="twitter:title" content={title}/>
-		<meta name="twitter:description" content={description}/>
-		<meta name="twitter:image" content={socialImageUrl}/>
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:site" content="@cyyynthia_" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={socialImageUrl} />
 
+		{robotsHidden && <meta name="robots" content="noindex, nofollow" />}
 		<link rel="sitemap" href="/sitemap-index.xml" />
-		<slot name="head"/>
-		<ViewTransitions/>
+		<slot name="head" />
+		<ClientRouter />
 	</head>
 	<body>
-		<Paws/>
+		<Paws />
 		<div id="page-contents">
-			<Navbar/>
-			<slot/>
+			<Navbar />
+			<slot />
 		</div>
-		<Footer/>
-		<Activity/>
+		<Footer />
+		<Activity />
 	</body>
 </html>
 
@@ -122,7 +124,8 @@ const description = d || 'meow meow meow meow meow meow'
 	}
 
 	:root {
-		--text-color: #000;
+		--text-color: #222;
+		--header-color: #000;
 		--background-color: #fff;
 	}
 
@@ -131,6 +134,12 @@ const description = d || 'meow meow meow meow meow meow'
 		height: 100%;
 		padding: 0;
 		margin: 0;
+
+		line-height: 1.375;
+		scrollbar-gutter: stable;
+
+		background-color: var(--background-color);
+		color: var(--text-color);
 	}
 
 	body {
@@ -140,9 +149,6 @@ const description = d || 'meow meow meow meow meow meow'
 		font-family: 'Lexend', sans-serif;
 		text-rendering: optimizeLegibility;
 		text-transform: lowercase;
-
-		background-color: var(--background-color);
-		color: var(--text-color);
 	}
 
 	/** MAIN CONTAINER */
@@ -159,7 +165,7 @@ const description = d || 'meow meow meow meow meow meow'
 
 	@media (min-width: 720px) {
 		#page-contents {
-			width: 45%;
+			width: 45vw;
 			min-width: 720px;
 		}
 	}
@@ -192,6 +198,10 @@ const description = d || 'meow meow meow meow meow meow'
 	}
 
 	/** MISC */
+	h1, h2, h3, h4, h5, h6 {
+		color: var(--header-color);
+	}
+
 	code {
 		font-size: 0.825rem;
 		font-family: monospace;
@@ -210,6 +220,7 @@ const description = d || 'meow meow meow meow meow meow'
 	@media (prefers-color-scheme: dark) {
 		:root {
 			--text-color: #cfcfcf;
+			--header-color: #dfdfdf;
 			--background-color: #202020;
 		}
 
