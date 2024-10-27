@@ -98,11 +98,9 @@ const descriptions = [
 		</Section>
 		<Section title="My work">
 			<p>
-				I've wrangled some software at <a href="https://tolgee.io" target="_blank"
-												  rel="noreferrer">tolgee.io</a>,
+				I've wrangled some software at <a href="https://tolgee.io" target="_blank" rel="noreferrer">tolgee.io</a>,
 				an open-core localization platform you can selfhost if you're not into SaaS. I highly recommend checking
-				it out
-				if you're looking for an alternative to proprietary crowdin or bloated weblate. 🙌
+				it out if you're looking for an alternative to proprietary crowdin or bloated weblate. 🙌
 			</p>
 			<p>
 				Some of my work includes:
@@ -110,19 +108,62 @@ const descriptions = [
 			<ul>
 				<li>
 					<a href="https://github.com/tolgee/tolgee-cli" target="_blank" rel="noreferrer">tolgee-cli</a>, a
-					cli to
-					interact with Tolgee easily and extract strings from your code automagically.
+					cli to interact with Tolgee easily and extract strings from your code automagically.
 				</li>
 				<li>
 					<a href="https://github.com/tolgee/vite-plugin-i18n-tolgee" target="_blank" rel="noreferrer">vite-plugin-i18n-tolgee</a>,
 					a proof of concept at compile-time based localization tooling for the Web via a Vite plugin,
-					featuring ICU
-					pre-processing, static analysis and error-checking, and more.
+					featuring ICU pre-processing, static analysis and error-checking, and more.
 				</li>
 				<li>
-					...and some contributions to <a href="https://github.com/tolgee/tolgee-platform" target="_blank" rel="noreferrer">Tolgee itself</a>.
+					...and some contributions to <a href="https://github.com/tolgee/tolgee-platform" target="_blank"
+													rel="noreferrer">Tolgee itself</a>.
 				</li>
 			</ul>
 		</Section>
 	</main>
 </GlobalLayout>
+
+<script>
+	// Hack to not be annoyed by number vs NodeJS.Timeout shenanigans
+	type Timeout = ReturnType<typeof setTimeout>
+
+	let keys: string[] = [ 'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'B', 'A' ]
+	let current: number = 0
+	let timeout: Timeout | null = null
+
+	window.addEventListener('keydown', (e) => {
+		if (timeout) {
+			clearTimeout(timeout)
+			timeout = null
+		}
+
+		// If modifier is pressed, ignore
+		if (e.ctrlKey || e.shiftKey || e.altKey || e.metaKey) {
+			current = 0
+			return
+		}
+
+		// Check the sequence
+		let k = e.key.length > 1 ? e.key : e.key.toUpperCase()
+		if (keys[current] === k) {
+			current++
+		}
+
+		// We got the code!
+		if (keys.length === current) {
+			current = 0
+			onKonamiCode()
+		} else {
+			// Consider the attempt abandoned if no key is pressed within a second
+			timeout = setTimeout(() => {
+				current = 0
+				timeout = null
+			}, 1e3)
+		}
+	})
+
+	function onKonamiCode () {
+		console.log('nerd')
+	}
+</script>

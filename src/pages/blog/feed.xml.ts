@@ -30,6 +30,9 @@ import type { APIContext } from 'astro'
 import { getCollection } from 'astro:content'
 import rss from '@astrojs/rss'
 
+import { version as astroVersion } from 'astro/package.json' with { type: 'json' }
+import { version as rssVersion } from '@astrojs/rss/package.json' with { type: 'json' }
+
 export async function GET ({ site }: APIContext) {
 	const blog = await getCollection('blog')
 	return rss({
@@ -44,12 +47,16 @@ export async function GET ({ site }: APIContext) {
 			categories: post.data.tags,
 		})),
 		trailingSlash: false,
+		xmlns: {
+			atom: 'http://www.w3.org/2005/Atom'
+		},
 		customData: `
-			<copyright>Copyright (c) Cynthia Rey. Licensed under CC-BY-SA 4.0 unless stated otherwise.</copyright>
+			<language>en-US</language>
+			<copyright>Copyright (c) Cynthia Rey. Licensed under CC BY-SA 4.0 unless stated otherwise.</copyright>
 			<managingEditor>cynthia@cynthia.dev (Cynthia Rey)</managingEditor>
 			<webMaster>cynthia@cynthia.dev (Cynthia Rey)</webMaster>
-			<language>en-US</language>
-			<generator>@astrojs/rss</generator>
+			<generator>@astrojs/rss v${rssVersion} (Astro v${astroVersion})</generator>
+			<atom:link href="https://cynthia.dev/blog/feed.xml" rel="self" type="application/rss+xml" />
 		`,
 	})
 }
