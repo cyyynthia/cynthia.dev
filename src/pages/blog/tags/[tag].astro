@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import type { CollectionEntry, Render } from 'astro:content'
+import type { CollectionEntry, RenderResult } from 'astro:content'
 import { getCollection, render } from 'astro:content'
 
 import GlobalLayout from '../../../layouts/GlobalLayout.astro'
@@ -37,7 +37,7 @@ import BlogPost from '../../../components/BlogPost.astro'
 
 type TagsData = {
 	params: { tag: string }
-	props: { entries: Array<CollectionEntry<'blog'> & Awaited<Render['.mdx']>> }
+	props: { entries: Array<CollectionEntry<'blog'> & Awaited<RenderResult>> }
 }
 
 export async function getStaticPaths () {
