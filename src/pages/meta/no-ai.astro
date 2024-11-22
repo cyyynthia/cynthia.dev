@@ -27,12 +27,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import Skeleton from '../../layouts/Skeleton.astro'
+import StyledSkeleton from '../../layouts/StyledSkeleton.astro'
 import Section from '../../components/Section.astro'
 
 import arrowLeftSvg from 'feather-icons/dist/icons/arrow-left.svg?raw'
 ---
-<Skeleton title="No Generative AI - cynthia's website" robots-hidden>
+<StyledSkeleton title="No Generative AI - cynthia's website" robots-hidden>
 	<main id="page-contents">
 		<a href="/" class="www-link">
 			<Fragment set:html={arrowLeftSvg} />
@@ -74,7 +74,7 @@ import arrowLeftSvg from 'feather-icons/dist/icons/arrow-left.svg?raw'
 			Whether you're creating something, or learning a skill, <u>struggling is a vital part of the process</u>.
 		</Section>
 	</main>
-</Skeleton>
+</StyledSkeleton>
 
 <style>
 	main#page-contents {

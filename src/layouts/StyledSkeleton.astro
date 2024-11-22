@@ -1,0 +1,165 @@
+---
+/*!
+ * Copyright (c) Cynthia Rey, All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the copyright holder nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software without
+ *    specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+import Skeleton from './Skeleton.astro'
+
+export type { Props } from './Skeleton.astro'
+---
+<Skeleton {...Astro.props}>
+	<slot />
+</Skeleton>
+
+<style is:global>
+	/** FONTS */
+	@font-face {
+		font-family: 'Lexend';
+		font-style: normal;
+		font-weight: 100 900;
+		font-display: swap;
+		src: url(../assets/fonts/lexend-variable.woff2) format('woff2');
+	}
+
+	@font-face {
+		font-family: 'JetBrains Mono';
+		font-style: normal;
+		font-display: swap;
+		src: url(../assets/fonts/jetbrains-mono-regular.woff2) format('woff2');
+	}
+
+	/** DOCUMENT */
+	* {
+		box-sizing: border-box;
+	}
+
+	:root {
+		--text-color: #222;
+		--header-color: #000;
+		--background-color: #fff;
+	}
+
+	html, body {
+		width: 100%;
+		height: 100%;
+		padding: 0;
+		margin: 0;
+
+		line-height: 1.375;
+		scrollbar-gutter: stable;
+
+		background-color: var(--background-color);
+		color: var(--text-color);
+	}
+
+	body {
+		display: flex;
+		flex-direction: column;
+
+		font-family: 'Lexend', sans-serif;
+		text-rendering: optimizeLegibility;
+		text-transform: lowercase;
+	}
+
+	/** MAIN CONTAINER */
+	#page-contents {
+		display: flex;
+		flex-direction: column;
+		padding: 0 1rem;
+		margin: 0 auto;
+		width: 100%;
+
+		position: relative;
+		z-index: 1;
+	}
+
+	@media (min-width: 720px) {
+		#page-contents {
+			width: 45vw;
+			min-width: 720px;
+		}
+	}
+
+	/** LINKS */
+	a {
+		color: inherit;
+		text-decoration: none;
+		position: relative;
+
+		background-image: linear-gradient(to right, #f49898, #f49898 50%, currentColor 50%, currentColor);
+		background-position: 100% 1.18em;
+		background-repeat: repeat-x;
+		background-size: 200% 0.06rem;
+
+		transition: background-position-x .3s;
+	}
+
+	a:hover {
+		background-position-x: 0;
+	}
+
+	/** LISTS */
+	ol, ul {
+		margin: 1em 0 0;
+	}
+
+	li:not(:last-child) {
+		margin-bottom: 0.25rem;
+	}
+
+	/** MISC */
+	h1, h2, h3, h4, h5, h6 {
+		color: var(--header-color);
+	}
+
+	code {
+		font-size: 0.825rem;
+		font-family: "JetBrains Mono", monospace;
+		font-weight: 500;
+	}
+
+	hr {
+		display: block;
+		border: 0;
+		background-color: #ccc;
+		height: 1px;
+		width: 100%;
+	}
+
+	/** DARK THEME */
+	@media (prefers-color-scheme: dark) {
+		:root {
+			--text-color: #cfcfcf;
+			--header-color: #dfdfdf;
+			--background-color: #202020;
+		}
+
+		hr {
+			background-color: #444;
+		}
+	}
+</style>
