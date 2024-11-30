@@ -1,39 +1,37 @@
 ---
 // Component originally written by Mary
-// https://codeberg.org/mary-ext/astro-bluesky-post/src/branch/trunk/src/components/BlueskyPost.astro
+// https://github.com/mary-ext/bluesky-embed-astro/blob/trunk/src/components/BlueskyPost.astro
 
-import * as core from 'bluesky-post-embed/core'
-import stylesUrl from 'bluesky-post-embed/style.css?url'
+import { fetchPost, renderPost } from 'bluesky-embed/post/core'
 
 interface Props {
-	src: string;
-	contextLess?: boolean;
+	uri: string;
 }
 
-const { src, contextLess = false } = Astro.props
+const { uri } = Astro.props
 
-const data = await core.get(src, contextLess)
-const template = core.render(data, contextLess)
+const data = await fetchPost({ uri })
+const render = renderPost(data)
 ---
-<bluesky-post src={src} theme="light">
-	<template shadowrootmode="open">
-		<link rel="stylesheet" href={stylesUrl} />
-		<Fragment set:html={template.value} />
-	</template>
+<bluesky-post src={data.thread?.post.uri}>
+	<Fragment set:html={render} />
 </bluesky-post>
 
-<script>
-	import 'bluesky-post-embed'
+<style is:global>
+	@import 'bluesky-embed/post/style.css';
+	@import 'bluesky-embed/themes/light.css' (prefers-color-scheme: light);
+	@import 'bluesky-embed/themes/dim.css' (prefers-color-scheme: dark);
 
-	const dark = matchMedia('(prefers-color-scheme: dark)')
-	const updateTheme = () => {
-		const isDark = dark.matches
-		for (const node of document.querySelectorAll('bluesky-post')) {
-			node.setAttribute('theme', !isDark ? 'light' : 'dark')
-		}
+	bluesky-post {
+		display: block;
+		text-align: left;
 	}
 
-	document.addEventListener('astro:after-swap', updateTheme)
-	dark.addEventListener('change', updateTheme)
-	updateTheme()
+	bluesky-post a {
+		background: none;
+	}
+</style>
+
+<script>
+	import 'bluesky-embed/post/wc'
 </script>

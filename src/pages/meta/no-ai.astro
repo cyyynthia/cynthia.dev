@@ -35,7 +35,7 @@ import arrowLeftSvg from 'feather-icons/dist/icons/arrow-left.svg?raw'
 <Skeleton title="No Generative AI - cynthia's website" robots-hidden>
 	<main id="page-contents">
 		<a href="/" class="www-link">
-			<Fragment set:html={arrowLeftSvg}/>
+			<Fragment set:html={arrowLeftSvg} />
 			<span>Go to cynthia.dev</span>
 		</a>
 
@@ -45,6 +45,7 @@ import arrowLeftSvg from 'feather-icons/dist/icons/arrow-left.svg?raw'
 				<span class="no-break">Generative AI</span>
 			</h1>
 		</div>
+
 		<Section class="statement">
 			While many have turned to AI generated slop, I will <b>never</b> sacrifice the <u>quality</u>,
 			<u>originality</u>, and <u>creativity</u> of my work.
@@ -52,19 +53,35 @@ import arrowLeftSvg from 'feather-icons/dist/icons/arrow-left.svg?raw'
 
 		<hr/>
 
-		<Section>
+		<Section class="statement">
 			Generative AI has been built by stealing <b>billions</b> of hours of work from artists fueled by
 			<b>passion</b> and <b>dedication</b>, fueling it into a <b>predatory</b> tool driven by <b>profit</b>
-			rather than <b>ethics</b>.
+			rather than <b>ethics</b>. I actively advocate <b>against</b> its widespread use as-is in all forms of art,
+			writing, communications, engineering, healthcare, education, decision-making, and the countless other
+			fields where it is useless and inappropriate.
+		</Section>
+
+		<hr/>
+
+		<Section class="statement">
+			It is by taking the time to <u>think</u> and <u>reason</u> for yourself, that you can grow your skill set.
+			It is how you can let <u>your</u> imagination wander free, letting it create something <u>new</u>,
+			<u>authentic</u>, something <u><b>human</b></u>, a true piece of <u><b>yourself</b></u> you can be
+			<u><b>proud</b></u> of.
+		</Section>
+
+		<Section class="big-statement">
+			Whether you're creating something, or learning a skill, <u>struggling is a vital part of the process</u>.
 		</Section>
 	</main>
 </Skeleton>
 
 <style>
 	main#page-contents {
+		display: block;
 		text-transform: initial;
 		font-size: 1.2rem;
-		width: 55vw;
+		width: 60vw;
 	}
 
 	.www-link {
@@ -81,7 +98,6 @@ import arrowLeftSvg from 'feather-icons/dist/icons/arrow-left.svg?raw'
 	.www-link :global(svg) {
 		width: 1em;
 		height: 1em;
-		margin-top: .2em;
 		transition: transform .5s;
 	}
 
@@ -90,7 +106,7 @@ import arrowLeftSvg from 'feather-icons/dist/icons/arrow-left.svg?raw'
 	}
 
 	.www-link:hover :global(svg) {
-		transform: translateX(-25%);
+		transform: translateX(-35%);
 	}
 
 	.no-break {
@@ -98,10 +114,10 @@ import arrowLeftSvg from 'feather-icons/dist/icons/arrow-left.svg?raw'
 	}
 
 	.big-heading {
-		font-size: 4rem;
+		font-size: 4.5rem;
 		line-height: 1;
 		color: var(--header-color);
-		font-weight: 300;
+		font-weight: 200;
 
 		text-align: center;
 		margin: 0 -10vw 2rem;
@@ -111,23 +127,30 @@ import arrowLeftSvg from 'feather-icons/dist/icons/arrow-left.svg?raw'
 		all: unset;
 	}
 
-	.big-heading .no, .statement u {
+	.big-heading .no, #page-contents u {
 		text-decoration: underline;
 		text-decoration-thickness: .125rem;
 		text-underline-offset: .25rem;
 	}
 
 	.statement {
-		font-size: 2rem;
+		font-size: 1.75rem;
 		text-align: center;
 		text-wrap: balance;
 		font-weight: 300;
 		line-height: 1.2;
-		margin: 0;
+	}
+
+	.big-statement {
+		font-size: 2.5rem;
+		text-align: center;
+		text-wrap: balance;
+		font-weight: 400;
+		line-height: 1.2;
 	}
 
 	hr {
-		margin: 3.5rem 0;
+		margin: 2rem 0;
 	}
 
 	sup {

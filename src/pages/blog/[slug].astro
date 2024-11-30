@@ -81,12 +81,12 @@ const { Content, remarkPluginFrontmatter } = await render(entry)
 				Creative Commons Attribution-ShareAlike 4.0 International License</a>,
 			unless stated otherwise. Acknowledgement & link to the this post suffice as attribution.
 		</div>
+
+		<div class="blog-no-ai">
+			<a href="/meta/no-ai" target="_blank">Made Without Generative AI Statement</a>
+		</div>
 	</div>
 </Layout>
-
-<script>
-	import 'bluesky-post-embed'
-</script>
 
 <style>
 	.blog-wrapper {
@@ -214,8 +214,12 @@ const { Content, remarkPluginFrontmatter } = await render(entry)
 		margin: 1.75em 0 0.5em 0;
 	}
 
-	.blog-license {
+	.blog-license, .blog-no-ai {
 		font-size: 0.85em;
+	}
+
+	.blog-no-ai {
+		margin-top: 0.25em;
 	}
 
 	@media (prefers-color-scheme: dark) {
