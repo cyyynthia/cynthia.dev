@@ -2,7 +2,7 @@
 // Component originally written by Mary
 // https://github.com/mary-ext/bluesky-embed-astro/blob/trunk/src/components/BlueskyPost.astro
 
-import { fetchPost, renderPost } from 'bluesky-embed/post/core'
+import { fetchPost, renderPost } from 'bluesky-post-embed/core'
 
 interface Props {
 	uri: string;
@@ -18,9 +18,9 @@ const render = renderPost(data)
 </bluesky-post>
 
 <style is:global>
-	@import 'bluesky-embed/post/style.css';
-	@import 'bluesky-embed/themes/light.css' (prefers-color-scheme: light);
-	@import 'bluesky-embed/themes/dim.css' (prefers-color-scheme: dark);
+	@import 'bluesky-post-embed/style.css';
+	@import 'bluesky-post-embed/themes/light.css' (prefers-color-scheme: light);
+	@import 'bluesky-post-embed/themes/dim.css' (prefers-color-scheme: dark);
 
 	bluesky-post {
 		display: block;
@@ -33,5 +33,5 @@ const render = renderPost(data)
 </style>
 
 <script>
-	import 'bluesky-embed/post/wc'
+	import 'bluesky-post-embed'
 </script>
