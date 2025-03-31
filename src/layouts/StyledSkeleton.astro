@@ -58,9 +58,12 @@ export type { Props } from './Skeleton.astro'
 	}
 
 	:root {
+		--text-highlight-color: #884545;
 		--text-color: #222;
 		--header-color: #000;
 		--background-color: #fff;
+		--background-secondary-color: #ddd;
+		--border-color: #aaa;
 	}
 
 	html, body {
@@ -99,16 +102,23 @@ export type { Props } from './Skeleton.astro'
 
 	@media (min-width: 720px) {
 		#page-contents {
-			width: 45vw;
+			width: 55vw;
 			min-width: 720px;
 		}
 	}
 
+	@media (min-width: 1800px) {
+		#page-contents {
+			width: 50vw;
+		}
+	}
+
 	/** LINKS */
-	a {
+	a, .fake-link {
 		color: inherit;
 		text-decoration: none;
 		position: relative;
+		cursor: pointer;
 
 		background-image: linear-gradient(to right, #f49898, #f49898 50%, currentColor 50%, currentColor);
 		background-position: 100% 1.18em;
@@ -118,7 +128,7 @@ export type { Props } from './Skeleton.astro'
 		transition: background-position-x .3s;
 	}
 
-	a:hover {
+	:is(a, .fake-link):hover {
 		background-position-x: 0;
 	}
 
@@ -150,12 +160,63 @@ export type { Props } from './Skeleton.astro'
 		width: 100%;
 	}
 
+	.dialog-container {
+		position: fixed;
+		inset: 0;
+		background-color: rgba(0, 0, 0, .5);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 999999;
+	}
+
+	.dialog-screen {
+		position: relative;
+		display: flex;
+		min-width: 450px;
+		max-width: 500px;
+		flex-direction: column;
+		border-radius: 1rem;
+		background-color: var(--background-color);
+		padding: 2rem;
+		gap: 1rem;
+	}
+
+	.dialog-screen h2 {
+		margin: 0;
+		font-weight: 400;
+	}
+
+	.dialog-close {
+		all: unset;
+		box-sizing: border-box;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		cursor: pointer;
+		width: 1.5rem;
+		height: 1.5rem;
+		padding: 0.25rem;
+		border-radius: 50%;
+		transition: background-color .3s;
+	}
+
+	.dialog-close:focus, .dialog-close:hover {
+		background-color: rgba(255, 119, 119, 0.25);
+	}
+
 	/** DARK THEME */
 	@media (prefers-color-scheme: dark) {
 		:root {
+			--text-highlight-color: #ffa1a1;
 			--text-color: #cfcfcf;
 			--header-color: #dfdfdf;
 			--background-color: #202020;
+			--background-secondary-color: #303030;
+			--border-color: #404040;
 		}
 
 		hr {

@@ -1,0 +1,134 @@
+---
+/*!
+ * Copyright (c) Cynthia Rey, All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the copyright holder nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software without
+ *    specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+import type { AstroBuiltinAttributes } from 'astro'
+
+export interface Props {
+	href: string
+	referrerSpoofing?: boolean
+	class?: AstroBuiltinAttributes['class:list']
+}
+
+const { href, class: cls, referrerSpoofing } = Astro.props
+const transformedHref = href.replace(/[a-z]/gi, (l) => String.fromCharCode(l.charCodeAt(0) + (l.toLowerCase() <= 'm' ? 13 : -13))).split('').reverse().join('')
+---
+<span class:list={cls ?? []} data-bad-link-href={transformedHref} data-via-redirector={referrerSpoofing ?? false}><slot /></span>{
+
+}<script>
+	for (const link of document.querySelectorAll<HTMLSpanElement>('span[data-bad-link-href]')) {
+		link.setAttribute('aria-role', 'button')
+		link.classList.add('fake-link')
+
+		link.addEventListener('click', () => {
+			const badHref = link.dataset.badLinkHref!
+			const viaRedirector = link.dataset.viaRedirector === 'true'
+			const href = badHref.replace(/[a-z]/gi, (l) => String.fromCharCode(l.charCodeAt(0) + (l.toLowerCase() <= 'm' ? 13 : -13))).split('').reverse().join('')
+
+			const dialogContainer = document.createElement('div')
+			dialogContainer.className = 'dialog-container'
+
+			const dialog = document.createElement('div')
+			dialog.className = 'dialog-screen'
+
+			const dialogTitle = document.createElement('h2')
+			dialogTitle.innerText = '⚠️ Leaving the website'
+			dialog.appendChild(dialogTitle)
+
+			const dialogWarn = document.createElement('div')
+			dialogWarn.innerText = 'You\'re about to leave this website for a discouraged link that has no alternative. ' +
+				'Consider this dialog a heads-up for your privacy, and a form of protest against the target website 🙃'
+			dialog.appendChild(dialogWarn)
+
+			if (viaRedirector) {
+				const via = document.createElement('div')
+				via.innerText = 'The link below will go through DuckDuckGo\'s redirector, to spoof the origin of ' +
+					'your visit as a search result. Some websites block access via third-party links when the origin ' +
+					'website does not provide tracking metadata; this workaround lets you visit the website without ' +
+					'issues whilst preserving your privacy.'
+				dialog.appendChild(via)
+			}
+
+			const dialogLinkWrapper = document.createElement('div')
+			const dialogLink = document.createElement('a')
+			dialog.appendChild(dialogLinkWrapper)
+			dialogLinkWrapper.appendChild(dialogLink)
+			dialogLink.rel = 'noreferrer'
+			dialogLink.target = '_blank'
+			dialogLink.innerText = href
+			dialogLink.href = viaRedirector
+				? `https://r.duckduckgo.com/l/?notrut=duckduck_in&uddg=${encodeURIComponent(href)}`
+				: href
+
+			const dialogClose = document.createElement('button')
+			const dialogSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+			const dialogSvgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+			dialogSvg.appendChild(dialogSvgPath)
+			dialogClose.appendChild(dialogSvg)
+			dialog.appendChild(dialogClose)
+
+			dialogClose.className = 'dialog-close'
+			dialogClose.ariaLabel = 'Close'
+			dialogSvg.ariaHidden = 'true'
+			dialogSvg.setAttribute('viewBox', '0 0 24 24')
+			dialogSvgPath.setAttribute('d', 'M18 6L6 18M6 6l12 12')
+			dialogSvgPath.setAttribute('stroke', 'currentColor')
+			dialogSvgPath.setAttribute('stroke-linecap', 'round')
+			dialogSvgPath.setAttribute('stroke-linejoin', 'round')
+
+			const stop = (e: Event) => e.stopPropagation()
+			const tab = (e: KeyboardEvent) => {
+				if (e.key === 'Tab') {
+					e.preventDefault()
+					const el = document.activeElement === dialogClose
+						? dialogLink
+						: dialogClose
+					el.focus()
+				}
+			}
+			const close = () => {
+				dialogContainer.remove()
+				document.body.style.overflow = ''
+				for (const c of document.body.children)
+					c.removeAttribute('aria-hidden')
+			}
+
+			dialog.addEventListener('keydown', tab)
+			dialog.addEventListener('click', stop)
+			dialogContainer.addEventListener('click', close)
+			dialogClose.addEventListener('click', close)
+			dialogLink.addEventListener('click', close)
+
+			for (const c of document.body.children) c.ariaHidden = 'true'
+			document.body.style.overflow = 'hidden'
+			document.body.appendChild(dialogContainer)
+			dialogContainer.appendChild(dialog)
+			dialogClose.focus()
+		})
+	}
+</script>

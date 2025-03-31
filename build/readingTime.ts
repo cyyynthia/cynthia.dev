@@ -29,8 +29,25 @@
 import getReadingTime from 'reading-time'
 import { toString } from 'mdast-util-to-string'
 
+function filterChildren(node: any, idx: number, array: unknown[]) {
+	array[idx] = { ...node }
+
+	switch (node.type) {
+		case 'mdxjsEsm':
+			return false
+		case 'mdxJsxFlowElement':
+			return !['AffiliationNotice'].includes(node.name)
+	}
+
+	if ('children' in node) node.children = node.children.filter(filterChildren)
+	return true
+}
+
 export default function () {
 	return (tree: any, { data }: any) => {
+		tree = { ...tree }
+		tree.children = tree.children.filter(filterChildren)
+
 		const text = toString(tree)
 		data.astro.frontmatter.readingTime = getReadingTime(text).text
 	}

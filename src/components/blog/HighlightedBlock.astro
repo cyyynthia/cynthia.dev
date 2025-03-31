@@ -1,3 +1,4 @@
+---
 /*!
  * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
@@ -25,39 +26,23 @@
  * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+---
+<div class="highlighted-section">
+	<slot />
+</div>
 
-import type { APIContext } from 'astro'
-import { getCollection } from 'astro:content'
-import rss from '@astrojs/rss'
+<style>
+	.highlighted-section {
+		padding: 1em 1.5em;
+		margin: 1.5em -1.5em;
+		background-color: #ffde64;
+		border-radius: 0.5rem;
+	}
 
-import { version as astroVersion } from 'astro/package.json' with { type: 'json' }
-import { version as rssVersion } from '@astrojs/rss/package.json' with { type: 'json' }
-
-export async function GET ({ site }: APIContext) {
-	const blog = await getCollection('blog')
-	return rss({
-		title: 'cynthia\'s blog',
-		description: 'i write stuff that may be mildly interesting',
-		site: site!,
-		items: blog.map((post) => ({
-			// TODO: make better... >:)
-			title: post.data.lang === 'fr' ? `(Article in French) ${post.data.title}` : post.data.title,
-			link: `/${post.collection}/${post.id}`,
-			description: post.data.description,
-			pubDate: post.data.date,
-			categories: post.data.tags,
-		})),
-		trailingSlash: false,
-		xmlns: {
-			atom: 'http://www.w3.org/2005/Atom'
-		},
-		customData: `
-			<language>en-US</language>
-			<copyright>Copyright (c) Cynthia Rey. Licensed under CC BY-SA 4.0 unless stated otherwise.</copyright>
-			<managingEditor>cynthia@cynthia.dev (Cynthia Rey)</managingEditor>
-			<webMaster>cynthia@cynthia.dev (Cynthia Rey)</webMaster>
-			<generator>@astrojs/rss v${rssVersion} (Astro v${astroVersion})</generator>
-			<atom:link href="https://cynthia.dev/blog/feed.xml" rel="self" type="application/rss+xml" />
-		`,
-	})
-}
+	@media (prefers-color-scheme: dark) {
+		.highlighted-section {
+			background-color: #edc743;
+			color: #000;
+		}
+	}
+</style>

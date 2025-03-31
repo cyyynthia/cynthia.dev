@@ -1,3 +1,4 @@
+---
 /*!
  * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
@@ -26,38 +27,64 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import type { APIContext } from 'astro'
-import { getCollection } from 'astro:content'
-import rss from '@astrojs/rss'
+const defaultSlot = Astro.slots.render("default").then((h) => h.trim())
+const dfnSlot = Astro.slots.render("dfn").then((h) => h.trim())
+const { class: cn, ...rest } = Astro.props
+---
+<span {...rest} class:list={[cn, "dfn-wrapper"]}
+	><span class="dfn-content"><Fragment set:html={defaultSlot} /></span
+	><span class="sr-only dfn"
+		><span class="sr-only">(</span><Fragment set:html={dfnSlot} /><span class="sr-only">)</span
+	></span
+></span
 
-import { version as astroVersion } from 'astro/package.json' with { type: 'json' }
-import { version as rssVersion } from '@astrojs/rss/package.json' with { type: 'json' }
+><style>
+	.dfn-wrapper {
+		position: relative;
+	}
 
-export async function GET ({ site }: APIContext) {
-	const blog = await getCollection('blog')
-	return rss({
-		title: 'cynthia\'s blog',
-		description: 'i write stuff that may be mildly interesting',
-		site: site!,
-		items: blog.map((post) => ({
-			// TODO: make better... >:)
-			title: post.data.lang === 'fr' ? `(Article in French) ${post.data.title}` : post.data.title,
-			link: `/${post.collection}/${post.id}`,
-			description: post.data.description,
-			pubDate: post.data.date,
-			categories: post.data.tags,
-		})),
-		trailingSlash: false,
-		xmlns: {
-			atom: 'http://www.w3.org/2005/Atom'
-		},
-		customData: `
-			<language>en-US</language>
-			<copyright>Copyright (c) Cynthia Rey. Licensed under CC BY-SA 4.0 unless stated otherwise.</copyright>
-			<managingEditor>cynthia@cynthia.dev (Cynthia Rey)</managingEditor>
-			<webMaster>cynthia@cynthia.dev (Cynthia Rey)</webMaster>
-			<generator>@astrojs/rss v${rssVersion} (Astro v${astroVersion})</generator>
-			<atom:link href="https://cynthia.dev/blog/feed.xml" rel="self" type="application/rss+xml" />
-		`,
-	})
-}
+	.dfn-wrapper:not(.no-underline) .dfn-content {
+		text-decoration: underline dashed;
+	}
+
+	.dfn-wrapper:hover::before {
+		content: '';
+		display: block;
+		position: absolute;
+		z-index: 10;
+		inset: 0;
+		bottom: -0.5rem;
+	}
+
+	.dfn-wrapper:hover .dfn {
+		all: unset;
+		display: block;
+		position: absolute;
+		box-shadow: 0 2px 16px 2px rgba(0,0,0,0.5);
+		background-color: var(--background-secondary-color);
+		border: 1px var(--border-color) solid;
+		width: max-content;
+		padding: 0.75em 1em;
+		max-width: 350px;
+		bottom: -0.5em;
+		left: 50%;
+		transform: translate(-50%, 100%);
+		z-index: 9999;
+	}
+
+	.dfn-wrapper.small:hover .dfn {
+		padding: 0.25em 0.5em;
+	}
+
+	.dfn-wrapper:hover .dfn::before {
+		content: '';
+		display: block;
+		width: 0.75em;
+		height: 0.75em;
+		background-color: inherit;
+		transform: translate(-50%, -50%) rotate(45deg);
+		position: absolute;
+		top: 0;
+		left: 50%;
+	}
+</style>

@@ -55,6 +55,7 @@ const posts = await getCollection('blog')
 			{posts.map((post) => (
 				<BlogPost
 					url={`/blog/${post.id}`}
+					lang={post.data.lang}
 					title={post.data.title}
 					description={post.data.description}
 					tags={post.data.tags}

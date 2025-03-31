@@ -1,3 +1,4 @@
+---
 /*!
  * Copyright (c) Cynthia Rey, All rights reserved.
  * SPDX-License-Identifier: BSD-3-Clause
@@ -26,38 +27,61 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import type { APIContext } from 'astro'
-import { getCollection } from 'astro:content'
-import rss from '@astrojs/rss'
+import penToolSvg from 'feather-icons/dist/icons/pen-tool.svg?raw'
 
-import { version as astroVersion } from 'astro/package.json' with { type: 'json' }
-import { version as rssVersion } from '@astrojs/rss/package.json' with { type: 'json' }
-
-export async function GET ({ site }: APIContext) {
-	const blog = await getCollection('blog')
-	return rss({
-		title: 'cynthia\'s blog',
-		description: 'i write stuff that may be mildly interesting',
-		site: site!,
-		items: blog.map((post) => ({
-			// TODO: make better... >:)
-			title: post.data.lang === 'fr' ? `(Article in French) ${post.data.title}` : post.data.title,
-			link: `/${post.collection}/${post.id}`,
-			description: post.data.description,
-			pubDate: post.data.date,
-			categories: post.data.tags,
-		})),
-		trailingSlash: false,
-		xmlns: {
-			atom: 'http://www.w3.org/2005/Atom'
-		},
-		customData: `
-			<language>en-US</language>
-			<copyright>Copyright (c) Cynthia Rey. Licensed under CC BY-SA 4.0 unless stated otherwise.</copyright>
-			<managingEditor>cynthia@cynthia.dev (Cynthia Rey)</managingEditor>
-			<webMaster>cynthia@cynthia.dev (Cynthia Rey)</webMaster>
-			<generator>@astrojs/rss v${rssVersion} (Astro v${astroVersion})</generator>
-			<atom:link href="https://cynthia.dev/blog/feed.xml" rel="self" type="application/rss+xml" />
-		`,
-	})
+export interface Props {
+	src: ImageMetadata
+	alt: string
+	caption?: string
+	invertible?: boolean
 }
+
+---
+<div class="affiliation-notice">
+	<Fragment class="icon" aria-hidden="true" set:html={penToolSvg} />
+	<div class="text">
+		<slot />
+	</div>
+</div>
+
+<style>
+	.affiliation-notice {
+		display: flex;
+		gap: .75rem;
+		padding: .75rem 1rem;
+		background-color: #83c7fc;
+		border-radius: .5rem;
+		font-size: .875rem;
+		margin-bottom: 2rem;
+	}
+
+	.affiliation-notice .text :global(p) {
+		line-height: 1.25;
+	}
+
+	.affiliation-notice .text :global(details) {
+		margin-top: 0.5rem;
+	}
+
+	.affiliation-notice .text :global(summary) {
+		cursor: pointer;
+	}
+
+	.affiliation-notice .text :global(details[open] summary) {
+		margin-bottom: 0.25em;
+	}
+
+	.affiliation-notice :global(svg) {
+		flex-shrink: 0;
+		width: 1em;
+		height: 1em;
+		margin-top: .25em;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		.affiliation-notice {
+			background-color: #005daf;
+			color: white;
+		}
+	}
+</style>

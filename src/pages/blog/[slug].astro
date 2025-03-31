@@ -109,6 +109,8 @@ const { Content, remarkPluginFrontmatter } = await render(entry)
 		margin-top: 2rem;
 		font-size: 1.125rem;
 		text-align: justify;
+		text-underline-offset: 3px;
+		text-wrap: pretty;
 	}
 
 	.blog-contents :global(:is(p, li)) {
@@ -117,7 +119,7 @@ const { Content, remarkPluginFrontmatter } = await render(entry)
 	}
 
 	.blog-contents :global(
-		:is(p, bluesky-post, ul, ol) + :is(p, bluesky-post, ul, ol)
+		:is(p, details, bluesky-post, ul, ol) + :is(p, details, bluesky-post, ul, ol)
 	) {
 		margin-top: 1.75em;
 	}
@@ -208,6 +210,49 @@ const { Content, remarkPluginFrontmatter } = await render(entry)
 		background-color: transparent;
 		border-width: 0;
 		tab-size: 4;
+	}
+
+	.blog-contents :global(.footnotes) {
+		margin-top: 1.75em;
+		margin-bottom: -1em;
+		padding-top: 0.75em;
+		font-size: 0.85rem;
+		border-top: 1px #444 solid;
+	}
+
+	.blog-contents :global(.footnotes ol) {
+		margin: 0;
+		padding-inline-start: 20px;
+	}
+
+	.blog-contents :global(.footnotes ol p) {
+		line-height: 1.5;
+		margin-left: 0.5em;
+	}
+
+	.blog-contents :global(.data-footnote-backref) {
+		margin-left: 0.5em;
+	}
+
+	.blog-contents :global([data-footnote-ref]) {
+		font-size: 0.75em;
+		user-select: none;
+		background: none !important;
+		color: var(--text-highlight-color);
+	}
+
+	.blog-contents :global([data-footnote-ref]::before) {
+		content: '[';
+		font-weight: 200;
+	}
+
+	.blog-contents :global([data-footnote-ref]::after) {
+		content: ']';
+		font-weight: 200;
+	}
+
+	.blog-contents :global(sup) {
+		line-height: 0.75;
 	}
 
 	.blog-footer-separator {

@@ -17,6 +17,7 @@ jobs:
       - run: pnpm run build
       - uses: actions/upload-artifact@v4
         with:
+          include-hidden-files: true
           name: website
           path: dist
   deploy:

@@ -31,9 +31,11 @@ import UnderlinedHeading from './UnderlinedHeading.astro'
 
 import calendar from 'feather-icons/dist/icons/calendar.svg'
 import clock from 'feather-icons/dist/icons/clock.svg'
+import InlineDfn from './InlineDfn.astro'
 
 export interface Props {
 	url: string
+	lang?: string | undefined
 	title: string
 	description: string
 	tags: string[]
@@ -47,12 +49,21 @@ const dateFormatter = new Intl.DateTimeFormat('en-GB', {
 	day: 'numeric',
 })
 
-const { url, title, description, tags, readingTime, date } = Astro.props
+const { url, lang, title, description, tags, readingTime, date } = Astro.props
 ---
 <article class="blog-post">
-	<UnderlinedHeading level={2}>
-		<a href={url} class="title">{title}</a>
-	</UnderlinedHeading>
+	<div class="title-container">
+		{/* todo: perhaps make a bit better... */}
+		{lang === 'fr' && (
+			<InlineDfn class="no-underline small">
+				<Fragment><span class="flag">🇫🇷</span></Fragment>
+				<Fragment slot="dfn">Article in French</Fragment>
+			</InlineDfn>
+		)}
+		<UnderlinedHeading level={2}>
+			<a href={url} class="title">{title}</a>
+		</UnderlinedHeading>
+	</div>
 	<p class="description">{description}</p>
 	<div class="tags">
 		{tags.map((t) => <a href={`/blog/tags/${t}`}>#{t}</a>)}
@@ -76,6 +87,16 @@ const { url, title, description, tags, readingTime, date } = Astro.props
 		gap: 1rem;
 	}
 
+	.title-container {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.title-container .flag {
+		font-size: 1.5rem;
+	}
+
 	.blog-post h2 {
 		font-weight: 400;
 		margin: 0;
@@ -83,6 +104,7 @@ const { url, title, description, tags, readingTime, date } = Astro.props
 
 	.description {
 		margin: 0;
+		text-wrap: balance;
 	}
 
 	.tags {

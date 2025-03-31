@@ -80,8 +80,24 @@ import arrowLeftSvg from 'feather-icons/dist/icons/arrow-left.svg?raw'
 	main#page-contents {
 		display: block;
 		text-transform: initial;
-		font-size: 1.2rem;
-		width: 60vw;
+	}
+
+	@media (min-width: 440px) {
+		main#page-contents {
+			font-size: 1.1rem;
+		}
+	}
+
+	@media (min-width: 510px) {
+		main#page-contents {
+			font-size: 1.2rem;
+		}
+	}
+
+	@media (min-width: 720px) {
+		main#page-contents {
+			width: 60vw;
+		}
 	}
 
 	.www-link {
@@ -114,13 +130,25 @@ import arrowLeftSvg from 'feather-icons/dist/icons/arrow-left.svg?raw'
 	}
 
 	.big-heading {
-		font-size: 4.5rem;
+		font-size: 3.5rem;
 		line-height: 1;
 		color: var(--header-color);
 		font-weight: 200;
 
 		text-align: center;
 		margin: 0 -10vw 2rem;
+	}
+
+	@media (min-width: 440px) {
+		.big-heading {
+			font-size: 4rem;
+		}
+	}
+
+	@media (min-width: 510px) {
+		.big-heading {
+			font-size: 4.5rem;
+		}
 	}
 
 	.big-heading h1 {
@@ -134,19 +162,43 @@ import arrowLeftSvg from 'feather-icons/dist/icons/arrow-left.svg?raw'
 	}
 
 	.statement {
-		font-size: 1.75rem;
+		font-size: 1.25rem;
 		text-align: center;
 		text-wrap: balance;
 		font-weight: 300;
 		line-height: 1.2;
 	}
 
+	@media (min-width: 440px) {
+		.statement {
+			font-size: 1.5rem;
+		}
+	}
+
+	@media (min-width: 510px) {
+		.statement {
+			font-size: 1.75rem;
+		}
+	}
+
 	.big-statement {
-		font-size: 2.5rem;
+		font-size: 2rem;
 		text-align: center;
 		text-wrap: balance;
 		font-weight: 400;
 		line-height: 1.2;
+	}
+
+	@media (min-width: 440px) {
+		.big-statement {
+			font-size: 2.25rem;
+		}
+	}
+
+	@media (min-width: 510px) {
+		.big-statement {
+			font-size: 2.5rem;
+		}
 	}
 
 	hr {

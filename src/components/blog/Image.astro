@@ -34,20 +34,21 @@ export interface Props {
 	alt: string
 	caption?: string
 	invertible?: boolean
+	imageStyle?: string | astroHTML.JSX.CSSProperties
 }
 
-const { src, alt, caption, invertible } = Astro.props
+const { src, alt, caption, invertible, imageStyle, ...rest } = Astro.props
 ---
-<figure class:list={[ { invertible } ]}>
-	<AstroImage src={src} alt={alt} />
-	<figcaption>{caption || alt}</figcaption>
+<figure {...rest} class:list={[ { invertible } ]}>
+	<AstroImage src={src} alt={alt} style={imageStyle}/>
+	{!!(caption || alt) && <figcaption>{caption || alt}</figcaption>}
 </figure>
 
 <style>
 	figure {
 		display: flex;
 		flex-direction: column;
-		margin: 1em 0 3em;
+		margin: 1em 0 2em;
 		width: 100%;
 	}
 

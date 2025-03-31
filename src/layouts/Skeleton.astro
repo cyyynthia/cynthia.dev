@@ -66,7 +66,8 @@ const description = d || 'meow meow meow meow meow meow'
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={socialImageUrl} />
 
-		{robotsHidden && <meta name="robots" content="noindex, nofollow" />}
+		{robotsHidden &&
+			<meta name="robots" content="noindex, nofollow" />}
 		<link rel="sitemap" href="/sitemap-index.xml" />
 		<slot name="head" />
 		<ClientRouter />
@@ -75,3 +76,18 @@ const description = d || 'meow meow meow meow meow meow'
 		<slot />
 	</body>
 </html>
+
+<style is:global>
+	.sr-only {
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		position: absolute;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		clip-path: inset(50%);
+		white-space: nowrap;
+		border: 0;
+	}
+</style>

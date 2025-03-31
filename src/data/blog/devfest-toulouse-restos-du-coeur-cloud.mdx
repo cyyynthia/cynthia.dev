@@ -1,0 +1,342 @@
++++
+#! Copyright (c) Cynthia Rey, All rights reserved.
+#! SPDX-License-Identifier: CC-BY-SA-4.0
+#!
+#! Contents of this file are licensed under a Creative Commons Attribution-ShareAlike 4.0 International License.
+#! https://creativecommons.org/licenses/by-sa/4.0/
+
+lang = "fr"
+title = "Cloud auto-hébergé : l'aventure des Restos du Cœur"
+description = """
+Le numérique et le besoin d'infrastructure sont présents partout. Aux Restos du Cœur, où chaque euro compte,
+le bénévole Julien Briault est devenu sur le cours de 3 ans l'administrateur d'une infrastructure Cloud auto-hébergée
+à moindre coût, et nous en parle au DevFest Toulouse 2024.
+"""
+
+date = 2025-03-31
+tags = ["software", "cloud", "self-hosting"]
++++
+
+import BadLink from '../../components/BadLink.astro'
+import InlineDfn from '../../components/InlineDfn.astro'
+import BlueskyPost from '../../components/BlueskyPost.astro'
+import Image from '../../components/blog/Image.astro'
+import AffiliationNotice from '../../components/blog/AffiliationNotice.astro'
+import HighlightedBlock from '../../components/blog/HighlightedBlock.astro'
+
+import illustration from '../../assets/blog/devfest-toulouse-restos-du-coeur/illustration-cloud-du-coeur.jpg'
+import getInvolved from '../../assets/blog/devfest-toulouse-restos-du-coeur/tous-une-bonne-raison-de-simpliquer.jpg'
+
+<Image
+	src={illustration}
+	style='margin-bottom: 1rem'
+	imageStyle='border-radius: .5rem'
+	aria-hidden
+	alt=''
+/>
+
+<AffiliationNotice>
+	Cet article a été écrit dans le cadre de mes études au sein de l'Université de Toulouse. La structure est dirigée
+	par un cahier des charges; cependant le contenu reste authentique et reflète mon opinion personnelle.
+
+	<details>
+		<summary>En savoir plus</summary>
+
+		Initialement demandé dans l'optique d'être publié sur {
+		}<InlineDfn>{
+			}<Fragment>UnlinkedOut</Fragment>{
+			}<Fragment slot="dfn">{
+				}Écorche délibérée du nom de la plateforme où sévit entre autres culte corporatif, auto-promotion et {
+				}productivité toxique, ainsi que vertu ostentatoire, en plus de représenter un danger pour la vie {
+				}privée (310 millions d'euros d'amende en octobre 2024 pour non respect du <abbr title="Règlement Général sur la Protection des Données">RGPD</abbr>){
+			}</Fragment>{
+		}</InlineDfn>{
+		}, sont attendues entre autres les coutumes d'usage de la plateforme. Les mots clés et mentions seront ici
+		remplacées par des liens vers Bluesky.
+	</details>
+</AffiliationNotice>
+
+Le numérique et le besoin d'infrastructure sont présents partout, y compris aux [Restos du Cœur](https://www.restosducoeur.org/),
+association emblématique du paysage caritatif français créée en 1985 par Coluche. Avec près de 78 000 bénévoles[^bnv-cnt]
+partout en France, dont 35 000 qui utilisent l'informatique au quotidien, l'association se retrouve face à un problème
+de taille, et potentiellement couteux, alors que chaque euro compte pour venir en aide à ceux qui en ont besoin.
+
+[^bnv-cnt]: Chiffres approximatifs, tirés de la présentation de Julien. Le nombre de bénévoles varie beaucoup en
+fonction notamment des périodes de l'année et de la mobilisation de bénévoles éphémères.
+
+Julien Briault [@jbriault.fr](https://bsky.app/profile/did:plc:xbuwp5lnt3cbikzvm5sa5mgj), ingénieur réseau
+<abbr title="Expert en ingénierie de la fiabilité des sites; “Site Reliability Engineering”">SRE</abbr> chez Deezer,
+est arrivé aux Restos comme bénévole il y a 4 ans, et a mis en place au fil du temps une infrastructure Cloud
+complètement auto-hébergée pour répondre aux besoins croissants de l'association, à échelle nationale. Il est venu
+au [#DevFestToulouse](https://bsky.app/hashtag/DevFestToulouse) 2024 raconter cette histoire, comment il s'y est pris,
+et comment son expertise a permis aux Restos de distribuer plusieurs millions de repas en plus, tout en assurant sa
+souveraineté numérique face aux géants du Cloud.
+
+## L'arrivée aux Restos
+Dès son arrivée à l'antenne départementale d'Eure-et-Loir, Julien ingénieur réseau de métier cherche rapidement à voir
+à quoi ressemble l'environnement numérique. Après un état des lieux rapide Julien constate très vite qu'en terme
+d'infrastructure, le moins qu'on puisse dire c'est qu'on a vu mieux. Outre le fait qu'il est seul et sans information
+concrète sur l'existant, il fait face au fameux ✨PC qui traine dans un coin✨ sur lequel tournent *des trucs*,
+avec *zéro sauvegarde*, *zéro redondance*, et un ✨max de poussière✨. *Super*.
+
+La mission, pour Julien, c'est de passer de cette installation précaire à une solution plus crédible pour l'antenne
+départementale.
+
+### Auto-hébergement, une solution à faible coût
+La solution de facilité, comme la décrit Julien, c'est de faire appel à un prestataire tel qu'OVHcloud, ou encore
+<abbr title="Amazon Web Services">AWS</abbr>. Cependant, cette solution est coûteuse, AWS tout particulièrement, comme
+en témoignent de [nombreuses](https://news.ycombinator.com/item?id=31907374) [histoires](https://news.ycombinator.com/item?id=10921365)
+[d'horreur](https://news.ycombinator.com/item?id=22719573) [de](https://news.ycombinator.com/item?id=23956671)
+[factures](https://news.ycombinator.com/item?id=9322073) [salées](https://news.ycombinator.com/item?id=22412606)
+[surprise](https://news.ycombinator.com/item?id=21697442). Et les Restos ne peuvent pas se permettre de dépenser
+autant, en tant qu'association s'appuyant sur des donations, et pour laquelle chaque euro compte.
+
+> <span style="font-size: 1.25em">1 euro dépensé, c'est 1 repas qui n'est **pas distribué**.</span>
+>
+> -- <i>Julien Briault, lors de sa conférence au DevFest Toulouse 2024.</i>
+
+### Premières itérations d'infrastructure
+Les Restos bénéficiant d'électricité payée par les communes, cette solution est d'autant plus avantageuse. Ingénieur
+réseau de métier, Julien se lance, et déploie pour l'antenne départementale le "DC aux WC", toute première version du
+datacenter des Restos, qui se trouvait... dans des toilettes. Après tout, pourquoi pas ; il faut bien trouver de la
+place où on peut !
+
+Voyant le succès de l'antenne départementale d'Eure-et-Loir, c'est cette fois-ci l'antenne régionale du Centre-Val de
+Loire qui fait appel à Julien pour généraliser cette infrastructure à toute la région. Grâce aux dons, y compris de
+Deezer où Julien travaille, il se retrouve avec trois baies de serveurs qui fournissent des services numériques
+redondés à toutes les antennes départementales de la région, à un coût défiant toute concurrence (zéro). C'est la
+naissance du premier point de présence, dans un endroit que Julien décrit comme un peu paumé avec pas grand-chose,
+à savoir des champs à perte de vue, une cathédrale, *et* le premier datacenter des Restos du Cœur : Chartres.
+
+<HighlightedBlock>
+	En récupérant ces serveurs dont les propriétaires originaux n'avaient plus besoin, les Restos ont eu non seulement
+	accès à du materiel à titre gratuit, mais aussi l'occasion d'éviter à ces machines de prendre la poussière ou
+	d'être détruites. Recycler c'est bien, mais réduire les déchets et réutiliser c'est encore mieux.
+	[#SustainableTech](https://bsky.app/hashtag/SustainableTech)
+</HighlightedBlock>
+
+## Mise à l'échelle nationale : Cloud du Cœur
+Rapidement, ce projet permet à Julien de se retrouver propulsé à l'Association Nationale, tout en haut de l'échelle.
+Et là, c'est une autre paire de manches. Pour rappel, les Restos du Cœur c'est 78 000 bénévoles dont 35 000 qui
+utilisent un ou plusieurs outils numériques pour les Restos. Qui plus est, les Restos c'est en backstage un immense
+maillage logistique, ce qui est extrêmement complexe à gérer ; d'où la délégation à des antennes régionales, puis
+départementales.
+
+Julien se retrouve dans une situation où l'AN n'a pas connaissance de ce qui se passe tout en bas de l'échelle, mais
+doit quand même trouver un moyen de mettre en place une infrastructure numérique capable de répondre à ces besoins
+non identifiés... Il a donc sorti l'artillerie lourde, qu'il connaît bien du fait de son métier chez Deezer, pour
+créer la Rolls-Royce des datacenter, le rêve de tout enthousiaste qui a un homelab[^dfn-homelab] chez lui. C'est ainsi
+que commence le projet "Cloud du Cœur".
+
+[^dfn-homelab]: Un homelab est une installation informatique hébergée à son domicile, qui sert de "laboratoire" pour
+expérimenter avec du materiel et/ou des logiciels, souvent à des fins d'apprentissage. Peut également servir de serveur
+privé pour abriter des services chez soi, par exemple un [<abbr title="Personal Data Server">PDS</abbr> ATProto](https://github.com/bluesky-social/pds),
+ou encore [Vaultwarden](https://github.com/dani-garcia/vaultwarden) (serveur Bitwarden non-officiel), permettant de
+bénéficier de la convenance des services cloud tout en étant totalement maître de ses données et du matériel.
+
+### Définir des règles pour éviter le chaos
+À cette échelle, hors de question de faire les choses n'importe comment. Julien a donc mis en place des règles simples,
+mais redoutablement efficaces, pour garantir la propreté, maintenabilité, transparence, et sécurité de l'infrastructure.
+
+1. ***Infrastructure as Code*** ([#IaC](https://bsky.app/hashtag/IaC)) -- Toute l'infrastructure est définie par du
+code, permettant de savoir précisément ce qui tourne, sous quelle version, et avec quelle configuration, en plus de
+permettre l'analyse statique et/ou dynamique de vulnérabilités sur l'ensemble des services déployés. Grâce à Git, cela
+permet aussi d'avoir un historique complet de l'évolution et de faire des retours en arrière.
+
+2. **Aucun accès direct aux machines** -- La gestion des machines se fait exclusivement par le mécanisme mentionné
+précédemment, ou si c'est strictement nécessaire en passant par un *bastion*, porte d'entrée unique qui enregistre
+toute activité et gère le contrôle d'accès.
+
+3. **Surveillance permanente** -- Les serveurs sont tous les jours soumis à une vérification automatisée de leur
+conformité aux bonnes pratiques en matière de sécurité, et toute activité suspecte comme des tentatives de connexion au
+beau milieu de la nuit sont signalées.
+
+4. **Infrastructure immuable** -- Les images systèmes sont préparées à l'avance et déployées sur les serveurs sans
+jamais les modifier, permettant d'automatiser le provisionnement des machines sans avoir la mauvaise surprise d'une
+dépendance non déclarée manquante. En gros, avec les outils adéquats ça permet de traiter son bare-metal[^dfn-bm] comme
+si c'était une machine virtuelle.
+
+5. **Gestion de configuration centralisée** -- Pour les élements non immuables, par exemple des clés SSH, la gestion
+est faite avec un outil qui s'assure de l'uniformité des configurations déployées, y compris la gestion de changements
+apportés à un déploiement.
+
+6. **Déploiement de configuration via <abbr title="Continuous Deployment">CD</abbr>** -- Pas question d'aller mettre
+les fichiers de configuration en production à la main, ceci est géré automatiquement avec la même approche que
+l'*Infrastructure as Code*.
+
+7. **Le partage** -- Une des règles les plus importantes : s'assurer que ce que l'on fait est bien documenté, que
+ce qui est mis en place est accessible à tous les Restos. L'infrastructure est un bien commun dont tout le monde doit
+prendre soin et utiliser sans oublier les objectifs des Restos.
+
+Au-delà des Restos, ces règles sont applicables à **toute** infrastructure, qu'il s'agisse de bare-metal ou de cloud,
+auto-hébergé ou hébergé chez un prestataire de services comme OVHcloud. Il se trouve que les géants du cloud utilisent
+eux-mêmes les techniques présentées par Julien, ce qui témoigne de la robustesse de son approche. Il n'est pas ingé
+réseau pour rien, dis ! 🤓
+
+[^dfn-bm]: Un "bare-metal", en opposition à une machine virtuelle, est un serveur qui tourne directement sur la machine
+physique sans aucune virtualisation.
+
+### Sous le capot
+Pour mettre tout ça en place, il faut un paquet d'outils, et savoir comment les utiliser. Pour celles et ceux qui
+souhaitent tous les détails je vous invite à aller voir la rediffusion de la conférence (lien à la fin de l'article).
+
+#### Un véritable cloud provider
+Le but du Cloud du Cœur c'est de simplifier la vie des milliers de bénévoles qui utilisent l'informatique, et des
+quelques personnes chargées de l'infrastructure. De la même manière que les millions de clients OVHcloud n'ont pas
+envie de s'occuper des problématiques liées à l'hébergement, les bénévoles ne devraient pas avoir à se soucier de
+comment les services tournent sur les serveurs physiques.
+
+Julien a donc mis en place une véritable *Infrastructure as a Service*, qui permet aux bénévoles de ne pas avoir à
+être confrontés à la complexité d'héberger ses services, et aux responsables d'infrastructure de ne se préoccuper que
+de cette fameuse partie.
+
+Cette séparation est explicitée dans l'architecture par la présence d'un *underlay* et d'un *overlay*, ou dans des
+termes moins liés au monde du réseau, d'un backend et d'un frontend. L'underlay, c'est ce que Julien et son équipe ont
+mis en place et maintiennent, ce sont les services "concrets" d'hébergement. L'overlay, c'est ce que les bénévoles
+voient et ce avec quoi ils interagissent, la belle façade avec laquelle il est facile d'intéragir.
+
+Grâce à cette approche, Julien permet le meilleur des deux mondes : pour les bénévoles, il n'y a plus ou moins aucune
+différence avec la solution de simplicité d'aller chez un cloud provider commercial, étant donné que le Cloud du Cœur
+propose la même offre, tout en bénéficiant des avantages d'auto-hébergement qui ont poussé Julien à démarrer ce projet
+au départ.
+
+#### Les outils
+Lors de sa présentation Julien a mentionné pas mal d'outils, voici donc une liste non-exhaustive des outils logiciels
+utilisés chez les Restos du Cœur :
+
+- Les outils de base qu'on ne présente plus : [Git](https://git-scm.com/), [GitLab](https://about.gitlab.com/), [GitLab CI/CD](https://about.gitlab.com/solutions/continuous-integration/)
+- [Teleport](https://goteleport.com/) : bastion qui permet de contrôler et sécuriser l'accès aux machines (Règle 2)
+- [Wazuh](https://wazuh.com/) : outil <abbr title="Extended Detection and Response">XDR</abbr>/<abbr title="Security Information and Event Management ">SIEM</abbr>
+  pour surveiller la sécurité de l'infrastructure, et évaluer l'application du [Benchmark <abbr title="Center for Internet Security">CIS</abbr>](https://www.cisecurity.org/cis-benchmarks-overview) (Règle 3)
+- [reNgine](https://github.com/yogeshojha/rengine) : reconnaissance automatique et test d'intrusion ("pentesting") pour
+  s'assurer de la sécurité d'un service déployé
+- [Canonical <abbr title="Metal as a Service">MaaS</abbr>](https://maas.io/), [Packer](https://www.packer.io/) : outils
+  pour traiter les serveurs physiques comme des <abbr title="Machines Virtuelles">VM</abbr> (Règle 4)
+- [Rudder](https://www.rudder.io/) : gestion de configuration des machines physiques (Règle 5)
+- [Ansible](https://ansible.com/) : déploiement de configuration (Règle 6)
+- [Kubernetes](https://kubernetes.io/), [Helm](https://helm.sh/), [Kubespray](https://kubespray.io/),
+  [Velero](https://velero.io/), [Argo](https://argoproj.github.io/) : gestion *as code* de l'*underlay* avec haute
+  disponibilité, sert aussi dans l'*overlay* cette fois pour déployer des VM ("Kube-cepion" !)
+- [OpenStack](https://www.openstack.org/) : le "moteur" de l'*undercloud*
+- [PowerDNS](https://www.powerdns.com/), [Unbound](https://nlnetlabs.nl/unbound) : DNS menteur interne
+- [Ceph](https://ceph.io/) : gestion du stockage de données (en objet et en blocs)
+- [MariaDB](https://mariadb.org/), [PostgreSQL](https://www.postgresql.org/), [Redis](https://redis.io/),
+  [RabbitMQ](https://www.rabbitmq.com/) : base de données, cache, file de messages...
+- [Victoria Metrics](https://victoriametrics.com/), [Prometheus](https://prometheus.io/),
+  [Grafana](https://grafana.com/) : outils d'observabilité aussi bien pour l'infrastructure que les chambres froides
+- [Netbox](https://netboxlabs.com/oss/netbox/) : source de vérité pour les fichiers de configuration
+- [OpenWisp](https://openwisp.org/), [OpenWrt](https://openwrt.org/), [Quickwit](https://quickwit.io/) : hotspot
+  Wi-Fi pour les centres de distribution
+- OpenBareMetal, un outil fait maison aux Restos du Cœur[^obm-oss-maybe] pour optimiser la consommation d'énergie du
+  Cloud du Cœur en allumant/éteignant des services en fonctions de la charge, *mais aussi* de facteurs environnementaux
+  comme la température dans la salle des serveurs.
+- ... et beaucoup d'autres !
+
+De toute la liste, OpenBareMetal est probablement celui qui m'intrigue le plus. Pas seulement du fait que c'est une
+solution maison, mais parce que l'outil traite un problème très intéressant qui est l'optimisation des resources,
+ici l'électricité. Optimiser cet aspect est complexe, surtout en prenant en compte des facteurs comme la capacité
+de refroidissement, où on peut aller jusqu'à s'amuser à Tetris et déplacer des VM d'une machine physique à une autre
+pour éventuellement en éteindre une qui n'a pas besoin de tourner.
+
+[^obm-oss-maybe]: À L'Open Source Experience 2024, Julien a [mentionné](https://youtu.be/tFmAX9CBmNY?t=1265) que
+OpenBareMetal était disponible sous licence open-source sur GitHub, cependant je n'ai pas trouvé le dépot...
+
+<HighlightedBlock>
+	C'est une occasion de prendre une minute pour apprécier ce que l'Open-Source permet. La majorité des logiciels
+	mentionnés sont disponibles gratuitement à tous, pour usage personnel ou commercial, et peuvent être modifiés
+	aisément. Mieux, n'importe qui peut proposer ses modifications, qui pourront ensuite être intégrés au projet afin
+	que tous les utilisateurs à travers le monde puissent en bénéficier.
+
+	Finalement, c'est le même modèle que le Cloud du Cœur, où une antenne départementale peut décider de déployer un
+	service de son propre chef, et partager ce dernier à toutes les antennes de l'association. Une culture du partage
+	et d'ouverture. [#OpenSource](https://bsky.app/hashtag/OpenSource) [#OSS](https://bsky.app/hashtag/OSS)
+</HighlightedBlock>
+
+Bien que je ne gère pas d'infrastructure de cette envergure, il y a quelques logiciels mentionnés par Julien dont je
+ne connaissais pas l'existence (à vrai dire, je n'avais jamais réellement creusé le sujet...) que je vais garder sous
+le coude, en plus des règles d'hygiène d'infrastructure mentionnées auparavant, à minima comme d'une base pour faire
+une veille, ou pour des projets personnels. 👀 🗒️✍️
+
+## Aujourd'hui
+Grâce à ce projet, les Restos du Cœur ont pu distribuer des dizaines millions de repas en plus, grâce à une réduction
+des coûts de fonctionnement et une efficacité de travail accrue par l'outil numérique. Une énième preuve de l'utilité
+de cet outil lorsqu'il est bien utilisé, et des opportunités de travailler dans le génie logiciel au-delà des
+entreprises du numérique.
+
+Cette aventure est un succès pour Julien et ses collègues aux Restos. Parti d'une volonté de faire mieux qu'un PC
+poussiéreux perdu dans un coin de son antenne départementale, il a lancé une transformation numérique complète à
+l'échelle nationale. Un investissement avec un impact social mesurable, puisque ce sont des repas en plus qui ont pu
+être distribués grâce à la passion pour les réseaux et les infrastructures numériques, mise au profit d'une bonne
+cause. Plus qu'un succès, c'est un modèle dont beaucoup peuvent s'inspirer et apprendre.
+[#TechForGood](https://bsky.app/hashtag/TechForGood)
+
+### Souveraineté numérique et cybersécurité
+Alors que l'<abbr title="Agence Nationale de la Sécurité des Systèmes d'Information">ANSSI</abbr> fait état de
+[4 386 événements de sécurité en 2024](https://cyber.gouv.fr/actualites/panorama-de-la-cybermenace-2024-mobilisation-et-vigilance-face-aux-attaquants)[^dfn-evt-sec],
+soit en moyenne 12 par jour, et dans un [contexte géopolitique incertain et inquiétant](https://www.francetvinfo.fr/politique/emmanuel-macron/face-a-la-menace-russe-rester-spectateur-serait-une-folie-ce-qu-il-faut-retenir-de-l-allocution-d-emmanuel-macron-consacree-a-la-guerre-en-ukraine_7112118.html),
+assurer sa sécurité et sa souveraineté numérique est un enjeu de plus en plus important. Entre [cyberattaques russes](https://www.francetvinfo.fr/internet/securite-sur-internet/cyberattaques/ce-que-l-on-sait-sur-les-cyberattaques-de-pirates-pro-russes-contre-des-collectivites-francaises_6988775.html)
+et [droit de regard démesuré des États-Unis](https://fr.wikipedia.org/wiki/CLOUD_Act), héberger ses données et services
+sur le territoire français (ou plus largement en Europe) dans une infrastructure robuste et sécurisée est une
+protection importante contre les attaques et ingérences étrangères.
+[#DigitalSovereignty](https://bsky.app/hashtag/DigitalSovereignty)
+[#Cybersecurity](https://bsky.app/hashtag/Cybersecurity)
+
+Sans aller jusqu'à construire son propre datacenter, je ne peux que recommander de rester sur des solutions européennes,
+comme [OVHcloud](https://www.ovhcloud.com/) 🇫🇷 (cocorico !), [Infomaniak](https://www.infomaniak.com/) 🇨🇭, ou encore [Hetzner](https://www.hetzner.com/) 🇩🇪
+(il en existe d'autres, n'hésitez pas à faire vos recherches 😉), et d'adopter les bonnes pratiques de sécurité.
+L'[ANSSI](https://cyber.gouv.fr/) dispose de nombreux guides, qui sont intéressants et plein de bons conseils.
+- [Recommandations relatives à l'administration sécurisée des <abbr title="Systèmes d'Information">SI</abbr>](https://cyber.gouv.fr/publications/recommandations-relatives-ladministration-securisee-des-si)
+- [Recommandations de déploiement d'un service <abbr title="Infrastructure as a Service">IaaS</abbr> OpenStack SecNumCloud](https://cyber.gouv.fr/publications/recommandations-de-deploiement-dun-service-iaas-openstack-secnumcloud)
+- [Recommandations de sécurité relatives au déploiement de conteneurs Docker](https://cyber.gouv.fr/publications/recommandations-de-securite-relatives-au-deploiement-de-conteneurs-docker)
+- [Recommandations pour la mise en œuvre d'un site web](https://cyber.gouv.fr/publications/securiser-un-site-web)
+- Et plein d'autres !
+
+[^dfn-evt-sec]: L'ANSSI définit un événement de sécurité un "événement porté à la connaissance de l'ANSSI et qui a
+donné lieu à un traitement par les équipes opérationnelles". Ces évènements regroupent les signalements faits de
+"comportements anormaux ou inattendus pouvant avoir un caractère malveillant", ainsi que les incidents pour lesquels
+"l'ANSSI est en mesure de confirmer qu'un acteur malveillant a conduit des actions avec succès".
+
+### Demain
+Julien l'a rappelé lors de sa conférence, mais malheureusement, chaque année les Restos font face à toujours plus de
+demande. La "petite idée" de Coluche, qui n'était pas censée durer plus d'un an, est à l'aube de son 40e anniversaire.
+L'association qui était vouée à disparaître une fois sa mission accomplie, est devenue pérenne malgré elle.
+
+> <strong style="font-size: 1.25em">Tant que nous sommes là, c'est que ça ne va pas.</strong>
+>
+> -- <i>Julien Briault, lors de sa conférence au DevFest Toulouse 2024.</i>
+
+Alors, pour Julien et tous les bénévoles de l'association, l'aventure des Restos et du Cloud du Cœur continue.
+Et comme toujours, ils ont besoin de vous. 🫵
+
+<Image src={getInvolved} alt="Parce qu'on a tous une bonne raison de s'impliquer…" />
+
+Materiel informatique, ou encore main d'œuvre, [les Restos ne disent pas non](https://nitter.net/Ganeshdeux/status/1760685872591335454) !
+N'hésitez pas à contacter Julien, il me semble qu'il ne mord pas... 😉
+
+Julien poste occasionnellement des skeets sur l'évolution du projet, n'hésitez pas à aller le suivre sur Bluesky pour
+voir comment le projet évolue. 🚀
+
+<BlueskyPost uri="at://did:plc:xbuwp5lnt3cbikzvm5sa5mgj/app.bsky.feed.post/3lituwdpnvk2s" />
+
+---
+
+<div style="font-size: 1rem">
+
+> [!TIP]
+> Curieux(se) d'en savoir plus ? Retrouvez la rediffusion complète de la conférence de Julien Briault sur la chaîne
+> YouTube du DevFest [ici](https://www.youtube.com/watch?v=z4BO6OSTYC8). Julien à également présenté au Devoxx France en
+> détail les technos d'<abbr title="Infrastructure as Code">IaC</abbr> [OctoDNS](https://www.youtube.com/watch?v=aZvsplOAd7c)
+> et [Pulumi](https://www.youtube.com/watch?v=IAwu-WCN6Nw).
+>
+> Vous pouvez retrouver les autres conférences du [@devfesttoulouse.fr](https://bsky.app/profile/did:plc:4ucz7le774qlviid7f6sewgv)
+> 2024 sur la [playlist YouTube dédiée](https://www.youtube.com/playlist?list=PLuZ_sYdawLiX7ld5UDYoH65OJ88_KbOGI), ainsi
+> que les intervenants sur le starter pack Bluesky [Speakers DevFest Toulouse 2024](https://bsky.app/starter-pack/did:plc:vt3ya7nuzb7ubtjcxntn326t/3labjpgiz5o2w)
+> créé par [@swallez.com](https://bsky.app/profile/did:plc:vt3ya7nuzb7ubtjcxntn326t) !
+
+*Merci à l'Université de Toulouse, au Master <abbr title="Sciences du Logiciel">SDL</abbr>, et à
+l'<abbr title="Institut de Recherche en Informatique de Toulouse">IRIT</abbr> pour cette opportunité de venir
+assister au DevFest Toulouse 2024. Merci à <BadLink href="https://fr.linkedin.com/in/montaine-marteau-5438692/fr" referrerSpoofing>Montaine Marteau</BadLink>,
+[nouvellement organisatrice du DevFest Toulouse](https://devfesttoulouse.fr/2025/03/27/les-coulisses-mars-2025/) 👀,
+pour l'exercice d'écriture.*
+
+</div>
