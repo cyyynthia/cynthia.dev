@@ -29,12 +29,20 @@ layout: ../../layouts/MarkdownLayout.astro
 ---
 
 # My keys
-This is the inventory of my public keys, kept here for discoverability and for myself when I need them.
+This is the inventory of my public keys, kept here for discoverability (and for myself when I need them).
 
-- [PGP FDDF5DD934DC58146C8B3E8BCB561F74DCEAE23B](/keys/pgp-dceae23b.txt)
+- [PGP `18B1 91C1 9CF9 A3AD C299  18C4 7C61 F0F6 BB3E CD93`](/keys/pgp-bb3ecd93.txt)
   - Cynthia Rey <cynthia@cynthia.dev> (*WKD discoverable*)
   - Cynthia Rey <cynthia@maid.gg> (*WKD discoverable*)
-  - Cynthia Rey (Work) <cyyynthia@borkenware.com>
+  - Cynthia Rey <cynthia.rey@irit.fr>
+    - ⚠️ PGP-encrypted emails get silently filtered by the mail server and are not delivered properly.
+
 - [SSH Keys](/keys/ssh.txt)
+
+## Old keys
+- [PGP `FDDF 5DD9 34DC 5814 6C8B  3E8B CB56 1F74 DCEA E23B`](/keys/pgp-dceae23b.txt)
+	- ⛔ **Soft-revoked 2025-11-02**. Superseded by a new key.
+	- Cynthia Rey <cynthia@cynthia.dev>
+	- Cynthia Rey <cynthia@maid.gg>
 
 Meow~
