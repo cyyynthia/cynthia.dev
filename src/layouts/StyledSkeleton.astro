@@ -27,6 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import { Font } from 'astro:assets'
 import Skeleton from './Skeleton.astro'
 
 export type { Props } from './Skeleton.astro'
@@ -35,23 +36,10 @@ export type { Props } from './Skeleton.astro'
 	<slot />
 </Skeleton>
 
+<Font cssVariable="--font-lexend" preload />
+<Font cssVariable="--font-jb-mono" preload />
+
 <style is:global>
-	/** FONTS */
-	@font-face {
-		font-family: 'Lexend';
-		font-style: normal;
-		font-weight: 100 900;
-		font-display: swap;
-		src: url(../assets/fonts/lexend-variable.woff2) format('woff2');
-	}
-
-	@font-face {
-		font-family: 'JetBrains Mono';
-		font-style: normal;
-		font-display: swap;
-		src: url(../assets/fonts/jetbrains-mono-regular.woff2) format('woff2');
-	}
-
 	/** DOCUMENT */
 	* {
 		box-sizing: border-box;
@@ -83,7 +71,7 @@ export type { Props } from './Skeleton.astro'
 		display: flex;
 		flex-direction: column;
 
-		font-family: 'Lexend', sans-serif;
+		font-family: var(--font-lexend);
 		text-rendering: optimizeLegibility;
 		text-transform: lowercase;
 	}
@@ -148,7 +136,7 @@ export type { Props } from './Skeleton.astro'
 
 	code {
 		font-size: 0.825rem;
-		font-family: "JetBrains Mono", monospace;
+		font-family: var(--font-jb-mono);
 		font-weight: 500;
 	}
 

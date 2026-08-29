@@ -26,8 +26,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { z, defineCollection } from 'astro:content'
+import { defineCollection } from 'astro:content'
 import { glob } from 'astro/loaders'
+import { z } from 'astro/zod'
 
 const blog = defineCollection({
 	loader: glob({ pattern: '**/*.md?(x)', base: './src/data/blog' }),

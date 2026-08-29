@@ -2,7 +2,7 @@
 	"src": "https://github.com/charlotte-bone/dark-feminine-italic",
 	"name": "Dark Feminine Italic",
 	"type": "dark",
-	"editor.fontFamily": "'JetBrains Mono', monospace",
+	"editor.fontFamily": "var(--font-jb-mono)",
 	"colors": {
 		"errorForeground": "#B2476E",
 		"activityBar.background": "#333842",

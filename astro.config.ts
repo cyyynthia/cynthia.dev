@@ -26,9 +26,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import { defineConfig } from 'astro/config'
+import { defineConfig, fontProviders } from 'astro/config'
 import mdx from '@astrojs/mdx'
 import sitemap from '@astrojs/sitemap'
+import { unified } from '@astrojs/markdown-remark'
 import rehypeExternalLinks from 'rehype-external-links'
 import { remarkAlert } from 'remark-github-blockquote-alert'
 
@@ -46,20 +47,40 @@ export default defineConfig({
 		})
 	],
 	scopedStyleStrategy: 'where',
+	compressHTML: true,
 	markdown: {
-		remarkPlugins: [
-			readingTime,
-			remarkAlert,
-		],
-		rehypePlugins: [
-			headers,
-			[ rehypeExternalLinks, { target: '_blank', rel: 'noreferrer' } ]
-		],
+		processor: unified({
+			remarkPlugins: [
+				readingTime,
+				remarkAlert,
+			],
+			rehypePlugins: [
+				headers,
+				[ rehypeExternalLinks, { target: '_blank', rel: 'noreferrer' } ]
+			],
+		}),
 		shikiConfig: {
 			// @ts-expect-error -- ok TS
 			theme: darkFeminineItalic,
 		},
 	},
+	fonts: [
+		{
+			name: 'Lexend',
+			cssVariable: '--font-lexend',
+			weights: ['200 700'],
+			styles: ['normal', 'italic'],
+			provider: fontProviders.fontsource(),
+		},
+		{
+			name: 'JetBrains Mono',
+			cssVariable: '--font-jb-mono',
+			weights: ['400 700'],
+			styles: ['normal', 'italic'],
+			fallbacks: ['monospace'],
+			provider: fontProviders.fontsource(),
+		}
+	],
 	vite: {
 		build: {
 			// I don't like inlined assets
