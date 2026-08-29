@@ -114,7 +114,7 @@ describing as harmful in this blog post. With 9.3k stars on GitHub and 21 millio
 time of writing, it is a *big* player and a lot of teams are using it, spreading the embedding problem like wildfire.
 
 ## A simple solution
-The worst (or best!) part is that there is a very simple solution to this problem: [`<use>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/use).
+The worst (or best!) part is that there is a very simple solution to this problem: [`<use>`](https://developer.mozilla.org/en-GB/docs/Web/SVG/Element/use).
 This tag allows you to reference a symbol (embedded in the document, or from an external spritesheet) and directly
 *use* it as if the SVG was just here. Full support for `currentColor` as well!
 
@@ -155,7 +155,7 @@ Jason's tweet is an example of what this can lead to. Half of your build, effect
 
 #### Lack of code-splitting
 Most tools don't take into account code-splitting. The final result is a single sprite, that some tools don't even
-let you externalize the spritesheet, and it is forcefully embedded into your HTML template file.
+let you externalise the spritesheet, and it is forcefully embedded into your HTML template file.
 
 Parsing SVGs is cheap, but imagine if you have an admin portal with a handful of icons unique to this context: all of
 your users would still download and parse every single icon from this portal despite them being effectively dead code
@@ -180,7 +180,7 @@ sprite-splitting), import as a plain file (as if it was an image asset, for use 
 inner SVG references processing. It also included SVGO processing.
 
 But it wasn't perfect. Actually, very far from it. The code itself is quite ugly internally, introduced some
-non-standard behavior with how it processed the SVGs, and had little to no customization possible. You couldn't tweak
+non-standard behavior with how it processed the SVGs, and had little to no customisation possible. You couldn't tweak
 the SVGO config, you couldn't easily use a custom code generator, etc...
 
 ### Starting from scratch

@@ -52,7 +52,7 @@ export async function GET ({ site }: APIContext) {
 			atom: 'http://www.w3.org/2005/Atom'
 		},
 		customData: `
-			<language>en-US</language>
+			<language>en-GB</language>
 			<copyright>Copyright (c) Cynthia Rey. Licensed under CC BY-SA 4.0 unless stated otherwise.</copyright>
 			<managingEditor>cynthia@cynthia.dev (Cynthia Rey)</managingEditor>
 			<webMaster>cynthia@cynthia.dev (Cynthia Rey)</webMaster>

@@ -33,7 +33,7 @@ Let's deep dive into what's accessibility all about.
 Accessibility (often written as a11y), is the practice of ensuring a maximum amount of people can access a website or
 an application.
 
-For instance, take visually impaired people. These people have special needs and use specialized tools to help them
+For instance, take visually impaired people. These people have special needs and use specialised tools to help them
 browse the Internet, and interact with their computers. They heavily rely on screen readers to read what's on the page
 for them and help them navigate.
 
@@ -86,7 +86,7 @@ Which follows all of my rules. This page is properly structured! Of course, this
 it quite good and effective to make sure your page follows good title hygiene. It possibly is a test that could be
 automated too.
 
-While I do like the tree representation and my brain is good at visualizing these, you may prefer a linear list too.
+While I do like the tree representation and my brain is good at visualising these, you may prefer a linear list too.
 It's probably simpler, but my brain somehow hates these... Whatever suits you!
 
 #### Use all the elements
@@ -179,22 +179,22 @@ will scale accordingly!
 
 For everything to scale, you should fully embrace the "font size is not predictable" mindset, and make sure your
 texts can properly wrap in all circumstances. This work should already be done if you have dynamic content, or if
-your application is localized to deal with the variable length of your strings.
+your application is localised to deal with the variable length of your strings.
 
-#### Careful when picking colors
-Contrast is very important. Text with improper color contrast may end up being completely unreadable for people who
-struggle to perceive color. Carefully picking the colors your text is written in, and ensuring a good contrast ratio
+#### Careful when picking colours
+Contrast is very important. Text with improper colour contrast may end up being completely unreadable for people who
+struggle to perceive colour. Carefully picking the colours your text is written in, and ensuring a good contrast ratio
 is essential.
 
-Colors aren't sufficient to convey meaning either. While you may see a bright red error text, someone will see a text
+Colours aren't sufficient to convey meaning either. While you may see a bright red error text, someone will see a text
 in a shade of grey and might not be able to perceive it's an error message. The message should clearly be labeled as
 an error with an icon (properly labeled so it'll be described by a screen reader), or more simply just by prefixing
 your message. Example: "Error: the reader is way too cute".
 
-In some color-heavy illustrations, such as charts, you should consider making sure colors are distinguishable by
-colorblind people, or that they use other features than color to convey meaning. For example, line charts may use
+In some colour-heavy illustrations, such as charts, you should consider making sure colours are distinguishable by
+colourblind people, or that they use other features than colour to convey meaning. For example, line charts may use
 different shapes of points and line patterns (solid, dotted, dashes, ...), pie charts may use different patterns to
-fill each part instead of solid colors, etc.
+fill each part instead of solid colours, etc.
 
 #### Properly describe images
 When your website has images, which it probably does, it must be properly described. And by properly, I don't mean
@@ -249,10 +249,10 @@ things to consider. Here's a still-non-exhaustive list of additional things to c
 - Responsive web design counts as accessibility. Making your application scale will make it behave correctly on many
   devices (not everyone has access to a computer), many screen resolutions (some don't have the luxury of considering
   16:9 1080p a minimum), etc.
-- Localizing your application is also making it accessible to foreign individuals. I recommend this
+- Localising your application is also making it accessible to foreign individuals. I recommend this
   [blog post from Tolgee](https://tolgee.io/blog/benefits-challenges-software-localization) about the *Benefits and
   Challenges of Software Localization*. (disclaimer: I am a collaborator on the project).
-- The weight of your app (JS bundle sizes, image optimizations, etc.) counts as accessibility. People with metered
+- The weight of your app (JS bundle sizes, image optimisations, etc.) counts as accessibility. People with metered
   and/or slow connections will struggle to access an application that loads 10 MB of JavaScript.
 
 And the list goes on. Thankfully, you don't need to be perfect. You may not need to deal with an international
@@ -261,7 +261,7 @@ extremely hard to get right and accessible, we have here a case of "somebody els
 
 ## Component libraries to the rescue
 Component libraries are building blocks you can use to create interfaces with complex and interactive elements, such
-as tabs, highly customized form elements, tooltips, toasts, modals, and pretty much anything you might have to use in
+as tabs, highly customised form elements, tooltips, toasts, modals, and pretty much anything you might have to use in
 your app. The most useful part is that nowadays, a lot of them handle accessibility for you out of the box.
 
 It's tempting to just roll your own, and assume you can do so without too much risk. You'd have considerably better
@@ -269,27 +269,27 @@ control over it and not have any problems with limitations. Though in reality, y
 spent thousands of hours (yes, thousands) building accessible components that *actually* work. You probably don't want
 to spend this much time writing a simple component, do you?
 
-Modern components allow for great customizability, and most UI kits out there are highly customizable. You shouldn't
+Modern components allow for great customisability, and most UI kits out there are highly customisable. You shouldn't
 encounter any limitations, and if you do chances are you are in a case of an antipattern, or the library is
 constraining you for accessibility purposes. Which is good.
 
 There is one thing that may be a concern: styles. A lot of UI kits, such as Material UI, come with a predefined
 style (in this case, Material Design). Having a predefined design language can be good, as these design languages
 have a lot of pre-defined things, and you can quickly build things that look good. They usually have a way to add
-styles on top of them, which is enough to customize them to suit all your needs.
+styles on top of them, which is enough to customise them to suit all your needs.
 
 But, if you're like me, you may not like this. Or you want to build an app that has its own design language and its
 own brand. In this case, what you're looking for is Headless UI libraries.
 
 ### Headless UI libraries
 Headless UI libraries, such as [Radix UI](https://www.radix-ui.com/), sit in a spot where their sole purpose is to
-provide components with predefined behavior, and accessibility concerns already taken into account, and then leave
+provide components with predefined behaviour, and accessibility concerns already taken into account, and then leave
 everything else up to you. You can think of them as a classic HTML elements, without styles, or anything.
 
-This is a sweet spot of being low-level enough to fit in any single application, but abstracts away a lot of behavior
+This is a sweet spot of being low-level enough to fit in any single application, but abstracts away a lot of behaviour
 and accessibility concerns out of view, so your app is accessible by default.
 
-Radix isn't the only one, but it's my favorite. There are a few other alternative libraries, all with their pros and
+Radix isn't the only one, but it's my favourite. There are a few other alternative libraries, all with their pros and
 cons. While I personally fell in love with Radix, you might want to check these out:
 
 - [Headless UI](https://headlessui.com/), especially if you're using Tailwind
@@ -301,7 +301,7 @@ cons. While I personally fell in love with Radix, you might want to check these 
 
 You may also want to check [shadcn/ui](https://ui.shadcn.com/) for beautiful components built with Radix and Tailwind.
 It's not developed as a package, but rather as things you can copy/paste into your code, so you can use it as a
-starting block and customize it to your specific needs.
+starting block and customise it to your specific needs.
 
 ## Beyond software engineering
 Accessibility topics go beyond software engineering and are something *you*, the reader, can contribute to even if
@@ -309,7 +309,7 @@ you're not writing software.
 
 In the next part of this series about accessibility, I will be tackling how everyone can contribute to making the
 Internet more accessible. Yes, everyone! Some things happen, especially on social media, which negatively affect
-accessibility. By raising awareness and correcting certain behaviors, we can make sure the Internet is more accessible.
+accessibility. By raising awareness and correcting certain behaviours, we can make sure the Internet is more accessible.
 
 > [!TIP]
 > *Want to be notified when the next episode is out? Join my [Discord server](https://discord.gg/VnxPeNHHpG), and get
