@@ -5,27 +5,38 @@ on:
       - mistress
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-      - uses: pnpm/action-setup@v4
-      - run: pnpm i
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with: { persist-credentials: false }
+
+      - uses: pnpm/setup@5d160c5bc68a09337ad0d5654e237e03253b5879 # v1
+        with: { cache: false }  # Cache poisoning defense
+
       - run: pnpm run check
       - run: pnpm run build
-      - uses: actions/upload-artifact@v4
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           include-hidden-files: true
           name: website
           path: dist
+
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     environment: Production
     needs: build
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: website
           path: dist
@@ -35,4 +46,6 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           ssh-keyscan -p "${{ secrets.SSH_PORT }}" -H "${{ secrets.SSH_HOSTNAME }}" > ~/.ssh/known_hosts
       - name: Push to server with rsync
-        run: rsync -a --no-o --no-g --rsh "ssh -p ${{ secrets.SSH_PORT }}" dist/ "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOSTNAME }}:${{ vars.DEPLOY_PATH }}"
+        run: rsync -a --no-o --no-g --rsh "ssh -p ${{ secrets.SSH_PORT }}" dist/ "${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOSTNAME }}:${VARS_DEPLOY_PATH}"
+        env:
+          VARS_DEPLOY_PATH: ${{ vars.DEPLOY_PATH }}
